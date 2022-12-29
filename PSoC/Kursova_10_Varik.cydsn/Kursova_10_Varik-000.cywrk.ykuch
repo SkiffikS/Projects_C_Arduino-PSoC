@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="5f2be1a5-0687-4501-bb8c-cf21cb8211bf">
+<CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf type_name="CyDesigner.Common.ProjMgmt.GUI.CyBookmarkData" version="1">
+<indicators />
+</CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf>
+</dataGuid>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Kursova_10_Varik-000\Kursova_10_Varik\TopDesign">
+<ExpandedNodeIds>
+<v>Kursova_10_Varik-000</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\TopDesign</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Pins</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Analog</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Clocks</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Interrupts</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\System</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Directives</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Flash Security</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Header Files</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Header Files\cyapicallbacks.h</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Source Files</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Source Files\main.c</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Kursova_10_Varik-000</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\TopDesign</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Pins</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Analog</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Clocks</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Interrupts</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\System</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Directives</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.cydwr\Flash Security</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Header Files</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Header Files\cyapicallbacks.h</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Source Files</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Source Files\main.c</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\Blue_Output</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cy_boot</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cy_lfclk</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\Em_EEPROM_Dynamic</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\Green_Output</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\isr_1</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\Red_Output</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\Timer_1</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\UART_1</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\UART_1_rx</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\UART_1_SCBCLK</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\UART_1_tx</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cycodeshareexport.ld</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cycodeshareimport.ld</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cycodeshareimport.scat</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cydevice_trm.h</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cydevicegnu_trm.inc</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cydeviceiar_trm.inc</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cydevicerv_trm.inc</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cydisabledsheets.h</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cyfitter.h</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cyfitter_cfg.c</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cyfitter_cfg.h</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cyfittergnu.inc</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cyfitteriar.inc</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cyfitterrv.inc</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\cymetadata.c</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Generated_Source\PSoC4\project.h</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Kursova_10_Varik-000">
+<ExpandedNodeIds>
+<v>Kursova_10_Varik-000</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\TopDesign</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Kursova_10_Varik-000</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\TopDesign</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Kursova_10_Varik-000">
+<ExpandedNodeIds>
+<v>Kursova_10_Varik-000</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Blue_Output.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Blue_Output_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Green_Output.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Green_Output_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\isr_1.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Red_Output.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Red_Output_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Timer_1.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Timer_1_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_BOOT.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_rx.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_rx_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_SCBCLK.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_SPI_UART.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_SPI_UART_INT.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_tx.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_tx_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_UART.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_UART_BOOT.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Kursova_10_Varik.elf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Kursova_10_Varik.hex</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Kursova_10_Varik.map</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.gpdsc</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.rpt</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Kursova_10_Varik-000</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Blue_Output.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Blue_Output_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Green_Output.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Green_Output_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\isr_1.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Red_Output.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Red_Output_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Timer_1.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\Timer_1_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_BOOT.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_rx.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_rx_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_SCBCLK.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_SPI_UART.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_SPI_UART_INT.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_tx.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_tx_PM.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_UART.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Listing Files\UART_1_UART_BOOT.lst</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Kursova_10_Varik.elf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Kursova_10_Varik.hex</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\CortexM0\ARM_GCC_541\Debug\Kursova_10_Varik.map</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.gpdsc</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik.rpt</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Kursova_10_Varik_timing.html</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Kursova_10_Varik-000">
+<ExpandedNodeIds>
+<v>Kursova_10_Varik-000</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\PSoC 4 Architecture TRM</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\PSoC 4200 Family Datasheet</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\System Reference Guides</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\System Reference Guides\cy_boot_v6_10</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\System Reference Guides\cy_lfclk_v1_20</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\cy_clock_v2_20.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\cy_isr_v1_70.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\cy_pins_v2_20</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\SCB_P4_v4_0.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Timer_v2_80.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\ZeroTerminal.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Kursova_10_Varik-000</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\PSoC 4 Architecture TRM</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\PSoC 4200 Family Datasheet</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\System Reference Guides</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\System Reference Guides\cy_boot_v6_10</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\System Reference Guides\cy_lfclk_v1_20</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\cy_clock_v2_20.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\cy_isr_v1_70.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\cy_pins_v2_20</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\SCB_P4_v4_0.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\Timer_v2_80.pdf</v>
+<v>Kursova_10_Varik-000\Kursova_10_Varik\ZeroTerminal.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\TopDesign\TopDesign.cysch" />
+<name v=".\Kursova_10_Varik.cydwr" />
+<name v=".\main.c" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1410, 909" SelectedTabbedMdiWindow="d153106d-f07d-4c7f-bfc1-2a700bada229"><DocumentWindow Key="C:\PSoC\Kursova_10_Varik.cydsn\TopDesign\TopDesign.cysch" Guid="f0b5a3eb-3c58-41cf-b8eb-1e00607fa506" /><DocumentWindow Key="C:\PSoC\Kursova_10_Varik.cydsn\Kursova_10_Varik.cydwr" Guid="acfea455-6396-4a7a-ad24-2402ae729f87" /><DocumentWindow Key="C:\PSoC\Kursova_10_Varik.cydsn\main.c" Guid="d153106d-f07d-4c7f-bfc1-2a700bada229" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="e339d159-e1f0-46b2-bbdc-40f3cf45a1c2" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>

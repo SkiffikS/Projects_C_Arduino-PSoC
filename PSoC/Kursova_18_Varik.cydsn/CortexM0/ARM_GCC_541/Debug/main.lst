@@ -1,0 +1,2723 @@
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Error_Return,"ax",%progbits
+  20              		.align	2
+  21              		.global	Error_Return
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	Error_Return, %function
+  25              	Error_Return:
+  26              	.LFB32:
+  27              		.file 1 "main.c"
+   1:main.c        **** #include "project.h"
+   2:main.c        **** /* Number of channnels */
+   3:main.c        **** #define NUMBER_OF_CHANNELS (4)
+   4:main.c        **** /* The argument of the Pin_Write API to turn on the LED */
+   5:main.c        **** #define LED_ON_VALUE (0)
+   6:main.c        **** /* The argument of the Pin_Write API to turn off the LED */
+   7:main.c        **** #define LED_OFF_VALUE (1)
+   8:main.c        **** /* Size of UART buffer */
+   9:main.c        **** #define UART_BUFFER_SIZE (11)
+  10:main.c        **** /* UART buffer indeces */
+  11:main.c        **** #define UART_BUFFER_A_IDX (0)
+  12:main.c        **** #define UART_BUFFER_T_IDX (1)
+  13:main.c        **** #define UART_BUFFER_PLUS_FIRST_IDX (2) // PLUS - Symbol "+"
+  14:main.c        **** #define UART_BUFFER_C_IDX (3)
+  15:main.c        **** #define UART_BUFFER_CHANNEL_IDX (4)
+  16:main.c        **** #define UART_BUFFER_EQUALS_IDX (5) // EQUALS - Symbol "="
+  17:main.c        **** #define UART_BUFFER_D_VALUE_IDX (6)
+  18:main.c        **** #define UART_BUFFER_PLUS_SECOND_IDX (7) // PLUS - Symbol "+"
+  19:main.c        **** #define UART_BUFFER_H_VALUE_IDX (8)
+  20:main.c        **** #define UART_BUFFER_PLUS_THIRD_IDX (9) // PLUS - Symbol "+"
+  21:main.c        **** #define UART_BUFFER_L_VALUE_IDX (10)
+  22:main.c        **** /* ASCII offset for digits. ASCII code of 0 in ASCII table. */
+  23:main.c        **** #define ASCII_OFFSET_FOR_DIGITS (48)
+  24:main.c        **** /* Channel Descriptor Type */
+  25:main.c        **** typedef struct
+  26:main.c        **** {
+  27:main.c        ****  uint8 Current_D; /* Counter of state D duration */
+  28:main.c        ****  uint8 Current_H; /* Counter of state H duration */
+  29:main.c        ****  uint8 Current_L; /* Counter of state L duration */
+  30:main.c        ****  uint8 Max_D; /* Maximum state D duration */
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 2
+
+
+  31:main.c        ****  uint8 Max_H; /* Maximum state H duration */
+  32:main.c        ****  uint8 Max_L; /* Maximum state L duration */
+  33:main.c        ****  void (*PinControlFunction)(uint8); /* Pointer to pin control function */
+  34:main.c        **** } ChannelDescriptorType;
+  35:main.c        **** 
+  36:main.c        **** /* Channels descriptors array with size of channels number */
+  37:main.c        **** ChannelDescriptorType ChannelDescriptorsArray[NUMBER_OF_CHANNELS];
+  38:main.c        **** /* Buffer to store data from UART */
+  39:main.c        **** char UartBuffer[UART_BUFFER_SIZE];
+  40:main.c        **** /* Index to the current UART buffer element */
+  41:main.c        **** uint8 UartBufferIdx;
+  42:main.c        **** 
+  43:main.c        **** /* This function notifies the user that an incorrect AT-command has been entered */
+  44:main.c        **** void Error_Return(void)
+  45:main.c        **** {
+  28              		.loc 1 45 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  46:main.c        ****     UART_1_UartPutChar('\n');
+  36              		.loc 1 46 0
+  37 0002 0A20     		movs	r0, #10
+  38 0004 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  39              	.LVL0:
+  47:main.c        ****     UART_1_UartPutChar('\r');
+  40              		.loc 1 47 0
+  41 0008 0D20     		movs	r0, #13
+  42 000a FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  43              	.LVL1:
+  48:main.c        ****     UART_1_UartPutChar(' ');
+  44              		.loc 1 48 0
+  45 000e 2020     		movs	r0, #32
+  46 0010 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  47              	.LVL2:
+  49:main.c        ****     UART_1_UartPutChar('E');
+  48              		.loc 1 49 0
+  49 0014 4520     		movs	r0, #69
+  50 0016 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  51              	.LVL3:
+  50:main.c        ****     UART_1_UartPutChar('r');
+  52              		.loc 1 50 0
+  53 001a 7220     		movs	r0, #114
+  54 001c FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  55              	.LVL4:
+  51:main.c        ****     UART_1_UartPutChar('r');
+  56              		.loc 1 51 0
+  57 0020 7220     		movs	r0, #114
+  58 0022 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  59              	.LVL5:
+  52:main.c        ****     UART_1_UartPutChar('o');
+  60              		.loc 1 52 0
+  61 0026 6F20     		movs	r0, #111
+  62 0028 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 3
+
+
+  63              	.LVL6:
+  53:main.c        ****     UART_1_UartPutChar('r');
+  64              		.loc 1 53 0
+  65 002c 7220     		movs	r0, #114
+  66 002e FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  67              	.LVL7:
+  54:main.c        ****     UART_1_UartPutChar(' ');
+  68              		.loc 1 54 0
+  69 0032 2020     		movs	r0, #32
+  70 0034 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  71              	.LVL8:
+  55:main.c        ****     UART_1_UartPutChar('\n');
+  72              		.loc 1 55 0
+  73 0038 0A20     		movs	r0, #10
+  74 003a FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  75              	.LVL9:
+  56:main.c        ****     UART_1_UartPutChar('\r');
+  76              		.loc 1 56 0
+  77 003e 0D20     		movs	r0, #13
+  78 0040 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  79              	.LVL10:
+  57:main.c        **** }
+  80              		.loc 1 57 0
+  81              		@ sp needed
+  82 0044 10BD     		pop	{r4, pc}
+  83              		.cfi_endproc
+  84              	.LFE32:
+  85              		.size	Error_Return, .-Error_Return
+  86 0046 C046     		.section	.text.ChannelController,"ax",%progbits
+  87              		.align	2
+  88              		.global	ChannelController
+  89              		.code	16
+  90              		.thumb_func
+  91              		.type	ChannelController, %function
+  92              	ChannelController:
+  93              	.LFB33:
+  58:main.c        **** 
+  59:main.c        **** /**************************************************************************
+  60:main.c        ****  This function perfoms channel control.
+  61:main.c        ****  It decrements counters D, H or L and toggles pin state when required.
+  62:main.c        **** **************************************************************************/
+  63:main.c        **** void ChannelController(uint8 Channel_Number)
+  64:main.c        **** {
+  94              		.loc 1 64 0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98              	.LVL11:
+  99 0000 70B5     		push	{r4, r5, r6, lr}
+ 100              		.cfi_def_cfa_offset 16
+ 101              		.cfi_offset 4, -16
+ 102              		.cfi_offset 5, -12
+ 103              		.cfi_offset 6, -8
+ 104              		.cfi_offset 14, -4
+  65:main.c        ****     if(ChannelDescriptorsArray[Channel_Number].Current_D > 0)
+ 105              		.loc 1 65 0
+ 106 0002 4300     		lsls	r3, r0, #1
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 4
+
+
+ 107 0004 1B18     		adds	r3, r3, r0
+ 108 0006 9A00     		lsls	r2, r3, #2
+ 109 0008 254B     		ldr	r3, .L7
+ 110 000a D15C     		ldrb	r1, [r2, r3]
+ 111 000c 0029     		cmp	r1, #0
+ 112 000e 0AD0     		beq	.L3
+  66:main.c        ****     {
+  67:main.c        ****         ChannelDescriptorsArray[Channel_Number].Current_D--;
+ 113              		.loc 1 67 0
+ 114 0010 1A00     		movs	r2, r3
+ 115 0012 4300     		lsls	r3, r0, #1
+ 116 0014 1D18     		adds	r5, r3, r0
+ 117 0016 AC00     		lsls	r4, r5, #2
+ 118 0018 0139     		subs	r1, r1, #1
+ 119 001a A154     		strb	r1, [r4, r2]
+  68:main.c        ****         ChannelDescriptorsArray[Channel_Number].PinControlFunction(LED_OFF_VALUE);
+ 120              		.loc 1 68 0
+ 121 001c 1319     		adds	r3, r2, r4
+ 122 001e 9B68     		ldr	r3, [r3, #8]
+ 123 0020 0120     		movs	r0, #1
+ 124              	.LVL12:
+ 125 0022 9847     		blx	r3
+ 126              	.LVL13:
+  69:main.c        ****         return;
+ 127              		.loc 1 69 0
+ 128 0024 3AE0     		b	.L2
+ 129              	.LVL14:
+ 130              	.L3:
+  70:main.c        ****     }
+  71:main.c        ****     if(ChannelDescriptorsArray[Channel_Number].Current_H > 0)
+ 131              		.loc 1 71 0
+ 132 0026 4200     		lsls	r2, r0, #1
+ 133 0028 1218     		adds	r2, r2, r0
+ 134 002a 9300     		lsls	r3, r2, #2
+ 135 002c 1C4A     		ldr	r2, .L7
+ 136 002e D318     		adds	r3, r2, r3
+ 137 0030 5C78     		ldrb	r4, [r3, #1]
+ 138 0032 002C     		cmp	r4, #0
+ 139 0034 0AD0     		beq	.L5
+  72:main.c        ****     {
+  73:main.c        ****         ChannelDescriptorsArray[Channel_Number].Current_H--;
+ 140              		.loc 1 73 0
+ 141 0036 1100     		movs	r1, r2
+ 142 0038 4300     		lsls	r3, r0, #1
+ 143 003a 1D18     		adds	r5, r3, r0
+ 144 003c AA00     		lsls	r2, r5, #2
+ 145 003e 8A18     		adds	r2, r1, r2
+ 146 0040 013C     		subs	r4, r4, #1
+ 147 0042 5470     		strb	r4, [r2, #1]
+  74:main.c        ****         ChannelDescriptorsArray[Channel_Number].PinControlFunction(LED_ON_VALUE);
+ 148              		.loc 1 74 0
+ 149 0044 9368     		ldr	r3, [r2, #8]
+ 150 0046 0020     		movs	r0, #0
+ 151              	.LVL15:
+ 152 0048 9847     		blx	r3
+ 153              	.LVL16:
+  75:main.c        ****         return;
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 5
+
+
+ 154              		.loc 1 75 0
+ 155 004a 27E0     		b	.L2
+ 156              	.LVL17:
+ 157              	.L5:
+  76:main.c        ****     }
+  77:main.c        ****     if(ChannelDescriptorsArray[Channel_Number].Current_L > 0)
+ 158              		.loc 1 77 0
+ 159 004c 4200     		lsls	r2, r0, #1
+ 160 004e 1218     		adds	r2, r2, r0
+ 161 0050 9300     		lsls	r3, r2, #2
+ 162 0052 134A     		ldr	r2, .L7
+ 163 0054 D318     		adds	r3, r2, r3
+ 164 0056 9B78     		ldrb	r3, [r3, #2]
+ 165 0058 002B     		cmp	r3, #0
+ 166 005a 0AD0     		beq	.L6
+  78:main.c        ****     {
+  79:main.c        ****         ChannelDescriptorsArray[Channel_Number].Current_L--;
+ 167              		.loc 1 79 0
+ 168 005c 1400     		movs	r4, r2
+ 169 005e 4200     		lsls	r2, r0, #1
+ 170 0060 1518     		adds	r5, r2, r0
+ 171 0062 A900     		lsls	r1, r5, #2
+ 172 0064 6118     		adds	r1, r4, r1
+ 173 0066 013B     		subs	r3, r3, #1
+ 174 0068 8B70     		strb	r3, [r1, #2]
+  80:main.c        ****         ChannelDescriptorsArray[Channel_Number].PinControlFunction(LED_OFF_VALUE);
+ 175              		.loc 1 80 0
+ 176 006a 8B68     		ldr	r3, [r1, #8]
+ 177 006c 0120     		movs	r0, #1
+ 178              	.LVL18:
+ 179 006e 9847     		blx	r3
+ 180              	.LVL19:
+  81:main.c        ****         return;
+ 181              		.loc 1 81 0
+ 182 0070 14E0     		b	.L2
+ 183              	.LVL20:
+ 184              	.L6:
+  82:main.c        ****     }
+  83:main.c        ****     
+  84:main.c        ****     if (     ChannelDescriptorsArray[Channel_Number].Current_D == 0 && 
+ 185              		.loc 1 84 0
+ 186 0072 0029     		cmp	r1, #0
+ 187 0074 12D1     		bne	.L2
+ 188              		.loc 1 84 0 is_stmt 0 discriminator 1
+ 189 0076 002C     		cmp	r4, #0
+ 190 0078 10D1     		bne	.L2
+  85:main.c        ****              ChannelDescriptorsArray[Channel_Number].Current_H == 0 && 
+ 191              		.loc 1 85 0 is_stmt 1
+ 192 007a 002B     		cmp	r3, #0
+ 193 007c 0ED1     		bne	.L2
+  86:main.c        ****              ChannelDescriptorsArray[Channel_Number].Current_L == 0)
+  87:main.c        ****     {
+  88:main.c        ****     ChannelDescriptorsArray[Channel_Number].Current_D = 
+  89:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_D;
+ 194              		.loc 1 89 0
+ 195 007e 084A     		ldr	r2, .L7
+ 196 0080 4100     		lsls	r1, r0, #1
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 6
+
+
+ 197 0082 0C18     		adds	r4, r1, r0
+ 198 0084 A300     		lsls	r3, r4, #2
+ 199 0086 D318     		adds	r3, r2, r3
+ 200 0088 DE78     		ldrb	r6, [r3, #3]
+  88:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_D;
+ 201              		.loc 1 88 0
+ 202 008a 2500     		movs	r5, r4
+ 203 008c A400     		lsls	r4, r4, #2
+ 204 008e A654     		strb	r6, [r4, r2]
+  90:main.c        ****     
+  91:main.c        ****     ChannelDescriptorsArray[Channel_Number].Current_H = 
+  92:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_H;
+ 205              		.loc 1 92 0
+ 206 0090 1C79     		ldrb	r4, [r3, #4]
+  91:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_H;
+ 207              		.loc 1 91 0
+ 208 0092 5C70     		strb	r4, [r3, #1]
+  93:main.c        ****     
+  94:main.c        ****     ChannelDescriptorsArray[Channel_Number].Current_L = 
+  95:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_L;
+ 209              		.loc 1 95 0
+ 210 0094 5C79     		ldrb	r4, [r3, #5]
+  94:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_L;
+ 211              		.loc 1 94 0
+ 212 0096 AB00     		lsls	r3, r5, #2
+ 213 0098 D318     		adds	r3, r2, r3
+ 214 009a 9C70     		strb	r4, [r3, #2]
+ 215              	.LVL21:
+ 216              	.L2:
+  96:main.c        **** 
+  97:main.c        ****     return;
+  98:main.c        ****     }
+  99:main.c        **** }
+ 217              		.loc 1 99 0
+ 218              		@ sp needed
+ 219 009c 70BD     		pop	{r4, r5, r6, pc}
+ 220              	.L8:
+ 221 009e C046     		.align	2
+ 222              	.L7:
+ 223 00a0 00000000 		.word	ChannelDescriptorsArray
+ 224              		.cfi_endproc
+ 225              	.LFE33:
+ 226              		.size	ChannelController, .-ChannelController
+ 227              		.section	.text.TimeSlotInterrupt,"ax",%progbits
+ 228              		.align	2
+ 229              		.global	TimeSlotInterrupt
+ 230              		.code	16
+ 231              		.thumb_func
+ 232              		.type	TimeSlotInterrupt, %function
+ 233              	TimeSlotInterrupt:
+ 234              	.LFB34:
+ 100:main.c        **** /**************************************************************************
+ 101:main.c        ****  Interrupt Handler called every 500ms
+ 102:main.c        **** **************************************************************************/
+ 103:main.c        **** CY_ISR(TimeSlotInterrupt)
+ 104:main.c        **** {
+ 235              		.loc 1 104 0
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 7
+
+
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239 0000 10B5     		push	{r4, lr}
+ 240              		.cfi_def_cfa_offset 8
+ 241              		.cfi_offset 4, -8
+ 242              		.cfi_offset 14, -4
+ 243              	.LVL22:
+ 105:main.c        ****  uint8 CurrentChannelNumber;
+ 106:main.c        ****  /* Call Channel controller function for each of channel */
+ 107:main.c        ****  for (CurrentChannelNumber = 0;
+ 244              		.loc 1 107 0
+ 245 0002 0024     		movs	r4, #0
+ 246 0004 04E0     		b	.L10
+ 247              	.LVL23:
+ 248              	.L11:
+ 108:main.c        ****  CurrentChannelNumber < NUMBER_OF_CHANNELS;
+ 109:main.c        ****  CurrentChannelNumber++)
+ 110:main.c        ****  {
+ 111:main.c        ****     ChannelController(CurrentChannelNumber);
+ 249              		.loc 1 111 0
+ 250 0006 2000     		movs	r0, r4
+ 251 0008 FFF7FEFF 		bl	ChannelController
+ 252              	.LVL24:
+ 109:main.c        ****  {
+ 253              		.loc 1 109 0
+ 254 000c 0134     		adds	r4, r4, #1
+ 255              	.LVL25:
+ 256 000e E4B2     		uxtb	r4, r4
+ 257              	.LVL26:
+ 258              	.L10:
+ 107:main.c        ****  CurrentChannelNumber < NUMBER_OF_CHANNELS;
+ 259              		.loc 1 107 0 discriminator 1
+ 260 0010 032C     		cmp	r4, #3
+ 261 0012 F8D9     		bls	.L11
+ 112:main.c        ****  }
+ 113:main.c        **** }
+ 262              		.loc 1 113 0
+ 263              		@ sp needed
+ 264              	.LVL27:
+ 265 0014 10BD     		pop	{r4, pc}
+ 266              		.cfi_endproc
+ 267              	.LFE34:
+ 268              		.size	TimeSlotInterrupt, .-TimeSlotInterrupt
+ 269 0016 C046     		.section	.text.UpdateChannelDescriptor,"ax",%progbits
+ 270              		.align	2
+ 271              		.global	UpdateChannelDescriptor
+ 272              		.code	16
+ 273              		.thumb_func
+ 274              		.type	UpdateChannelDescriptor, %function
+ 275              	UpdateChannelDescriptor:
+ 276              	.LFB35:
+ 114:main.c        **** /**************************************************************************
+ 115:main.c        ****  This function to update channel descriptors and pin state.
+ 116:main.c        ****  Counters D, H and L of all other channels are reset to the initial state
+ 117:main.c        ****  to start all channels synchronously.
+ 118:main.c        ****  Parameters:
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 8
+
+
+ 119:main.c        ****  ChannelNumber - channel to be updated;
+ 120:main.c        ****  D - new value of delay D;
+ 121:main.c        ****  H - new value of pulse duration H;
+ 122:main.c        ****  L - new value of pause duration L;
+ 123:main.c        **** **************************************************************************/
+ 124:main.c        **** void UpdateChannelDescriptor(uint8 ChannelNumber, uint8 D, uint8 H, uint8 L)
+ 125:main.c        **** {
+ 277              		.loc 1 125 0
+ 278              		.cfi_startproc
+ 279              		@ args = 0, pretend = 0, frame = 0
+ 280              		@ frame_needed = 0, uses_anonymous_args = 0
+ 281              	.LVL28:
+ 282 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 283              		.cfi_def_cfa_offset 24
+ 284              		.cfi_offset 3, -24
+ 285              		.cfi_offset 4, -20
+ 286              		.cfi_offset 5, -16
+ 287              		.cfi_offset 6, -12
+ 288              		.cfi_offset 7, -8
+ 289              		.cfi_offset 14, -4
+ 126:main.c        ****  uint8 ChannelIdx;
+ 127:main.c        ****  
+ 128:main.c        ****  /* Enter critical section to avoid interrupts during channel descriptors update */
+ 129:main.c        ****  CyGlobalIntDisable; /* Disable global interrupts. */
+ 290              		.loc 1 129 0
+ 291              		.syntax divided
+ 292              	@ 129 "main.c" 1
+ 293 0002 72B6     		CPSID   i
+ 294              	@ 0 "" 2
+ 130:main.c        ****  /* Update channel descriptor values from the data received from UART */
+ 131:main.c        ****  ChannelDescriptorsArray[ChannelNumber].Max_D = D;
+ 295              		.loc 1 131 0
+ 296              		.thumb
+ 297              		.syntax unified
+ 298 0004 104D     		ldr	r5, .L15
+ 299 0006 4600     		lsls	r6, r0, #1
+ 300 0008 3718     		adds	r7, r6, r0
+ 301 000a BC00     		lsls	r4, r7, #2
+ 302 000c 2C19     		adds	r4, r5, r4
+ 303 000e E170     		strb	r1, [r4, #3]
+ 132:main.c        ****  ChannelDescriptorsArray[ChannelNumber].Max_H = H; 
+ 304              		.loc 1 132 0
+ 305 0010 2271     		strb	r2, [r4, #4]
+ 133:main.c        ****  ChannelDescriptorsArray[ChannelNumber].Max_L = L; 
+ 306              		.loc 1 133 0
+ 307 0012 6371     		strb	r3, [r4, #5]
+ 308              	.LVL29:
+ 134:main.c        ****  
+ 135:main.c        ****  /* Reload counters in all channels to synchronize all channels. */
+ 136:main.c        ****  for (ChannelIdx = 0; ChannelIdx < NUMBER_OF_CHANNELS; ChannelIdx++)
+ 309              		.loc 1 136 0
+ 310 0014 0024     		movs	r4, #0
+ 311 0016 13E0     		b	.L13
+ 312              	.LVL30:
+ 313              	.L14:
+ 137:main.c        ****  {
+ 138:main.c        ****  ChannelDescriptorsArray[ChannelIdx].Current_D = ChannelDescriptorsArray[ChannelIdx].Max_D;
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 9
+
+
+ 314              		.loc 1 138 0 discriminator 3
+ 315 0018 0B49     		ldr	r1, .L15
+ 316 001a 6200     		lsls	r2, r4, #1
+ 317 001c 1019     		adds	r0, r2, r4
+ 318 001e 8300     		lsls	r3, r0, #2
+ 319 0020 CB18     		adds	r3, r1, r3
+ 320 0022 DE78     		ldrb	r6, [r3, #3]
+ 321 0024 0500     		movs	r5, r0
+ 322 0026 8000     		lsls	r0, r0, #2
+ 323 0028 4654     		strb	r6, [r0, r1]
+ 139:main.c        ****  ChannelDescriptorsArray[ChannelIdx].Current_H = ChannelDescriptorsArray[ChannelIdx].Max_H;
+ 324              		.loc 1 139 0 discriminator 3
+ 325 002a 1879     		ldrb	r0, [r3, #4]
+ 326 002c 5870     		strb	r0, [r3, #1]
+ 140:main.c        ****  ChannelDescriptorsArray[ChannelIdx].Current_L = ChannelDescriptorsArray[ChannelIdx].Max_L;
+ 327              		.loc 1 140 0 discriminator 3
+ 328 002e 5879     		ldrb	r0, [r3, #5]
+ 329 0030 9870     		strb	r0, [r3, #2]
+ 141:main.c        ****  /* Reset output pin corresponding to this channel */
+ 142:main.c        ****  ChannelDescriptorsArray[ChannelIdx].PinControlFunction(LED_OFF_VALUE);
+ 330              		.loc 1 142 0 discriminator 3
+ 331 0032 AB00     		lsls	r3, r5, #2
+ 332 0034 CB18     		adds	r3, r1, r3
+ 333 0036 9B68     		ldr	r3, [r3, #8]
+ 334 0038 0120     		movs	r0, #1
+ 335 003a 9847     		blx	r3
+ 336              	.LVL31:
+ 136:main.c        ****  {
+ 337              		.loc 1 136 0 discriminator 3
+ 338 003c 0134     		adds	r4, r4, #1
+ 339              	.LVL32:
+ 340 003e E4B2     		uxtb	r4, r4
+ 341              	.LVL33:
+ 342              	.L13:
+ 136:main.c        ****  {
+ 343              		.loc 1 136 0 is_stmt 0 discriminator 1
+ 344 0040 032C     		cmp	r4, #3
+ 345 0042 E9D9     		bls	.L14
+ 143:main.c        ****  }
+ 144:main.c        ****  /* Exit critical section */
+ 145:main.c        ****  CyGlobalIntEnable; /* Enable global interrupts. */
+ 346              		.loc 1 145 0 is_stmt 1
+ 347              		.syntax divided
+ 348              	@ 145 "main.c" 1
+ 349 0044 62B6     		CPSIE   i
+ 350              	@ 0 "" 2
+ 146:main.c        **** }
+ 351              		.loc 1 146 0
+ 352              		.thumb
+ 353              		.syntax unified
+ 354              		@ sp needed
+ 355              	.LVL34:
+ 356 0046 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 357              	.L16:
+ 358              		.align	2
+ 359              	.L15:
+ 360 0048 00000000 		.word	ChannelDescriptorsArray
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 10
+
+
+ 361              		.cfi_endproc
+ 362              	.LFE35:
+ 363              		.size	UpdateChannelDescriptor, .-UpdateChannelDescriptor
+ 364              		.section	.text.UartBufferParser,"ax",%progbits
+ 365              		.align	2
+ 366              		.global	UartBufferParser
+ 367              		.code	16
+ 368              		.thumb_func
+ 369              		.type	UartBufferParser, %function
+ 370              	UartBufferParser:
+ 371              	.LFB36:
+ 147:main.c        **** /**************************************************************************
+ 148:main.c        ****  This function parses the UART buffer and update counters D, H and L
+ 149:main.c        **** **************************************************************************/
+ 150:main.c        **** void UartBufferParser(void)
+ 151:main.c        **** {
+ 372              		.loc 1 151 0
+ 373              		.cfi_startproc
+ 374              		@ args = 0, pretend = 0, frame = 0
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376 0000 10B5     		push	{r4, lr}
+ 377              		.cfi_def_cfa_offset 8
+ 378              		.cfi_offset 4, -8
+ 379              		.cfi_offset 14, -4
+ 152:main.c        ****  uint8 ChannelNumber;
+ 153:main.c        ****  uint8 ValueD, ValueH, ValueL;
+ 154:main.c        ****  
+ 155:main.c        ****  ValueD = UartBuffer[UART_BUFFER_D_VALUE_IDX] - ASCII_OFFSET_FOR_DIGITS;
+ 380              		.loc 1 155 0
+ 381 0002 254C     		ldr	r4, .L27
+ 382 0004 A179     		ldrb	r1, [r4, #6]
+ 383 0006 3039     		subs	r1, r1, #48
+ 384 0008 C9B2     		uxtb	r1, r1
+ 385              	.LVL35:
+ 156:main.c        ****  ValueH = UartBuffer[UART_BUFFER_H_VALUE_IDX] - ASCII_OFFSET_FOR_DIGITS;
+ 386              		.loc 1 156 0
+ 387 000a 227A     		ldrb	r2, [r4, #8]
+ 388 000c 303A     		subs	r2, r2, #48
+ 389 000e D2B2     		uxtb	r2, r2
+ 390              	.LVL36:
+ 157:main.c        ****  ValueL = UartBuffer[UART_BUFFER_L_VALUE_IDX] - ASCII_OFFSET_FOR_DIGITS;   
+ 391              		.loc 1 157 0
+ 392 0010 A37A     		ldrb	r3, [r4, #10]
+ 393 0012 303B     		subs	r3, r3, #48
+ 394 0014 DBB2     		uxtb	r3, r3
+ 395              	.LVL37:
+ 158:main.c        ****  ChannelNumber = UartBuffer[UART_BUFFER_CHANNEL_IDX] - ASCII_OFFSET_FOR_DIGITS;
+ 396              		.loc 1 158 0
+ 397 0016 2079     		ldrb	r0, [r4, #4]
+ 398 0018 3038     		subs	r0, r0, #48
+ 399 001a C0B2     		uxtb	r0, r0
+ 400              	.LVL38:
+ 159:main.c        **** 
+ 160:main.c        ****  if ('A' != UartBuffer[UART_BUFFER_A_IDX])
+ 401              		.loc 1 160 0
+ 402 001c 2478     		ldrb	r4, [r4]
+ 403 001e 412C     		cmp	r4, #65
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 11
+
+
+ 404 0020 02D0     		beq	.L18
+ 161:main.c        ****     {
+ 162:main.c        ****         /* UART buffer content does not match to the expected value "A". Return. */
+ 163:main.c        ****         Error_Return();
+ 405              		.loc 1 163 0
+ 406 0022 FFF7FEFF 		bl	Error_Return
+ 407              	.LVL39:
+ 164:main.c        ****         return;
+ 408              		.loc 1 164 0
+ 409 0026 36E0     		b	.L17
+ 410              	.LVL40:
+ 411              	.L18:
+ 165:main.c        ****     }
+ 166:main.c        ****  if ('T' != UartBuffer[UART_BUFFER_T_IDX])
+ 412              		.loc 1 166 0
+ 413 0028 1B4C     		ldr	r4, .L27
+ 414 002a 6478     		ldrb	r4, [r4, #1]
+ 415 002c 542C     		cmp	r4, #84
+ 416 002e 02D0     		beq	.L20
+ 167:main.c        ****     {
+ 168:main.c        ****         Error_Return();
+ 417              		.loc 1 168 0
+ 418 0030 FFF7FEFF 		bl	Error_Return
+ 419              	.LVL41:
+ 169:main.c        ****         return;
+ 420              		.loc 1 169 0
+ 421 0034 2FE0     		b	.L17
+ 422              	.LVL42:
+ 423              	.L20:
+ 170:main.c        ****     }
+ 171:main.c        ****  if ('+' != UartBuffer[UART_BUFFER_PLUS_FIRST_IDX])
+ 424              		.loc 1 171 0
+ 425 0036 184C     		ldr	r4, .L27
+ 426 0038 A478     		ldrb	r4, [r4, #2]
+ 427 003a 2B2C     		cmp	r4, #43
+ 428 003c 02D0     		beq	.L21
+ 172:main.c        ****     {
+ 173:main.c        ****         Error_Return();
+ 429              		.loc 1 173 0
+ 430 003e FFF7FEFF 		bl	Error_Return
+ 431              	.LVL43:
+ 174:main.c        ****         return;
+ 432              		.loc 1 174 0
+ 433 0042 28E0     		b	.L17
+ 434              	.LVL44:
+ 435              	.L21:
+ 175:main.c        ****     }
+ 176:main.c        ****  if ('C' != UartBuffer[UART_BUFFER_C_IDX])
+ 436              		.loc 1 176 0
+ 437 0044 144C     		ldr	r4, .L27
+ 438 0046 E478     		ldrb	r4, [r4, #3]
+ 439 0048 432C     		cmp	r4, #67
+ 440 004a 02D0     		beq	.L22
+ 177:main.c        ****     {
+ 178:main.c        ****         Error_Return();
+ 441              		.loc 1 178 0
+ 442 004c FFF7FEFF 		bl	Error_Return
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 12
+
+
+ 443              	.LVL45:
+ 179:main.c        ****         return;
+ 444              		.loc 1 179 0
+ 445 0050 21E0     		b	.L17
+ 446              	.LVL46:
+ 447              	.L22:
+ 180:main.c        ****     }
+ 181:main.c        ****  if ('=' != UartBuffer[UART_BUFFER_EQUALS_IDX])
+ 448              		.loc 1 181 0
+ 449 0052 114C     		ldr	r4, .L27
+ 450 0054 6479     		ldrb	r4, [r4, #5]
+ 451 0056 3D2C     		cmp	r4, #61
+ 452 0058 02D0     		beq	.L23
+ 182:main.c        ****     {
+ 183:main.c        ****         Error_Return();
+ 453              		.loc 1 183 0
+ 454 005a FFF7FEFF 		bl	Error_Return
+ 455              	.LVL47:
+ 184:main.c        ****         return;
+ 456              		.loc 1 184 0
+ 457 005e 1AE0     		b	.L17
+ 458              	.LVL48:
+ 459              	.L23:
+ 185:main.c        ****     }
+ 186:main.c        ****     
+ 187:main.c        ****  if ('+' != UartBuffer[UART_BUFFER_PLUS_SECOND_IDX])
+ 460              		.loc 1 187 0
+ 461 0060 0D4C     		ldr	r4, .L27
+ 462 0062 E479     		ldrb	r4, [r4, #7]
+ 463 0064 2B2C     		cmp	r4, #43
+ 464 0066 02D0     		beq	.L24
+ 188:main.c        ****     {
+ 189:main.c        ****         Error_Return();
+ 465              		.loc 1 189 0
+ 466 0068 FFF7FEFF 		bl	Error_Return
+ 467              	.LVL49:
+ 190:main.c        ****         return;
+ 468              		.loc 1 190 0
+ 469 006c 13E0     		b	.L17
+ 470              	.LVL50:
+ 471              	.L24:
+ 191:main.c        ****     }
+ 192:main.c        ****     
+ 193:main.c        ****  if ('+' != UartBuffer[UART_BUFFER_PLUS_THIRD_IDX])
+ 472              		.loc 1 193 0
+ 473 006e 0A4C     		ldr	r4, .L27
+ 474 0070 647A     		ldrb	r4, [r4, #9]
+ 475 0072 2B2C     		cmp	r4, #43
+ 476 0074 02D0     		beq	.L25
+ 194:main.c        ****     {
+ 195:main.c        ****         Error_Return();
+ 477              		.loc 1 195 0
+ 478 0076 FFF7FEFF 		bl	Error_Return
+ 479              	.LVL51:
+ 196:main.c        ****         return;
+ 480              		.loc 1 196 0
+ 481 007a 0CE0     		b	.L17
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 13
+
+
+ 482              	.LVL52:
+ 483              	.L25:
+ 197:main.c        ****     }   
+ 198:main.c        ****     
+ 199:main.c        ****  if (ValueD >= 0 && ValueD <= 9 &&
+ 484              		.loc 1 199 0
+ 485 007c 0929     		cmp	r1, #9
+ 486 007e 08D8     		bhi	.L26
+ 200:main.c        ****      ValueH >= 0 && ValueH <= 9 &&
+ 487              		.loc 1 200 0
+ 488 0080 092A     		cmp	r2, #9
+ 489 0082 06D8     		bhi	.L26
+ 201:main.c        ****      ValueL >= 0 && ValueL <= 9 &&
+ 490              		.loc 1 201 0
+ 491 0084 092B     		cmp	r3, #9
+ 492 0086 04D8     		bhi	.L26
+ 202:main.c        ****      ChannelNumber >= 0 && ChannelNumber < NUMBER_OF_CHANNELS)
+ 493              		.loc 1 202 0
+ 494 0088 0328     		cmp	r0, #3
+ 495 008a 02D8     		bhi	.L26
+ 203:main.c        ****     {
+ 204:main.c        ****         /* Update channel descriptor with received values D, H and L */
+ 205:main.c        ****         UpdateChannelDescriptor(ChannelNumber, ValueD, ValueH, ValueL);
+ 496              		.loc 1 205 0
+ 497 008c FFF7FEFF 		bl	UpdateChannelDescriptor
+ 498              	.LVL53:
+ 499 0090 01E0     		b	.L17
+ 500              	.LVL54:
+ 501              	.L26:
+ 206:main.c        ****     }
+ 207:main.c        ****  else
+ 208:main.c        ****     {
+ 209:main.c        ****         Error_Return();
+ 502              		.loc 1 209 0
+ 503 0092 FFF7FEFF 		bl	Error_Return
+ 504              	.LVL55:
+ 505              	.L17:
+ 210:main.c        ****     }
+ 211:main.c        **** }
+ 506              		.loc 1 211 0
+ 507              		@ sp needed
+ 508 0096 10BD     		pop	{r4, pc}
+ 509              	.L28:
+ 510              		.align	2
+ 511              	.L27:
+ 512 0098 00000000 		.word	UartBuffer
+ 513              		.cfi_endproc
+ 514              	.LFE36:
+ 515              		.size	UartBufferParser, .-UartBufferParser
+ 516              		.section	.text.UartDataReader,"ax",%progbits
+ 517              		.align	2
+ 518              		.global	UartDataReader
+ 519              		.code	16
+ 520              		.thumb_func
+ 521              		.type	UartDataReader, %function
+ 522              	UartDataReader:
+ 523              	.LFB37:
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 14
+
+
+ 212:main.c        **** /**************************************************************************
+ 213:main.c        ****  This function to read bytes (characters) from UART, collect data to the
+ 214:main.c        ****  buffer and parse the buffer.
+ 215:main.c        **** **************************************************************************/
+ 216:main.c        **** void UartDataReader(void)
+ 217:main.c        **** {
+ 524              		.loc 1 217 0
+ 525              		.cfi_startproc
+ 526              		@ args = 0, pretend = 0, frame = 0
+ 527              		@ frame_needed = 0, uses_anonymous_args = 0
+ 528 0000 10B5     		push	{r4, lr}
+ 529              		.cfi_def_cfa_offset 8
+ 530              		.cfi_offset 4, -8
+ 531              		.cfi_offset 14, -4
+ 532              	.LVL56:
+ 218:main.c        ****  char CurrentCharacter = 0;
+ 219:main.c        ****  CurrentCharacter = UART_1_UartGetChar();
+ 533              		.loc 1 219 0
+ 534 0002 FFF7FEFF 		bl	UART_1_UartGetChar
+ 535              	.LVL57:
+ 536 0006 C4B2     		uxtb	r4, r0
+ 537              	.LVL58:
+ 220:main.c        ****  if (0 == CurrentCharacter)
+ 538              		.loc 1 220 0
+ 539 0008 002C     		cmp	r4, #0
+ 540 000a 16D0     		beq	.L29
+ 221:main.c        ****  {
+ 222:main.c        ****  /* If current character equal to zero it means that no data received
+ 223:main.c        **** from UART.
+ 224:main.c        ****  Retrun from the function. */
+ 225:main.c        ****  return;
+ 226:main.c        ****  }
+ 227:main.c        ****  
+ 228:main.c        ****  /* Send back received character to see it in the terminal */
+ 229:main.c        ****  UART_1_UartPutChar(CurrentCharacter);
+ 541              		.loc 1 229 0
+ 542 000c FF23     		movs	r3, #255
+ 543 000e 1840     		ands	r0, r3
+ 544 0010 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+ 545              	.LVL59:
+ 230:main.c        ****  
+ 231:main.c        ****  /* Check if received character is "A" (== indicator of packet begin) */
+ 232:main.c        ****  if ('A' == CurrentCharacter)
+ 546              		.loc 1 232 0
+ 547 0014 412C     		cmp	r4, #65
+ 548 0016 02D1     		bne	.L31
+ 233:main.c        ****  {
+ 234:main.c        ****  /* UART received character "A". Reset index to begin of the UART buffer
+ 235:main.c        **** */
+ 236:main.c        ****  UartBufferIdx = 0;
+ 549              		.loc 1 236 0
+ 550 0018 0022     		movs	r2, #0
+ 551 001a 084B     		ldr	r3, .L32
+ 552 001c 1A70     		strb	r2, [r3]
+ 553              	.L31:
+ 237:main.c        ****  }
+ 238:main.c        ****  /* Put received character to UART buffer and increment index. */
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 15
+
+
+ 239:main.c        ****  UartBuffer[UartBufferIdx] = CurrentCharacter;
+ 554              		.loc 1 239 0
+ 555 001e 074A     		ldr	r2, .L32
+ 556 0020 1378     		ldrb	r3, [r2]
+ 557 0022 0749     		ldr	r1, .L32+4
+ 558 0024 CC54     		strb	r4, [r1, r3]
+ 240:main.c        ****  UartBufferIdx++;
+ 559              		.loc 1 240 0
+ 560 0026 0133     		adds	r3, r3, #1
+ 561 0028 DBB2     		uxtb	r3, r3
+ 562 002a 1370     		strb	r3, [r2]
+ 241:main.c        ****  
+ 242:main.c        ****  /* Check if UART buffer is filled */
+ 243:main.c        ****  if (UART_BUFFER_SIZE == UartBufferIdx)
+ 563              		.loc 1 243 0
+ 564 002c 0B2B     		cmp	r3, #11
+ 565 002e 04D1     		bne	.L29
+ 244:main.c        ****  {
+ 245:main.c        ****  /* UART buffer is full. Start parse this buffer. */
+ 246:main.c        ****  UartBufferParser();
+ 566              		.loc 1 246 0
+ 567 0030 FFF7FEFF 		bl	UartBufferParser
+ 568              	.LVL60:
+ 247:main.c        ****  /* Reset index to begin of the UART buffer */
+ 248:main.c        ****  UartBufferIdx = 0;
+ 569              		.loc 1 248 0
+ 570 0034 0022     		movs	r2, #0
+ 571 0036 014B     		ldr	r3, .L32
+ 572 0038 1A70     		strb	r2, [r3]
+ 573              	.L29:
+ 249:main.c        ****  }
+ 250:main.c        **** }
+ 574              		.loc 1 250 0
+ 575              		@ sp needed
+ 576              	.LVL61:
+ 577 003a 10BD     		pop	{r4, pc}
+ 578              	.L33:
+ 579              		.align	2
+ 580              	.L32:
+ 581 003c 00000000 		.word	UartBufferIdx
+ 582 0040 00000000 		.word	UartBuffer
+ 583              		.cfi_endproc
+ 584              	.LFE37:
+ 585              		.size	UartDataReader, .-UartDataReader
+ 586              		.section	.text.Init,"ax",%progbits
+ 587              		.align	2
+ 588              		.global	Init
+ 589              		.code	16
+ 590              		.thumb_func
+ 591              		.type	Init, %function
+ 592              	Init:
+ 593              	.LFB38:
+ 251:main.c        **** /**************************************************************************
+ 252:main.c        ****  This function performs generic initialization.
+ 253:main.c        **** **************************************************************************/
+ 254:main.c        **** void Init(void)
+ 255:main.c        **** {
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 16
+
+
+ 594              		.loc 1 255 0
+ 595              		.cfi_startproc
+ 596              		@ args = 0, pretend = 0, frame = 0
+ 597              		@ frame_needed = 0, uses_anonymous_args = 0
+ 598 0000 10B5     		push	{r4, lr}
+ 599              		.cfi_def_cfa_offset 8
+ 600              		.cfi_offset 4, -8
+ 601              		.cfi_offset 14, -4
+ 256:main.c        ****  /* Assign pin control functions to the channel descriptors. */
+ 257:main.c        ****  ChannelDescriptorsArray[0].PinControlFunction = Blue_Output_Write;
+ 602              		.loc 1 257 0
+ 603 0002 084B     		ldr	r3, .L35
+ 604 0004 084A     		ldr	r2, .L35+4
+ 605 0006 9A60     		str	r2, [r3, #8]
+ 258:main.c        ****  ChannelDescriptorsArray[1].PinControlFunction = Green_Output_Write;
+ 606              		.loc 1 258 0
+ 607 0008 0849     		ldr	r1, .L35+8
+ 608 000a 5961     		str	r1, [r3, #20]
+ 259:main.c        ****  ChannelDescriptorsArray[2].PinControlFunction = Red_Output_Write;
+ 609              		.loc 1 259 0
+ 610 000c 0849     		ldr	r1, .L35+12
+ 611 000e 1962     		str	r1, [r3, #32]
+ 260:main.c        ****  ChannelDescriptorsArray[3].PinControlFunction = Blue_Output_Write;
+ 612              		.loc 1 260 0
+ 613 0010 DA62     		str	r2, [r3, #44]
+ 261:main.c        ****  
+ 262:main.c        **** /* UART component start */
+ 263:main.c        ****  UART_1_Start();
+ 614              		.loc 1 263 0
+ 615 0012 FFF7FEFF 		bl	UART_1_Start
+ 616              	.LVL62:
+ 264:main.c        **** 
+ 265:main.c        ****  /* Start Interrupt component */
+ 266:main.c        ****  isr_1_StartEx(TimeSlotInterrupt);
+ 617              		.loc 1 266 0
+ 618 0016 0748     		ldr	r0, .L35+16
+ 619 0018 FFF7FEFF 		bl	isr_1_StartEx
+ 620              	.LVL63:
+ 267:main.c        **** 
+ 268:main.c        ****  /* Start component Timer */
+ 269:main.c        ****  Timer_1_Start();
+ 621              		.loc 1 269 0
+ 622 001c FFF7FEFF 		bl	Timer_1_Start
+ 623              	.LVL64:
+ 270:main.c        **** }
+ 624              		.loc 1 270 0
+ 625              		@ sp needed
+ 626 0020 10BD     		pop	{r4, pc}
+ 627              	.L36:
+ 628 0022 C046     		.align	2
+ 629              	.L35:
+ 630 0024 00000000 		.word	ChannelDescriptorsArray
+ 631 0028 00000000 		.word	Blue_Output_Write
+ 632 002c 00000000 		.word	Green_Output_Write
+ 633 0030 00000000 		.word	Red_Output_Write
+ 634 0034 00000000 		.word	TimeSlotInterrupt
+ 635              		.cfi_endproc
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 17
+
+
+ 636              	.LFE38:
+ 637              		.size	Init, .-Init
+ 638              		.section	.text.main,"ax",%progbits
+ 639              		.align	2
+ 640              		.global	main
+ 641              		.code	16
+ 642              		.thumb_func
+ 643              		.type	main, %function
+ 644              	main:
+ 645              	.LFB39:
+ 271:main.c        **** /**************************************************************************
+ 272:main.c        ****  Main function
+ 273:main.c        **** **************************************************************************/
+ 274:main.c        **** int main(void)
+ 275:main.c        **** {
+ 646              		.loc 1 275 0
+ 647              		.cfi_startproc
+ 648              		@ Volatile: function does not return.
+ 649              		@ args = 0, pretend = 0, frame = 0
+ 650              		@ frame_needed = 0, uses_anonymous_args = 0
+ 651 0000 10B5     		push	{r4, lr}
+ 652              		.cfi_def_cfa_offset 8
+ 653              		.cfi_offset 4, -8
+ 654              		.cfi_offset 14, -4
+ 276:main.c        ****  CyGlobalIntEnable; /* Enable global interrupts. */
+ 655              		.loc 1 276 0
+ 656              		.syntax divided
+ 657              	@ 276 "main.c" 1
+ 658 0002 62B6     		CPSIE   i
+ 659              	@ 0 "" 2
+ 277:main.c        ****  Red_Output_Write(1);
+ 660              		.loc 1 277 0
+ 661              		.thumb
+ 662              		.syntax unified
+ 663 0004 0120     		movs	r0, #1
+ 664 0006 FFF7FEFF 		bl	Red_Output_Write
+ 665              	.LVL65:
+ 278:main.c        ****  Blue_Output_Write(1);
+ 666              		.loc 1 278 0
+ 667 000a 0120     		movs	r0, #1
+ 668 000c FFF7FEFF 		bl	Blue_Output_Write
+ 669              	.LVL66:
+ 279:main.c        ****  Green_Output_Write(1);
+ 670              		.loc 1 279 0
+ 671 0010 0120     		movs	r0, #1
+ 672 0012 FFF7FEFF 		bl	Green_Output_Write
+ 673              	.LVL67:
+ 280:main.c        ****  /* Perform generic initialization */
+ 281:main.c        ****  Init(); 
+ 674              		.loc 1 281 0
+ 675 0016 FFF7FEFF 		bl	Init
+ 676              	.LVL68:
+ 677              	.L38:
+ 282:main.c        ****  /* Infinite loop */
+ 283:main.c        ****  for(;;)
+ 284:main.c        ****  {
+ 285:main.c        ****     UartDataReader();
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 18
+
+
+ 678              		.loc 1 285 0 discriminator 1
+ 679 001a FFF7FEFF 		bl	UartDataReader
+ 680              	.LVL69:
+ 681 001e FCE7     		b	.L38
+ 682              		.cfi_endproc
+ 683              	.LFE39:
+ 684              		.size	main, .-main
+ 685              		.comm	UartBufferIdx,1,1
+ 686              		.comm	UartBuffer,11,4
+ 687              		.comm	ChannelDescriptorsArray,48,4
+ 688              		.text
+ 689              	.Letext0:
+ 690              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 691              		.file 3 "Generated_Source\\PSoC4/UART_1_SPI_UART.h"
+ 692              		.file 4 "Generated_Source\\PSoC4/UART_1.h"
+ 693              		.file 5 "Generated_Source\\PSoC4/isr_1.h"
+ 694              		.file 6 "Generated_Source\\PSoC4/Timer_1.h"
+ 695              		.file 7 "Generated_Source\\PSoC4/Red_Output.h"
+ 696              		.file 8 "Generated_Source\\PSoC4/Blue_Output.h"
+ 697              		.file 9 "Generated_Source\\PSoC4/Green_Output.h"
+ 698              		.section	.debug_info,"",%progbits
+ 699              	.Ldebug_info0:
+ 700 0000 24050000 		.4byte	0x524
+ 701 0004 0400     		.2byte	0x4
+ 702 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 703 000a 04       		.byte	0x4
+ 704 000b 01       		.uleb128 0x1
+ 705 000c 85020000 		.4byte	.LASF50
+ 706 0010 0C       		.byte	0xc
+ 707 0011 5E020000 		.4byte	.LASF51
+ 708 0015 F3010000 		.4byte	.LASF52
+ 709 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 710 001d 00000000 		.4byte	0
+ 711 0021 00000000 		.4byte	.Ldebug_line0
+ 712 0025 02       		.uleb128 0x2
+ 713 0026 01       		.byte	0x1
+ 714 0027 06       		.byte	0x6
+ 715 0028 BE000000 		.4byte	.LASF0
+ 716 002c 02       		.uleb128 0x2
+ 717 002d 01       		.byte	0x1
+ 718 002e 08       		.byte	0x8
+ 719 002f D1000000 		.4byte	.LASF1
+ 720 0033 02       		.uleb128 0x2
+ 721 0034 02       		.byte	0x2
+ 722 0035 05       		.byte	0x5
+ 723 0036 5C010000 		.4byte	.LASF2
+ 724 003a 02       		.uleb128 0x2
+ 725 003b 02       		.byte	0x2
+ 726 003c 07       		.byte	0x7
+ 727 003d 0D010000 		.4byte	.LASF3
+ 728 0041 02       		.uleb128 0x2
+ 729 0042 04       		.byte	0x4
+ 730 0043 05       		.byte	0x5
+ 731 0044 13030000 		.4byte	.LASF4
+ 732 0048 02       		.uleb128 0x2
+ 733 0049 04       		.byte	0x4
+ 734 004a 07       		.byte	0x7
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 19
+
+
+ 735 004b F4000000 		.4byte	.LASF5
+ 736 004f 02       		.uleb128 0x2
+ 737 0050 08       		.byte	0x8
+ 738 0051 05       		.byte	0x5
+ 739 0052 50020000 		.4byte	.LASF6
+ 740 0056 02       		.uleb128 0x2
+ 741 0057 08       		.byte	0x8
+ 742 0058 07       		.byte	0x7
+ 743 0059 A5010000 		.4byte	.LASF7
+ 744 005d 03       		.uleb128 0x3
+ 745 005e 04       		.byte	0x4
+ 746 005f 05       		.byte	0x5
+ 747 0060 696E7400 		.ascii	"int\000"
+ 748 0064 02       		.uleb128 0x2
+ 749 0065 04       		.byte	0x4
+ 750 0066 07       		.byte	0x7
+ 751 0067 92010000 		.4byte	.LASF8
+ 752 006b 04       		.uleb128 0x4
+ 753 006c 7F020000 		.4byte	.LASF9
+ 754 0070 02       		.byte	0x2
+ 755 0071 FC01     		.2byte	0x1fc
+ 756 0073 2C000000 		.4byte	0x2c
+ 757 0077 04       		.uleb128 0x4
+ 758 0078 86010000 		.4byte	.LASF10
+ 759 007c 02       		.byte	0x2
+ 760 007d FE01     		.2byte	0x1fe
+ 761 007f 48000000 		.4byte	0x48
+ 762 0083 02       		.uleb128 0x2
+ 763 0084 04       		.byte	0x4
+ 764 0085 04       		.byte	0x4
+ 765 0086 B8000000 		.4byte	.LASF11
+ 766 008a 02       		.uleb128 0x2
+ 767 008b 08       		.byte	0x8
+ 768 008c 04       		.byte	0x4
+ 769 008d 55010000 		.4byte	.LASF12
+ 770 0091 02       		.uleb128 0x2
+ 771 0092 01       		.byte	0x1
+ 772 0093 08       		.byte	0x8
+ 773 0094 65020000 		.4byte	.LASF13
+ 774 0098 02       		.uleb128 0x2
+ 775 0099 08       		.byte	0x8
+ 776 009a 04       		.byte	0x4
+ 777 009b 2A030000 		.4byte	.LASF14
+ 778 009f 02       		.uleb128 0x2
+ 779 00a0 04       		.byte	0x4
+ 780 00a1 07       		.byte	0x7
+ 781 00a2 47020000 		.4byte	.LASF15
+ 782 00a6 05       		.uleb128 0x5
+ 783 00a7 0C       		.byte	0xc
+ 784 00a8 01       		.byte	0x1
+ 785 00a9 19       		.byte	0x19
+ 786 00aa 03010000 		.4byte	0x103
+ 787 00ae 06       		.uleb128 0x6
+ 788 00af DF010000 		.4byte	.LASF16
+ 789 00b3 01       		.byte	0x1
+ 790 00b4 1B       		.byte	0x1b
+ 791 00b5 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 20
+
+
+ 792 00b9 00       		.byte	0
+ 793 00ba 06       		.uleb128 0x6
+ 794 00bb E9010000 		.4byte	.LASF17
+ 795 00bf 01       		.byte	0x1
+ 796 00c0 1C       		.byte	0x1c
+ 797 00c1 6B000000 		.4byte	0x6b
+ 798 00c5 01       		.byte	0x1
+ 799 00c6 06       		.uleb128 0x6
+ 800 00c7 9B000000 		.4byte	.LASF18
+ 801 00cb 01       		.byte	0x1
+ 802 00cc 1D       		.byte	0x1d
+ 803 00cd 6B000000 		.4byte	0x6b
+ 804 00d1 02       		.byte	0x2
+ 805 00d2 06       		.uleb128 0x6
+ 806 00d3 80010000 		.4byte	.LASF19
+ 807 00d7 01       		.byte	0x1
+ 808 00d8 1E       		.byte	0x1e
+ 809 00d9 6B000000 		.4byte	0x6b
+ 810 00dd 03       		.byte	0x3
+ 811 00de 06       		.uleb128 0x6
+ 812 00df 79020000 		.4byte	.LASF20
+ 813 00e3 01       		.byte	0x1
+ 814 00e4 1F       		.byte	0x1f
+ 815 00e5 6B000000 		.4byte	0x6b
+ 816 00e9 04       		.byte	0x4
+ 817 00ea 06       		.uleb128 0x6
+ 818 00eb 9F010000 		.4byte	.LASF21
+ 819 00ef 01       		.byte	0x1
+ 820 00f0 20       		.byte	0x20
+ 821 00f1 6B000000 		.4byte	0x6b
+ 822 00f5 05       		.byte	0x5
+ 823 00f6 06       		.uleb128 0x6
+ 824 00f7 88000000 		.4byte	.LASF22
+ 825 00fb 01       		.byte	0x1
+ 826 00fc 21       		.byte	0x21
+ 827 00fd 0E010000 		.4byte	0x10e
+ 828 0101 08       		.byte	0x8
+ 829 0102 00       		.byte	0
+ 830 0103 07       		.uleb128 0x7
+ 831 0104 0E010000 		.4byte	0x10e
+ 832 0108 08       		.uleb128 0x8
+ 833 0109 6B000000 		.4byte	0x6b
+ 834 010d 00       		.byte	0
+ 835 010e 09       		.uleb128 0x9
+ 836 010f 04       		.byte	0x4
+ 837 0110 03010000 		.4byte	0x103
+ 838 0114 0A       		.uleb128 0xa
+ 839 0115 52000000 		.4byte	.LASF23
+ 840 0119 01       		.byte	0x1
+ 841 011a 22       		.byte	0x22
+ 842 011b A6000000 		.4byte	0xa6
+ 843 011f 0B       		.uleb128 0xb
+ 844 0120 48010000 		.4byte	.LASF24
+ 845 0124 01       		.byte	0x1
+ 846 0125 2C       		.byte	0x2c
+ 847 0126 00000000 		.4byte	.LFB32
+ 848 012a 46000000 		.4byte	.LFE32-.LFB32
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 21
+
+
+ 849 012e 01       		.uleb128 0x1
+ 850 012f 9C       		.byte	0x9c
+ 851 0130 09020000 		.4byte	0x209
+ 852 0134 0C       		.uleb128 0xc
+ 853 0135 08000000 		.4byte	.LVL0
+ 854 0139 CD040000 		.4byte	0x4cd
+ 855 013d 47010000 		.4byte	0x147
+ 856 0141 0D       		.uleb128 0xd
+ 857 0142 01       		.uleb128 0x1
+ 858 0143 50       		.byte	0x50
+ 859 0144 01       		.uleb128 0x1
+ 860 0145 3A       		.byte	0x3a
+ 861 0146 00       		.byte	0
+ 862 0147 0C       		.uleb128 0xc
+ 863 0148 0E000000 		.4byte	.LVL1
+ 864 014c CD040000 		.4byte	0x4cd
+ 865 0150 5A010000 		.4byte	0x15a
+ 866 0154 0D       		.uleb128 0xd
+ 867 0155 01       		.uleb128 0x1
+ 868 0156 50       		.byte	0x50
+ 869 0157 01       		.uleb128 0x1
+ 870 0158 3D       		.byte	0x3d
+ 871 0159 00       		.byte	0
+ 872 015a 0C       		.uleb128 0xc
+ 873 015b 14000000 		.4byte	.LVL2
+ 874 015f CD040000 		.4byte	0x4cd
+ 875 0163 6E010000 		.4byte	0x16e
+ 876 0167 0D       		.uleb128 0xd
+ 877 0168 01       		.uleb128 0x1
+ 878 0169 50       		.byte	0x50
+ 879 016a 02       		.uleb128 0x2
+ 880 016b 08       		.byte	0x8
+ 881 016c 20       		.byte	0x20
+ 882 016d 00       		.byte	0
+ 883 016e 0C       		.uleb128 0xc
+ 884 016f 1A000000 		.4byte	.LVL3
+ 885 0173 CD040000 		.4byte	0x4cd
+ 886 0177 82010000 		.4byte	0x182
+ 887 017b 0D       		.uleb128 0xd
+ 888 017c 01       		.uleb128 0x1
+ 889 017d 50       		.byte	0x50
+ 890 017e 02       		.uleb128 0x2
+ 891 017f 08       		.byte	0x8
+ 892 0180 45       		.byte	0x45
+ 893 0181 00       		.byte	0
+ 894 0182 0C       		.uleb128 0xc
+ 895 0183 20000000 		.4byte	.LVL4
+ 896 0187 CD040000 		.4byte	0x4cd
+ 897 018b 96010000 		.4byte	0x196
+ 898 018f 0D       		.uleb128 0xd
+ 899 0190 01       		.uleb128 0x1
+ 900 0191 50       		.byte	0x50
+ 901 0192 02       		.uleb128 0x2
+ 902 0193 08       		.byte	0x8
+ 903 0194 72       		.byte	0x72
+ 904 0195 00       		.byte	0
+ 905 0196 0C       		.uleb128 0xc
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 22
+
+
+ 906 0197 26000000 		.4byte	.LVL5
+ 907 019b CD040000 		.4byte	0x4cd
+ 908 019f AA010000 		.4byte	0x1aa
+ 909 01a3 0D       		.uleb128 0xd
+ 910 01a4 01       		.uleb128 0x1
+ 911 01a5 50       		.byte	0x50
+ 912 01a6 02       		.uleb128 0x2
+ 913 01a7 08       		.byte	0x8
+ 914 01a8 72       		.byte	0x72
+ 915 01a9 00       		.byte	0
+ 916 01aa 0C       		.uleb128 0xc
+ 917 01ab 2C000000 		.4byte	.LVL6
+ 918 01af CD040000 		.4byte	0x4cd
+ 919 01b3 BE010000 		.4byte	0x1be
+ 920 01b7 0D       		.uleb128 0xd
+ 921 01b8 01       		.uleb128 0x1
+ 922 01b9 50       		.byte	0x50
+ 923 01ba 02       		.uleb128 0x2
+ 924 01bb 08       		.byte	0x8
+ 925 01bc 6F       		.byte	0x6f
+ 926 01bd 00       		.byte	0
+ 927 01be 0C       		.uleb128 0xc
+ 928 01bf 32000000 		.4byte	.LVL7
+ 929 01c3 CD040000 		.4byte	0x4cd
+ 930 01c7 D2010000 		.4byte	0x1d2
+ 931 01cb 0D       		.uleb128 0xd
+ 932 01cc 01       		.uleb128 0x1
+ 933 01cd 50       		.byte	0x50
+ 934 01ce 02       		.uleb128 0x2
+ 935 01cf 08       		.byte	0x8
+ 936 01d0 72       		.byte	0x72
+ 937 01d1 00       		.byte	0
+ 938 01d2 0C       		.uleb128 0xc
+ 939 01d3 38000000 		.4byte	.LVL8
+ 940 01d7 CD040000 		.4byte	0x4cd
+ 941 01db E6010000 		.4byte	0x1e6
+ 942 01df 0D       		.uleb128 0xd
+ 943 01e0 01       		.uleb128 0x1
+ 944 01e1 50       		.byte	0x50
+ 945 01e2 02       		.uleb128 0x2
+ 946 01e3 08       		.byte	0x8
+ 947 01e4 20       		.byte	0x20
+ 948 01e5 00       		.byte	0
+ 949 01e6 0C       		.uleb128 0xc
+ 950 01e7 3E000000 		.4byte	.LVL9
+ 951 01eb CD040000 		.4byte	0x4cd
+ 952 01ef F9010000 		.4byte	0x1f9
+ 953 01f3 0D       		.uleb128 0xd
+ 954 01f4 01       		.uleb128 0x1
+ 955 01f5 50       		.byte	0x50
+ 956 01f6 01       		.uleb128 0x1
+ 957 01f7 3A       		.byte	0x3a
+ 958 01f8 00       		.byte	0
+ 959 01f9 0E       		.uleb128 0xe
+ 960 01fa 44000000 		.4byte	.LVL10
+ 961 01fe CD040000 		.4byte	0x4cd
+ 962 0202 0D       		.uleb128 0xd
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 23
+
+
+ 963 0203 01       		.uleb128 0x1
+ 964 0204 50       		.byte	0x50
+ 965 0205 01       		.uleb128 0x1
+ 966 0206 3D       		.byte	0x3d
+ 967 0207 00       		.byte	0
+ 968 0208 00       		.byte	0
+ 969 0209 0B       		.uleb128 0xb
+ 970 020a 40000000 		.4byte	.LASF25
+ 971 020e 01       		.byte	0x1
+ 972 020f 3F       		.byte	0x3f
+ 973 0210 00000000 		.4byte	.LFB33
+ 974 0214 A4000000 		.4byte	.LFE33-.LFB33
+ 975 0218 01       		.uleb128 0x1
+ 976 0219 9C       		.byte	0x9c
+ 977 021a 57020000 		.4byte	0x257
+ 978 021e 0F       		.uleb128 0xf
+ 979 021f 6A020000 		.4byte	.LASF28
+ 980 0223 01       		.byte	0x1
+ 981 0224 3F       		.byte	0x3f
+ 982 0225 6B000000 		.4byte	0x6b
+ 983 0229 00000000 		.4byte	.LLST0
+ 984 022d 10       		.uleb128 0x10
+ 985 022e 24000000 		.4byte	.LVL13
+ 986 0232 3C020000 		.4byte	0x23c
+ 987 0236 0D       		.uleb128 0xd
+ 988 0237 01       		.uleb128 0x1
+ 989 0238 50       		.byte	0x50
+ 990 0239 01       		.uleb128 0x1
+ 991 023a 31       		.byte	0x31
+ 992 023b 00       		.byte	0
+ 993 023c 10       		.uleb128 0x10
+ 994 023d 4A000000 		.4byte	.LVL16
+ 995 0241 4B020000 		.4byte	0x24b
+ 996 0245 0D       		.uleb128 0xd
+ 997 0246 01       		.uleb128 0x1
+ 998 0247 50       		.byte	0x50
+ 999 0248 01       		.uleb128 0x1
+ 1000 0249 30       		.byte	0x30
+ 1001 024a 00       		.byte	0
+ 1002 024b 11       		.uleb128 0x11
+ 1003 024c 70000000 		.4byte	.LVL19
+ 1004 0250 0D       		.uleb128 0xd
+ 1005 0251 01       		.uleb128 0x1
+ 1006 0252 50       		.byte	0x50
+ 1007 0253 01       		.uleb128 0x1
+ 1008 0254 31       		.byte	0x31
+ 1009 0255 00       		.byte	0
+ 1010 0256 00       		.byte	0
+ 1011 0257 0B       		.uleb128 0xb
+ 1012 0258 2E000000 		.4byte	.LASF26
+ 1013 025c 01       		.byte	0x1
+ 1014 025d 67       		.byte	0x67
+ 1015 025e 00000000 		.4byte	.LFB34
+ 1016 0262 16000000 		.4byte	.LFE34-.LFB34
+ 1017 0266 01       		.uleb128 0x1
+ 1018 0267 9C       		.byte	0x9c
+ 1019 0268 8C020000 		.4byte	0x28c
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 24
+
+
+ 1020 026c 12       		.uleb128 0x12
+ 1021 026d 68000000 		.4byte	.LASF30
+ 1022 0271 01       		.byte	0x1
+ 1023 0272 69       		.byte	0x69
+ 1024 0273 6B000000 		.4byte	0x6b
+ 1025 0277 6C000000 		.4byte	.LLST1
+ 1026 027b 0E       		.uleb128 0xe
+ 1027 027c 0C000000 		.4byte	.LVL24
+ 1028 0280 09020000 		.4byte	0x209
+ 1029 0284 0D       		.uleb128 0xd
+ 1030 0285 01       		.uleb128 0x1
+ 1031 0286 50       		.byte	0x50
+ 1032 0287 02       		.uleb128 0x2
+ 1033 0288 74       		.byte	0x74
+ 1034 0289 00       		.sleb128 0
+ 1035 028a 00       		.byte	0
+ 1036 028b 00       		.byte	0
+ 1037 028c 0B       		.uleb128 0xb
+ 1038 028d BC010000 		.4byte	.LASF27
+ 1039 0291 01       		.byte	0x1
+ 1040 0292 7C       		.byte	0x7c
+ 1041 0293 00000000 		.4byte	.LFB35
+ 1042 0297 4C000000 		.4byte	.LFE35-.LFB35
+ 1043 029b 01       		.uleb128 0x1
+ 1044 029c 9C       		.byte	0x9c
+ 1045 029d F2020000 		.4byte	0x2f2
+ 1046 02a1 0F       		.uleb128 0xf
+ 1047 02a2 E6000000 		.4byte	.LASF29
+ 1048 02a6 01       		.byte	0x1
+ 1049 02a7 7C       		.byte	0x7c
+ 1050 02a8 6B000000 		.4byte	0x6b
+ 1051 02ac 96000000 		.4byte	.LLST2
+ 1052 02b0 13       		.uleb128 0x13
+ 1053 02b1 4400     		.ascii	"D\000"
+ 1054 02b3 01       		.byte	0x1
+ 1055 02b4 7C       		.byte	0x7c
+ 1056 02b5 6B000000 		.4byte	0x6b
+ 1057 02b9 B7000000 		.4byte	.LLST3
+ 1058 02bd 13       		.uleb128 0x13
+ 1059 02be 4800     		.ascii	"H\000"
+ 1060 02c0 01       		.byte	0x1
+ 1061 02c1 7C       		.byte	0x7c
+ 1062 02c2 6B000000 		.4byte	0x6b
+ 1063 02c6 D8000000 		.4byte	.LLST4
+ 1064 02ca 13       		.uleb128 0x13
+ 1065 02cb 4C00     		.ascii	"L\000"
+ 1066 02cd 01       		.byte	0x1
+ 1067 02ce 7C       		.byte	0x7c
+ 1068 02cf 6B000000 		.4byte	0x6b
+ 1069 02d3 F9000000 		.4byte	.LLST5
+ 1070 02d7 12       		.uleb128 0x12
+ 1071 02d8 7D000000 		.4byte	.LASF31
+ 1072 02dc 01       		.byte	0x1
+ 1073 02dd 7E       		.byte	0x7e
+ 1074 02de 6B000000 		.4byte	0x6b
+ 1075 02e2 1A010000 		.4byte	.LLST6
+ 1076 02e6 11       		.uleb128 0x11
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 25
+
+
+ 1077 02e7 3C000000 		.4byte	.LVL31
+ 1078 02eb 0D       		.uleb128 0xd
+ 1079 02ec 01       		.uleb128 0x1
+ 1080 02ed 50       		.byte	0x50
+ 1081 02ee 01       		.uleb128 0x1
+ 1082 02ef 31       		.byte	0x31
+ 1083 02f0 00       		.byte	0
+ 1084 02f1 00       		.byte	0
+ 1085 02f2 0B       		.uleb128 0xb
+ 1086 02f3 4E030000 		.4byte	.LASF32
+ 1087 02f7 01       		.byte	0x1
+ 1088 02f8 96       		.byte	0x96
+ 1089 02f9 00000000 		.4byte	.LFB36
+ 1090 02fd 9C000000 		.4byte	.LFE36-.LFB36
+ 1091 0301 01       		.uleb128 0x1
+ 1092 0302 9C       		.byte	0x9c
+ 1093 0303 95030000 		.4byte	0x395
+ 1094 0307 12       		.uleb128 0x12
+ 1095 0308 E6000000 		.4byte	.LASF29
+ 1096 030c 01       		.byte	0x1
+ 1097 030d 98       		.byte	0x98
+ 1098 030e 6B000000 		.4byte	0x6b
+ 1099 0312 44010000 		.4byte	.LLST7
+ 1100 0316 12       		.uleb128 0x12
+ 1101 0317 CA000000 		.4byte	.LASF33
+ 1102 031b 01       		.byte	0x1
+ 1103 031c 99       		.byte	0x99
+ 1104 031d 6B000000 		.4byte	0x6b
+ 1105 0321 AF010000 		.4byte	.LLST8
+ 1106 0325 12       		.uleb128 0x12
+ 1107 0326 DF000000 		.4byte	.LASF34
+ 1108 032a 01       		.byte	0x1
+ 1109 032b 99       		.byte	0x99
+ 1110 032c 6B000000 		.4byte	0x6b
+ 1111 0330 1A020000 		.4byte	.LLST9
+ 1112 0334 12       		.uleb128 0x12
+ 1113 0335 06010000 		.4byte	.LASF35
+ 1114 0339 01       		.byte	0x1
+ 1115 033a 99       		.byte	0x99
+ 1116 033b 6B000000 		.4byte	0x6b
+ 1117 033f 85020000 		.4byte	.LLST10
+ 1118 0343 14       		.uleb128 0x14
+ 1119 0344 26000000 		.4byte	.LVL39
+ 1120 0348 1F010000 		.4byte	0x11f
+ 1121 034c 14       		.uleb128 0x14
+ 1122 034d 34000000 		.4byte	.LVL41
+ 1123 0351 1F010000 		.4byte	0x11f
+ 1124 0355 14       		.uleb128 0x14
+ 1125 0356 42000000 		.4byte	.LVL43
+ 1126 035a 1F010000 		.4byte	0x11f
+ 1127 035e 14       		.uleb128 0x14
+ 1128 035f 50000000 		.4byte	.LVL45
+ 1129 0363 1F010000 		.4byte	0x11f
+ 1130 0367 14       		.uleb128 0x14
+ 1131 0368 5E000000 		.4byte	.LVL47
+ 1132 036c 1F010000 		.4byte	0x11f
+ 1133 0370 14       		.uleb128 0x14
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 26
+
+
+ 1134 0371 6C000000 		.4byte	.LVL49
+ 1135 0375 1F010000 		.4byte	0x11f
+ 1136 0379 14       		.uleb128 0x14
+ 1137 037a 7A000000 		.4byte	.LVL51
+ 1138 037e 1F010000 		.4byte	0x11f
+ 1139 0382 14       		.uleb128 0x14
+ 1140 0383 90000000 		.4byte	.LVL53
+ 1141 0387 8C020000 		.4byte	0x28c
+ 1142 038b 14       		.uleb128 0x14
+ 1143 038c 96000000 		.4byte	.LVL55
+ 1144 0390 1F010000 		.4byte	0x11f
+ 1145 0394 00       		.byte	0
+ 1146 0395 0B       		.uleb128 0xb
+ 1147 0396 38020000 		.4byte	.LASF36
+ 1148 039a 01       		.byte	0x1
+ 1149 039b D8       		.byte	0xd8
+ 1150 039c 00000000 		.4byte	.LFB37
+ 1151 03a0 44000000 		.4byte	.LFE37-.LFB37
+ 1152 03a4 01       		.uleb128 0x1
+ 1153 03a5 9C       		.byte	0x9c
+ 1154 03a6 D5030000 		.4byte	0x3d5
+ 1155 03aa 12       		.uleb128 0x12
+ 1156 03ab 37010000 		.4byte	.LASF37
+ 1157 03af 01       		.byte	0x1
+ 1158 03b0 DA       		.byte	0xda
+ 1159 03b1 91000000 		.4byte	0x91
+ 1160 03b5 F0020000 		.4byte	.LLST11
+ 1161 03b9 14       		.uleb128 0x14
+ 1162 03ba 06000000 		.4byte	.LVL57
+ 1163 03be D9040000 		.4byte	0x4d9
+ 1164 03c2 14       		.uleb128 0x14
+ 1165 03c3 14000000 		.4byte	.LVL59
+ 1166 03c7 CD040000 		.4byte	0x4cd
+ 1167 03cb 14       		.uleb128 0x14
+ 1168 03cc 34000000 		.4byte	.LVL60
+ 1169 03d0 F2020000 		.4byte	0x2f2
+ 1170 03d4 00       		.byte	0
+ 1171 03d5 0B       		.uleb128 0xb
+ 1172 03d6 20010000 		.4byte	.LASF38
+ 1173 03da 01       		.byte	0x1
+ 1174 03db FE       		.byte	0xfe
+ 1175 03dc 00000000 		.4byte	.LFB38
+ 1176 03e0 38000000 		.4byte	.LFE38-.LFB38
+ 1177 03e4 01       		.uleb128 0x1
+ 1178 03e5 9C       		.byte	0x9c
+ 1179 03e6 14040000 		.4byte	0x414
+ 1180 03ea 14       		.uleb128 0x14
+ 1181 03eb 16000000 		.4byte	.LVL62
+ 1182 03ef E5040000 		.4byte	0x4e5
+ 1183 03f3 0C       		.uleb128 0xc
+ 1184 03f4 1C000000 		.4byte	.LVL63
+ 1185 03f8 F0040000 		.4byte	0x4f0
+ 1186 03fc 0A040000 		.4byte	0x40a
+ 1187 0400 0D       		.uleb128 0xd
+ 1188 0401 01       		.uleb128 0x1
+ 1189 0402 50       		.byte	0x50
+ 1190 0403 05       		.uleb128 0x5
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 27
+
+
+ 1191 0404 03       		.byte	0x3
+ 1192 0405 00000000 		.4byte	TimeSlotInterrupt
+ 1193 0409 00       		.byte	0
+ 1194 040a 14       		.uleb128 0x14
+ 1195 040b 20000000 		.4byte	.LVL64
+ 1196 040f FB040000 		.4byte	0x4fb
+ 1197 0413 00       		.byte	0
+ 1198 0414 15       		.uleb128 0x15
+ 1199 0415 8D010000 		.4byte	.LASF53
+ 1200 0419 01       		.byte	0x1
+ 1201 041a 1201     		.2byte	0x112
+ 1202 041c 5D000000 		.4byte	0x5d
+ 1203 0420 00000000 		.4byte	.LFB39
+ 1204 0424 20000000 		.4byte	.LFE39-.LFB39
+ 1205 0428 01       		.uleb128 0x1
+ 1206 0429 9C       		.byte	0x9c
+ 1207 042a 7A040000 		.4byte	0x47a
+ 1208 042e 0C       		.uleb128 0xc
+ 1209 042f 0A000000 		.4byte	.LVL65
+ 1210 0433 06050000 		.4byte	0x506
+ 1211 0437 41040000 		.4byte	0x441
+ 1212 043b 0D       		.uleb128 0xd
+ 1213 043c 01       		.uleb128 0x1
+ 1214 043d 50       		.byte	0x50
+ 1215 043e 01       		.uleb128 0x1
+ 1216 043f 31       		.byte	0x31
+ 1217 0440 00       		.byte	0
+ 1218 0441 0C       		.uleb128 0xc
+ 1219 0442 10000000 		.4byte	.LVL66
+ 1220 0446 11050000 		.4byte	0x511
+ 1221 044a 54040000 		.4byte	0x454
+ 1222 044e 0D       		.uleb128 0xd
+ 1223 044f 01       		.uleb128 0x1
+ 1224 0450 50       		.byte	0x50
+ 1225 0451 01       		.uleb128 0x1
+ 1226 0452 31       		.byte	0x31
+ 1227 0453 00       		.byte	0
+ 1228 0454 0C       		.uleb128 0xc
+ 1229 0455 16000000 		.4byte	.LVL67
+ 1230 0459 1C050000 		.4byte	0x51c
+ 1231 045d 67040000 		.4byte	0x467
+ 1232 0461 0D       		.uleb128 0xd
+ 1233 0462 01       		.uleb128 0x1
+ 1234 0463 50       		.byte	0x50
+ 1235 0464 01       		.uleb128 0x1
+ 1236 0465 31       		.byte	0x31
+ 1237 0466 00       		.byte	0
+ 1238 0467 14       		.uleb128 0x14
+ 1239 0468 1A000000 		.4byte	.LVL68
+ 1240 046c D5030000 		.4byte	0x3d5
+ 1241 0470 14       		.uleb128 0x14
+ 1242 0471 1E000000 		.4byte	.LVL69
+ 1243 0475 95030000 		.4byte	0x395
+ 1244 0479 00       		.byte	0
+ 1245 047a 16       		.uleb128 0x16
+ 1246 047b 14010000 		.4byte	0x114
+ 1247 047f 8A040000 		.4byte	0x48a
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 28
+
+
+ 1248 0483 17       		.uleb128 0x17
+ 1249 0484 9F000000 		.4byte	0x9f
+ 1250 0488 03       		.byte	0x3
+ 1251 0489 00       		.byte	0
+ 1252 048a 18       		.uleb128 0x18
+ 1253 048b 36030000 		.4byte	.LASF39
+ 1254 048f 01       		.byte	0x1
+ 1255 0490 25       		.byte	0x25
+ 1256 0491 7A040000 		.4byte	0x47a
+ 1257 0495 05       		.uleb128 0x5
+ 1258 0496 03       		.byte	0x3
+ 1259 0497 00000000 		.4byte	ChannelDescriptorsArray
+ 1260 049b 16       		.uleb128 0x16
+ 1261 049c 91000000 		.4byte	0x91
+ 1262 04a0 AB040000 		.4byte	0x4ab
+ 1263 04a4 17       		.uleb128 0x17
+ 1264 04a5 9F000000 		.4byte	0x9f
+ 1265 04a9 0A       		.byte	0xa
+ 1266 04aa 00       		.byte	0
+ 1267 04ab 18       		.uleb128 0x18
+ 1268 04ac D4010000 		.4byte	.LASF40
+ 1269 04b0 01       		.byte	0x1
+ 1270 04b1 27       		.byte	0x27
+ 1271 04b2 9B040000 		.4byte	0x49b
+ 1272 04b6 05       		.uleb128 0x5
+ 1273 04b7 03       		.byte	0x3
+ 1274 04b8 00000000 		.4byte	UartBuffer
+ 1275 04bc 18       		.uleb128 0x18
+ 1276 04bd 1C030000 		.4byte	.LASF41
+ 1277 04c1 01       		.byte	0x1
+ 1278 04c2 29       		.byte	0x29
+ 1279 04c3 6B000000 		.4byte	0x6b
+ 1280 04c7 05       		.uleb128 0x5
+ 1281 04c8 03       		.byte	0x3
+ 1282 04c9 00000000 		.4byte	UartBufferIdx
+ 1283 04cd 19       		.uleb128 0x19
+ 1284 04ce 66010000 		.4byte	.LASF42
+ 1285 04d2 66010000 		.4byte	.LASF42
+ 1286 04d6 03       		.byte	0x3
+ 1287 04d7 4403     		.2byte	0x344
+ 1288 04d9 19       		.uleb128 0x19
+ 1289 04da 1B000000 		.4byte	.LASF43
+ 1290 04de 1B000000 		.4byte	.LASF43
+ 1291 04e2 03       		.byte	0x3
+ 1292 04e3 0F03     		.2byte	0x30f
+ 1293 04e5 1A       		.uleb128 0x1a
+ 1294 04e6 00000000 		.4byte	.LASF44
+ 1295 04ea 00000000 		.4byte	.LASF44
+ 1296 04ee 04       		.byte	0x4
+ 1297 04ef 72       		.byte	0x72
+ 1298 04f0 1A       		.uleb128 0x1a
+ 1299 04f1 5F030000 		.4byte	.LASF45
+ 1300 04f5 5F030000 		.4byte	.LASF45
+ 1301 04f9 05       		.byte	0x5
+ 1302 04fa 18       		.byte	0x18
+ 1303 04fb 1A       		.uleb128 0x1a
+ 1304 04fc 0D000000 		.4byte	.LASF46
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 29
+
+
+ 1305 0500 0D000000 		.4byte	.LASF46
+ 1306 0504 06       		.byte	0x6
+ 1307 0505 5A       		.byte	0x5a
+ 1308 0506 1A       		.uleb128 0x1a
+ 1309 0507 6D030000 		.4byte	.LASF47
+ 1310 050b 6D030000 		.4byte	.LASF47
+ 1311 050f 07       		.byte	0x7
+ 1312 0510 33       		.byte	0x33
+ 1313 0511 1A       		.uleb128 0x1a
+ 1314 0512 25010000 		.4byte	.LASF48
+ 1315 0516 25010000 		.4byte	.LASF48
+ 1316 051a 08       		.byte	0x8
+ 1317 051b 33       		.byte	0x33
+ 1318 051c 1A       		.uleb128 0x1a
+ 1319 051d A5000000 		.4byte	.LASF49
+ 1320 0521 A5000000 		.4byte	.LASF49
+ 1321 0525 09       		.byte	0x9
+ 1322 0526 33       		.byte	0x33
+ 1323 0527 00       		.byte	0
+ 1324              		.section	.debug_abbrev,"",%progbits
+ 1325              	.Ldebug_abbrev0:
+ 1326 0000 01       		.uleb128 0x1
+ 1327 0001 11       		.uleb128 0x11
+ 1328 0002 01       		.byte	0x1
+ 1329 0003 25       		.uleb128 0x25
+ 1330 0004 0E       		.uleb128 0xe
+ 1331 0005 13       		.uleb128 0x13
+ 1332 0006 0B       		.uleb128 0xb
+ 1333 0007 03       		.uleb128 0x3
+ 1334 0008 0E       		.uleb128 0xe
+ 1335 0009 1B       		.uleb128 0x1b
+ 1336 000a 0E       		.uleb128 0xe
+ 1337 000b 55       		.uleb128 0x55
+ 1338 000c 17       		.uleb128 0x17
+ 1339 000d 11       		.uleb128 0x11
+ 1340 000e 01       		.uleb128 0x1
+ 1341 000f 10       		.uleb128 0x10
+ 1342 0010 17       		.uleb128 0x17
+ 1343 0011 00       		.byte	0
+ 1344 0012 00       		.byte	0
+ 1345 0013 02       		.uleb128 0x2
+ 1346 0014 24       		.uleb128 0x24
+ 1347 0015 00       		.byte	0
+ 1348 0016 0B       		.uleb128 0xb
+ 1349 0017 0B       		.uleb128 0xb
+ 1350 0018 3E       		.uleb128 0x3e
+ 1351 0019 0B       		.uleb128 0xb
+ 1352 001a 03       		.uleb128 0x3
+ 1353 001b 0E       		.uleb128 0xe
+ 1354 001c 00       		.byte	0
+ 1355 001d 00       		.byte	0
+ 1356 001e 03       		.uleb128 0x3
+ 1357 001f 24       		.uleb128 0x24
+ 1358 0020 00       		.byte	0
+ 1359 0021 0B       		.uleb128 0xb
+ 1360 0022 0B       		.uleb128 0xb
+ 1361 0023 3E       		.uleb128 0x3e
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 30
+
+
+ 1362 0024 0B       		.uleb128 0xb
+ 1363 0025 03       		.uleb128 0x3
+ 1364 0026 08       		.uleb128 0x8
+ 1365 0027 00       		.byte	0
+ 1366 0028 00       		.byte	0
+ 1367 0029 04       		.uleb128 0x4
+ 1368 002a 16       		.uleb128 0x16
+ 1369 002b 00       		.byte	0
+ 1370 002c 03       		.uleb128 0x3
+ 1371 002d 0E       		.uleb128 0xe
+ 1372 002e 3A       		.uleb128 0x3a
+ 1373 002f 0B       		.uleb128 0xb
+ 1374 0030 3B       		.uleb128 0x3b
+ 1375 0031 05       		.uleb128 0x5
+ 1376 0032 49       		.uleb128 0x49
+ 1377 0033 13       		.uleb128 0x13
+ 1378 0034 00       		.byte	0
+ 1379 0035 00       		.byte	0
+ 1380 0036 05       		.uleb128 0x5
+ 1381 0037 13       		.uleb128 0x13
+ 1382 0038 01       		.byte	0x1
+ 1383 0039 0B       		.uleb128 0xb
+ 1384 003a 0B       		.uleb128 0xb
+ 1385 003b 3A       		.uleb128 0x3a
+ 1386 003c 0B       		.uleb128 0xb
+ 1387 003d 3B       		.uleb128 0x3b
+ 1388 003e 0B       		.uleb128 0xb
+ 1389 003f 01       		.uleb128 0x1
+ 1390 0040 13       		.uleb128 0x13
+ 1391 0041 00       		.byte	0
+ 1392 0042 00       		.byte	0
+ 1393 0043 06       		.uleb128 0x6
+ 1394 0044 0D       		.uleb128 0xd
+ 1395 0045 00       		.byte	0
+ 1396 0046 03       		.uleb128 0x3
+ 1397 0047 0E       		.uleb128 0xe
+ 1398 0048 3A       		.uleb128 0x3a
+ 1399 0049 0B       		.uleb128 0xb
+ 1400 004a 3B       		.uleb128 0x3b
+ 1401 004b 0B       		.uleb128 0xb
+ 1402 004c 49       		.uleb128 0x49
+ 1403 004d 13       		.uleb128 0x13
+ 1404 004e 38       		.uleb128 0x38
+ 1405 004f 0B       		.uleb128 0xb
+ 1406 0050 00       		.byte	0
+ 1407 0051 00       		.byte	0
+ 1408 0052 07       		.uleb128 0x7
+ 1409 0053 15       		.uleb128 0x15
+ 1410 0054 01       		.byte	0x1
+ 1411 0055 27       		.uleb128 0x27
+ 1412 0056 19       		.uleb128 0x19
+ 1413 0057 01       		.uleb128 0x1
+ 1414 0058 13       		.uleb128 0x13
+ 1415 0059 00       		.byte	0
+ 1416 005a 00       		.byte	0
+ 1417 005b 08       		.uleb128 0x8
+ 1418 005c 05       		.uleb128 0x5
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 31
+
+
+ 1419 005d 00       		.byte	0
+ 1420 005e 49       		.uleb128 0x49
+ 1421 005f 13       		.uleb128 0x13
+ 1422 0060 00       		.byte	0
+ 1423 0061 00       		.byte	0
+ 1424 0062 09       		.uleb128 0x9
+ 1425 0063 0F       		.uleb128 0xf
+ 1426 0064 00       		.byte	0
+ 1427 0065 0B       		.uleb128 0xb
+ 1428 0066 0B       		.uleb128 0xb
+ 1429 0067 49       		.uleb128 0x49
+ 1430 0068 13       		.uleb128 0x13
+ 1431 0069 00       		.byte	0
+ 1432 006a 00       		.byte	0
+ 1433 006b 0A       		.uleb128 0xa
+ 1434 006c 16       		.uleb128 0x16
+ 1435 006d 00       		.byte	0
+ 1436 006e 03       		.uleb128 0x3
+ 1437 006f 0E       		.uleb128 0xe
+ 1438 0070 3A       		.uleb128 0x3a
+ 1439 0071 0B       		.uleb128 0xb
+ 1440 0072 3B       		.uleb128 0x3b
+ 1441 0073 0B       		.uleb128 0xb
+ 1442 0074 49       		.uleb128 0x49
+ 1443 0075 13       		.uleb128 0x13
+ 1444 0076 00       		.byte	0
+ 1445 0077 00       		.byte	0
+ 1446 0078 0B       		.uleb128 0xb
+ 1447 0079 2E       		.uleb128 0x2e
+ 1448 007a 01       		.byte	0x1
+ 1449 007b 3F       		.uleb128 0x3f
+ 1450 007c 19       		.uleb128 0x19
+ 1451 007d 03       		.uleb128 0x3
+ 1452 007e 0E       		.uleb128 0xe
+ 1453 007f 3A       		.uleb128 0x3a
+ 1454 0080 0B       		.uleb128 0xb
+ 1455 0081 3B       		.uleb128 0x3b
+ 1456 0082 0B       		.uleb128 0xb
+ 1457 0083 27       		.uleb128 0x27
+ 1458 0084 19       		.uleb128 0x19
+ 1459 0085 11       		.uleb128 0x11
+ 1460 0086 01       		.uleb128 0x1
+ 1461 0087 12       		.uleb128 0x12
+ 1462 0088 06       		.uleb128 0x6
+ 1463 0089 40       		.uleb128 0x40
+ 1464 008a 18       		.uleb128 0x18
+ 1465 008b 9742     		.uleb128 0x2117
+ 1466 008d 19       		.uleb128 0x19
+ 1467 008e 01       		.uleb128 0x1
+ 1468 008f 13       		.uleb128 0x13
+ 1469 0090 00       		.byte	0
+ 1470 0091 00       		.byte	0
+ 1471 0092 0C       		.uleb128 0xc
+ 1472 0093 898201   		.uleb128 0x4109
+ 1473 0096 01       		.byte	0x1
+ 1474 0097 11       		.uleb128 0x11
+ 1475 0098 01       		.uleb128 0x1
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 32
+
+
+ 1476 0099 31       		.uleb128 0x31
+ 1477 009a 13       		.uleb128 0x13
+ 1478 009b 01       		.uleb128 0x1
+ 1479 009c 13       		.uleb128 0x13
+ 1480 009d 00       		.byte	0
+ 1481 009e 00       		.byte	0
+ 1482 009f 0D       		.uleb128 0xd
+ 1483 00a0 8A8201   		.uleb128 0x410a
+ 1484 00a3 00       		.byte	0
+ 1485 00a4 02       		.uleb128 0x2
+ 1486 00a5 18       		.uleb128 0x18
+ 1487 00a6 9142     		.uleb128 0x2111
+ 1488 00a8 18       		.uleb128 0x18
+ 1489 00a9 00       		.byte	0
+ 1490 00aa 00       		.byte	0
+ 1491 00ab 0E       		.uleb128 0xe
+ 1492 00ac 898201   		.uleb128 0x4109
+ 1493 00af 01       		.byte	0x1
+ 1494 00b0 11       		.uleb128 0x11
+ 1495 00b1 01       		.uleb128 0x1
+ 1496 00b2 31       		.uleb128 0x31
+ 1497 00b3 13       		.uleb128 0x13
+ 1498 00b4 00       		.byte	0
+ 1499 00b5 00       		.byte	0
+ 1500 00b6 0F       		.uleb128 0xf
+ 1501 00b7 05       		.uleb128 0x5
+ 1502 00b8 00       		.byte	0
+ 1503 00b9 03       		.uleb128 0x3
+ 1504 00ba 0E       		.uleb128 0xe
+ 1505 00bb 3A       		.uleb128 0x3a
+ 1506 00bc 0B       		.uleb128 0xb
+ 1507 00bd 3B       		.uleb128 0x3b
+ 1508 00be 0B       		.uleb128 0xb
+ 1509 00bf 49       		.uleb128 0x49
+ 1510 00c0 13       		.uleb128 0x13
+ 1511 00c1 02       		.uleb128 0x2
+ 1512 00c2 17       		.uleb128 0x17
+ 1513 00c3 00       		.byte	0
+ 1514 00c4 00       		.byte	0
+ 1515 00c5 10       		.uleb128 0x10
+ 1516 00c6 898201   		.uleb128 0x4109
+ 1517 00c9 01       		.byte	0x1
+ 1518 00ca 11       		.uleb128 0x11
+ 1519 00cb 01       		.uleb128 0x1
+ 1520 00cc 01       		.uleb128 0x1
+ 1521 00cd 13       		.uleb128 0x13
+ 1522 00ce 00       		.byte	0
+ 1523 00cf 00       		.byte	0
+ 1524 00d0 11       		.uleb128 0x11
+ 1525 00d1 898201   		.uleb128 0x4109
+ 1526 00d4 01       		.byte	0x1
+ 1527 00d5 11       		.uleb128 0x11
+ 1528 00d6 01       		.uleb128 0x1
+ 1529 00d7 00       		.byte	0
+ 1530 00d8 00       		.byte	0
+ 1531 00d9 12       		.uleb128 0x12
+ 1532 00da 34       		.uleb128 0x34
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 33
+
+
+ 1533 00db 00       		.byte	0
+ 1534 00dc 03       		.uleb128 0x3
+ 1535 00dd 0E       		.uleb128 0xe
+ 1536 00de 3A       		.uleb128 0x3a
+ 1537 00df 0B       		.uleb128 0xb
+ 1538 00e0 3B       		.uleb128 0x3b
+ 1539 00e1 0B       		.uleb128 0xb
+ 1540 00e2 49       		.uleb128 0x49
+ 1541 00e3 13       		.uleb128 0x13
+ 1542 00e4 02       		.uleb128 0x2
+ 1543 00e5 17       		.uleb128 0x17
+ 1544 00e6 00       		.byte	0
+ 1545 00e7 00       		.byte	0
+ 1546 00e8 13       		.uleb128 0x13
+ 1547 00e9 05       		.uleb128 0x5
+ 1548 00ea 00       		.byte	0
+ 1549 00eb 03       		.uleb128 0x3
+ 1550 00ec 08       		.uleb128 0x8
+ 1551 00ed 3A       		.uleb128 0x3a
+ 1552 00ee 0B       		.uleb128 0xb
+ 1553 00ef 3B       		.uleb128 0x3b
+ 1554 00f0 0B       		.uleb128 0xb
+ 1555 00f1 49       		.uleb128 0x49
+ 1556 00f2 13       		.uleb128 0x13
+ 1557 00f3 02       		.uleb128 0x2
+ 1558 00f4 17       		.uleb128 0x17
+ 1559 00f5 00       		.byte	0
+ 1560 00f6 00       		.byte	0
+ 1561 00f7 14       		.uleb128 0x14
+ 1562 00f8 898201   		.uleb128 0x4109
+ 1563 00fb 00       		.byte	0
+ 1564 00fc 11       		.uleb128 0x11
+ 1565 00fd 01       		.uleb128 0x1
+ 1566 00fe 31       		.uleb128 0x31
+ 1567 00ff 13       		.uleb128 0x13
+ 1568 0100 00       		.byte	0
+ 1569 0101 00       		.byte	0
+ 1570 0102 15       		.uleb128 0x15
+ 1571 0103 2E       		.uleb128 0x2e
+ 1572 0104 01       		.byte	0x1
+ 1573 0105 3F       		.uleb128 0x3f
+ 1574 0106 19       		.uleb128 0x19
+ 1575 0107 03       		.uleb128 0x3
+ 1576 0108 0E       		.uleb128 0xe
+ 1577 0109 3A       		.uleb128 0x3a
+ 1578 010a 0B       		.uleb128 0xb
+ 1579 010b 3B       		.uleb128 0x3b
+ 1580 010c 05       		.uleb128 0x5
+ 1581 010d 27       		.uleb128 0x27
+ 1582 010e 19       		.uleb128 0x19
+ 1583 010f 49       		.uleb128 0x49
+ 1584 0110 13       		.uleb128 0x13
+ 1585 0111 8701     		.uleb128 0x87
+ 1586 0113 19       		.uleb128 0x19
+ 1587 0114 11       		.uleb128 0x11
+ 1588 0115 01       		.uleb128 0x1
+ 1589 0116 12       		.uleb128 0x12
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 34
+
+
+ 1590 0117 06       		.uleb128 0x6
+ 1591 0118 40       		.uleb128 0x40
+ 1592 0119 18       		.uleb128 0x18
+ 1593 011a 9742     		.uleb128 0x2117
+ 1594 011c 19       		.uleb128 0x19
+ 1595 011d 01       		.uleb128 0x1
+ 1596 011e 13       		.uleb128 0x13
+ 1597 011f 00       		.byte	0
+ 1598 0120 00       		.byte	0
+ 1599 0121 16       		.uleb128 0x16
+ 1600 0122 01       		.uleb128 0x1
+ 1601 0123 01       		.byte	0x1
+ 1602 0124 49       		.uleb128 0x49
+ 1603 0125 13       		.uleb128 0x13
+ 1604 0126 01       		.uleb128 0x1
+ 1605 0127 13       		.uleb128 0x13
+ 1606 0128 00       		.byte	0
+ 1607 0129 00       		.byte	0
+ 1608 012a 17       		.uleb128 0x17
+ 1609 012b 21       		.uleb128 0x21
+ 1610 012c 00       		.byte	0
+ 1611 012d 49       		.uleb128 0x49
+ 1612 012e 13       		.uleb128 0x13
+ 1613 012f 2F       		.uleb128 0x2f
+ 1614 0130 0B       		.uleb128 0xb
+ 1615 0131 00       		.byte	0
+ 1616 0132 00       		.byte	0
+ 1617 0133 18       		.uleb128 0x18
+ 1618 0134 34       		.uleb128 0x34
+ 1619 0135 00       		.byte	0
+ 1620 0136 03       		.uleb128 0x3
+ 1621 0137 0E       		.uleb128 0xe
+ 1622 0138 3A       		.uleb128 0x3a
+ 1623 0139 0B       		.uleb128 0xb
+ 1624 013a 3B       		.uleb128 0x3b
+ 1625 013b 0B       		.uleb128 0xb
+ 1626 013c 49       		.uleb128 0x49
+ 1627 013d 13       		.uleb128 0x13
+ 1628 013e 3F       		.uleb128 0x3f
+ 1629 013f 19       		.uleb128 0x19
+ 1630 0140 02       		.uleb128 0x2
+ 1631 0141 18       		.uleb128 0x18
+ 1632 0142 00       		.byte	0
+ 1633 0143 00       		.byte	0
+ 1634 0144 19       		.uleb128 0x19
+ 1635 0145 2E       		.uleb128 0x2e
+ 1636 0146 00       		.byte	0
+ 1637 0147 3F       		.uleb128 0x3f
+ 1638 0148 19       		.uleb128 0x19
+ 1639 0149 3C       		.uleb128 0x3c
+ 1640 014a 19       		.uleb128 0x19
+ 1641 014b 6E       		.uleb128 0x6e
+ 1642 014c 0E       		.uleb128 0xe
+ 1643 014d 03       		.uleb128 0x3
+ 1644 014e 0E       		.uleb128 0xe
+ 1645 014f 3A       		.uleb128 0x3a
+ 1646 0150 0B       		.uleb128 0xb
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 35
+
+
+ 1647 0151 3B       		.uleb128 0x3b
+ 1648 0152 05       		.uleb128 0x5
+ 1649 0153 00       		.byte	0
+ 1650 0154 00       		.byte	0
+ 1651 0155 1A       		.uleb128 0x1a
+ 1652 0156 2E       		.uleb128 0x2e
+ 1653 0157 00       		.byte	0
+ 1654 0158 3F       		.uleb128 0x3f
+ 1655 0159 19       		.uleb128 0x19
+ 1656 015a 3C       		.uleb128 0x3c
+ 1657 015b 19       		.uleb128 0x19
+ 1658 015c 6E       		.uleb128 0x6e
+ 1659 015d 0E       		.uleb128 0xe
+ 1660 015e 03       		.uleb128 0x3
+ 1661 015f 0E       		.uleb128 0xe
+ 1662 0160 3A       		.uleb128 0x3a
+ 1663 0161 0B       		.uleb128 0xb
+ 1664 0162 3B       		.uleb128 0x3b
+ 1665 0163 0B       		.uleb128 0xb
+ 1666 0164 00       		.byte	0
+ 1667 0165 00       		.byte	0
+ 1668 0166 00       		.byte	0
+ 1669              		.section	.debug_loc,"",%progbits
+ 1670              	.Ldebug_loc0:
+ 1671              	.LLST0:
+ 1672 0000 00000000 		.4byte	.LVL11
+ 1673 0004 22000000 		.4byte	.LVL12
+ 1674 0008 0100     		.2byte	0x1
+ 1675 000a 50       		.byte	0x50
+ 1676 000b 22000000 		.4byte	.LVL12
+ 1677 000f 26000000 		.4byte	.LVL14
+ 1678 0013 0400     		.2byte	0x4
+ 1679 0015 F3       		.byte	0xf3
+ 1680 0016 01       		.uleb128 0x1
+ 1681 0017 50       		.byte	0x50
+ 1682 0018 9F       		.byte	0x9f
+ 1683 0019 26000000 		.4byte	.LVL14
+ 1684 001d 48000000 		.4byte	.LVL15
+ 1685 0021 0100     		.2byte	0x1
+ 1686 0023 50       		.byte	0x50
+ 1687 0024 48000000 		.4byte	.LVL15
+ 1688 0028 4C000000 		.4byte	.LVL17
+ 1689 002c 0400     		.2byte	0x4
+ 1690 002e F3       		.byte	0xf3
+ 1691 002f 01       		.uleb128 0x1
+ 1692 0030 50       		.byte	0x50
+ 1693 0031 9F       		.byte	0x9f
+ 1694 0032 4C000000 		.4byte	.LVL17
+ 1695 0036 6E000000 		.4byte	.LVL18
+ 1696 003a 0100     		.2byte	0x1
+ 1697 003c 50       		.byte	0x50
+ 1698 003d 6E000000 		.4byte	.LVL18
+ 1699 0041 72000000 		.4byte	.LVL20
+ 1700 0045 0400     		.2byte	0x4
+ 1701 0047 F3       		.byte	0xf3
+ 1702 0048 01       		.uleb128 0x1
+ 1703 0049 50       		.byte	0x50
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 36
+
+
+ 1704 004a 9F       		.byte	0x9f
+ 1705 004b 72000000 		.4byte	.LVL20
+ 1706 004f 9C000000 		.4byte	.LVL21
+ 1707 0053 0100     		.2byte	0x1
+ 1708 0055 50       		.byte	0x50
+ 1709 0056 9C000000 		.4byte	.LVL21
+ 1710 005a A4000000 		.4byte	.LFE33
+ 1711 005e 0400     		.2byte	0x4
+ 1712 0060 F3       		.byte	0xf3
+ 1713 0061 01       		.uleb128 0x1
+ 1714 0062 50       		.byte	0x50
+ 1715 0063 9F       		.byte	0x9f
+ 1716 0064 00000000 		.4byte	0
+ 1717 0068 00000000 		.4byte	0
+ 1718              	.LLST1:
+ 1719 006c 02000000 		.4byte	.LVL22
+ 1720 0070 06000000 		.4byte	.LVL23
+ 1721 0074 0200     		.2byte	0x2
+ 1722 0076 30       		.byte	0x30
+ 1723 0077 9F       		.byte	0x9f
+ 1724 0078 06000000 		.4byte	.LVL23
+ 1725 007c 0E000000 		.4byte	.LVL25
+ 1726 0080 0100     		.2byte	0x1
+ 1727 0082 54       		.byte	0x54
+ 1728 0083 10000000 		.4byte	.LVL26
+ 1729 0087 14000000 		.4byte	.LVL27
+ 1730 008b 0100     		.2byte	0x1
+ 1731 008d 54       		.byte	0x54
+ 1732 008e 00000000 		.4byte	0
+ 1733 0092 00000000 		.4byte	0
+ 1734              	.LLST2:
+ 1735 0096 00000000 		.4byte	.LVL28
+ 1736 009a 18000000 		.4byte	.LVL30
+ 1737 009e 0100     		.2byte	0x1
+ 1738 00a0 50       		.byte	0x50
+ 1739 00a1 18000000 		.4byte	.LVL30
+ 1740 00a5 4C000000 		.4byte	.LFE35
+ 1741 00a9 0400     		.2byte	0x4
+ 1742 00ab F3       		.byte	0xf3
+ 1743 00ac 01       		.uleb128 0x1
+ 1744 00ad 50       		.byte	0x50
+ 1745 00ae 9F       		.byte	0x9f
+ 1746 00af 00000000 		.4byte	0
+ 1747 00b3 00000000 		.4byte	0
+ 1748              	.LLST3:
+ 1749 00b7 00000000 		.4byte	.LVL28
+ 1750 00bb 18000000 		.4byte	.LVL30
+ 1751 00bf 0100     		.2byte	0x1
+ 1752 00c1 51       		.byte	0x51
+ 1753 00c2 18000000 		.4byte	.LVL30
+ 1754 00c6 4C000000 		.4byte	.LFE35
+ 1755 00ca 0400     		.2byte	0x4
+ 1756 00cc F3       		.byte	0xf3
+ 1757 00cd 01       		.uleb128 0x1
+ 1758 00ce 51       		.byte	0x51
+ 1759 00cf 9F       		.byte	0x9f
+ 1760 00d0 00000000 		.4byte	0
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 37
+
+
+ 1761 00d4 00000000 		.4byte	0
+ 1762              	.LLST4:
+ 1763 00d8 00000000 		.4byte	.LVL28
+ 1764 00dc 18000000 		.4byte	.LVL30
+ 1765 00e0 0100     		.2byte	0x1
+ 1766 00e2 52       		.byte	0x52
+ 1767 00e3 18000000 		.4byte	.LVL30
+ 1768 00e7 4C000000 		.4byte	.LFE35
+ 1769 00eb 0400     		.2byte	0x4
+ 1770 00ed F3       		.byte	0xf3
+ 1771 00ee 01       		.uleb128 0x1
+ 1772 00ef 52       		.byte	0x52
+ 1773 00f0 9F       		.byte	0x9f
+ 1774 00f1 00000000 		.4byte	0
+ 1775 00f5 00000000 		.4byte	0
+ 1776              	.LLST5:
+ 1777 00f9 00000000 		.4byte	.LVL28
+ 1778 00fd 18000000 		.4byte	.LVL30
+ 1779 0101 0100     		.2byte	0x1
+ 1780 0103 53       		.byte	0x53
+ 1781 0104 18000000 		.4byte	.LVL30
+ 1782 0108 4C000000 		.4byte	.LFE35
+ 1783 010c 0400     		.2byte	0x4
+ 1784 010e F3       		.byte	0xf3
+ 1785 010f 01       		.uleb128 0x1
+ 1786 0110 53       		.byte	0x53
+ 1787 0111 9F       		.byte	0x9f
+ 1788 0112 00000000 		.4byte	0
+ 1789 0116 00000000 		.4byte	0
+ 1790              	.LLST6:
+ 1791 011a 14000000 		.4byte	.LVL29
+ 1792 011e 18000000 		.4byte	.LVL30
+ 1793 0122 0200     		.2byte	0x2
+ 1794 0124 30       		.byte	0x30
+ 1795 0125 9F       		.byte	0x9f
+ 1796 0126 18000000 		.4byte	.LVL30
+ 1797 012a 3E000000 		.4byte	.LVL32
+ 1798 012e 0100     		.2byte	0x1
+ 1799 0130 54       		.byte	0x54
+ 1800 0131 40000000 		.4byte	.LVL33
+ 1801 0135 46000000 		.4byte	.LVL34
+ 1802 0139 0100     		.2byte	0x1
+ 1803 013b 54       		.byte	0x54
+ 1804 013c 00000000 		.4byte	0
+ 1805 0140 00000000 		.4byte	0
+ 1806              	.LLST7:
+ 1807 0144 1C000000 		.4byte	.LVL38
+ 1808 0148 25000000 		.4byte	.LVL39-1
+ 1809 014c 0100     		.2byte	0x1
+ 1810 014e 50       		.byte	0x50
+ 1811 014f 28000000 		.4byte	.LVL40
+ 1812 0153 33000000 		.4byte	.LVL41-1
+ 1813 0157 0100     		.2byte	0x1
+ 1814 0159 50       		.byte	0x50
+ 1815 015a 36000000 		.4byte	.LVL42
+ 1816 015e 41000000 		.4byte	.LVL43-1
+ 1817 0162 0100     		.2byte	0x1
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 38
+
+
+ 1818 0164 50       		.byte	0x50
+ 1819 0165 44000000 		.4byte	.LVL44
+ 1820 0169 4F000000 		.4byte	.LVL45-1
+ 1821 016d 0100     		.2byte	0x1
+ 1822 016f 50       		.byte	0x50
+ 1823 0170 52000000 		.4byte	.LVL46
+ 1824 0174 5D000000 		.4byte	.LVL47-1
+ 1825 0178 0100     		.2byte	0x1
+ 1826 017a 50       		.byte	0x50
+ 1827 017b 60000000 		.4byte	.LVL48
+ 1828 017f 6B000000 		.4byte	.LVL49-1
+ 1829 0183 0100     		.2byte	0x1
+ 1830 0185 50       		.byte	0x50
+ 1831 0186 6E000000 		.4byte	.LVL50
+ 1832 018a 79000000 		.4byte	.LVL51-1
+ 1833 018e 0100     		.2byte	0x1
+ 1834 0190 50       		.byte	0x50
+ 1835 0191 7C000000 		.4byte	.LVL52
+ 1836 0195 8F000000 		.4byte	.LVL53-1
+ 1837 0199 0100     		.2byte	0x1
+ 1838 019b 50       		.byte	0x50
+ 1839 019c 92000000 		.4byte	.LVL54
+ 1840 01a0 95000000 		.4byte	.LVL55-1
+ 1841 01a4 0100     		.2byte	0x1
+ 1842 01a6 50       		.byte	0x50
+ 1843 01a7 00000000 		.4byte	0
+ 1844 01ab 00000000 		.4byte	0
+ 1845              	.LLST8:
+ 1846 01af 0A000000 		.4byte	.LVL35
+ 1847 01b3 25000000 		.4byte	.LVL39-1
+ 1848 01b7 0100     		.2byte	0x1
+ 1849 01b9 51       		.byte	0x51
+ 1850 01ba 28000000 		.4byte	.LVL40
+ 1851 01be 33000000 		.4byte	.LVL41-1
+ 1852 01c2 0100     		.2byte	0x1
+ 1853 01c4 51       		.byte	0x51
+ 1854 01c5 36000000 		.4byte	.LVL42
+ 1855 01c9 41000000 		.4byte	.LVL43-1
+ 1856 01cd 0100     		.2byte	0x1
+ 1857 01cf 51       		.byte	0x51
+ 1858 01d0 44000000 		.4byte	.LVL44
+ 1859 01d4 4F000000 		.4byte	.LVL45-1
+ 1860 01d8 0100     		.2byte	0x1
+ 1861 01da 51       		.byte	0x51
+ 1862 01db 52000000 		.4byte	.LVL46
+ 1863 01df 5D000000 		.4byte	.LVL47-1
+ 1864 01e3 0100     		.2byte	0x1
+ 1865 01e5 51       		.byte	0x51
+ 1866 01e6 60000000 		.4byte	.LVL48
+ 1867 01ea 6B000000 		.4byte	.LVL49-1
+ 1868 01ee 0100     		.2byte	0x1
+ 1869 01f0 51       		.byte	0x51
+ 1870 01f1 6E000000 		.4byte	.LVL50
+ 1871 01f5 79000000 		.4byte	.LVL51-1
+ 1872 01f9 0100     		.2byte	0x1
+ 1873 01fb 51       		.byte	0x51
+ 1874 01fc 7C000000 		.4byte	.LVL52
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 39
+
+
+ 1875 0200 8F000000 		.4byte	.LVL53-1
+ 1876 0204 0100     		.2byte	0x1
+ 1877 0206 51       		.byte	0x51
+ 1878 0207 92000000 		.4byte	.LVL54
+ 1879 020b 95000000 		.4byte	.LVL55-1
+ 1880 020f 0100     		.2byte	0x1
+ 1881 0211 51       		.byte	0x51
+ 1882 0212 00000000 		.4byte	0
+ 1883 0216 00000000 		.4byte	0
+ 1884              	.LLST9:
+ 1885 021a 10000000 		.4byte	.LVL36
+ 1886 021e 25000000 		.4byte	.LVL39-1
+ 1887 0222 0100     		.2byte	0x1
+ 1888 0224 52       		.byte	0x52
+ 1889 0225 28000000 		.4byte	.LVL40
+ 1890 0229 33000000 		.4byte	.LVL41-1
+ 1891 022d 0100     		.2byte	0x1
+ 1892 022f 52       		.byte	0x52
+ 1893 0230 36000000 		.4byte	.LVL42
+ 1894 0234 41000000 		.4byte	.LVL43-1
+ 1895 0238 0100     		.2byte	0x1
+ 1896 023a 52       		.byte	0x52
+ 1897 023b 44000000 		.4byte	.LVL44
+ 1898 023f 4F000000 		.4byte	.LVL45-1
+ 1899 0243 0100     		.2byte	0x1
+ 1900 0245 52       		.byte	0x52
+ 1901 0246 52000000 		.4byte	.LVL46
+ 1902 024a 5D000000 		.4byte	.LVL47-1
+ 1903 024e 0100     		.2byte	0x1
+ 1904 0250 52       		.byte	0x52
+ 1905 0251 60000000 		.4byte	.LVL48
+ 1906 0255 6B000000 		.4byte	.LVL49-1
+ 1907 0259 0100     		.2byte	0x1
+ 1908 025b 52       		.byte	0x52
+ 1909 025c 6E000000 		.4byte	.LVL50
+ 1910 0260 79000000 		.4byte	.LVL51-1
+ 1911 0264 0100     		.2byte	0x1
+ 1912 0266 52       		.byte	0x52
+ 1913 0267 7C000000 		.4byte	.LVL52
+ 1914 026b 8F000000 		.4byte	.LVL53-1
+ 1915 026f 0100     		.2byte	0x1
+ 1916 0271 52       		.byte	0x52
+ 1917 0272 92000000 		.4byte	.LVL54
+ 1918 0276 95000000 		.4byte	.LVL55-1
+ 1919 027a 0100     		.2byte	0x1
+ 1920 027c 52       		.byte	0x52
+ 1921 027d 00000000 		.4byte	0
+ 1922 0281 00000000 		.4byte	0
+ 1923              	.LLST10:
+ 1924 0285 16000000 		.4byte	.LVL37
+ 1925 0289 25000000 		.4byte	.LVL39-1
+ 1926 028d 0100     		.2byte	0x1
+ 1927 028f 53       		.byte	0x53
+ 1928 0290 28000000 		.4byte	.LVL40
+ 1929 0294 33000000 		.4byte	.LVL41-1
+ 1930 0298 0100     		.2byte	0x1
+ 1931 029a 53       		.byte	0x53
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 40
+
+
+ 1932 029b 36000000 		.4byte	.LVL42
+ 1933 029f 41000000 		.4byte	.LVL43-1
+ 1934 02a3 0100     		.2byte	0x1
+ 1935 02a5 53       		.byte	0x53
+ 1936 02a6 44000000 		.4byte	.LVL44
+ 1937 02aa 4F000000 		.4byte	.LVL45-1
+ 1938 02ae 0100     		.2byte	0x1
+ 1939 02b0 53       		.byte	0x53
+ 1940 02b1 52000000 		.4byte	.LVL46
+ 1941 02b5 5D000000 		.4byte	.LVL47-1
+ 1942 02b9 0100     		.2byte	0x1
+ 1943 02bb 53       		.byte	0x53
+ 1944 02bc 60000000 		.4byte	.LVL48
+ 1945 02c0 6B000000 		.4byte	.LVL49-1
+ 1946 02c4 0100     		.2byte	0x1
+ 1947 02c6 53       		.byte	0x53
+ 1948 02c7 6E000000 		.4byte	.LVL50
+ 1949 02cb 79000000 		.4byte	.LVL51-1
+ 1950 02cf 0100     		.2byte	0x1
+ 1951 02d1 53       		.byte	0x53
+ 1952 02d2 7C000000 		.4byte	.LVL52
+ 1953 02d6 8F000000 		.4byte	.LVL53-1
+ 1954 02da 0100     		.2byte	0x1
+ 1955 02dc 53       		.byte	0x53
+ 1956 02dd 92000000 		.4byte	.LVL54
+ 1957 02e1 95000000 		.4byte	.LVL55-1
+ 1958 02e5 0100     		.2byte	0x1
+ 1959 02e7 53       		.byte	0x53
+ 1960 02e8 00000000 		.4byte	0
+ 1961 02ec 00000000 		.4byte	0
+ 1962              	.LLST11:
+ 1963 02f0 02000000 		.4byte	.LVL56
+ 1964 02f4 08000000 		.4byte	.LVL58
+ 1965 02f8 0200     		.2byte	0x2
+ 1966 02fa 30       		.byte	0x30
+ 1967 02fb 9F       		.byte	0x9f
+ 1968 02fc 08000000 		.4byte	.LVL58
+ 1969 0300 3A000000 		.4byte	.LVL61
+ 1970 0304 0100     		.2byte	0x1
+ 1971 0306 54       		.byte	0x54
+ 1972 0307 00000000 		.4byte	0
+ 1973 030b 00000000 		.4byte	0
+ 1974              		.section	.debug_aranges,"",%progbits
+ 1975 0000 54000000 		.4byte	0x54
+ 1976 0004 0200     		.2byte	0x2
+ 1977 0006 00000000 		.4byte	.Ldebug_info0
+ 1978 000a 04       		.byte	0x4
+ 1979 000b 00       		.byte	0
+ 1980 000c 0000     		.2byte	0
+ 1981 000e 0000     		.2byte	0
+ 1982 0010 00000000 		.4byte	.LFB32
+ 1983 0014 46000000 		.4byte	.LFE32-.LFB32
+ 1984 0018 00000000 		.4byte	.LFB33
+ 1985 001c A4000000 		.4byte	.LFE33-.LFB33
+ 1986 0020 00000000 		.4byte	.LFB34
+ 1987 0024 16000000 		.4byte	.LFE34-.LFB34
+ 1988 0028 00000000 		.4byte	.LFB35
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 41
+
+
+ 1989 002c 4C000000 		.4byte	.LFE35-.LFB35
+ 1990 0030 00000000 		.4byte	.LFB36
+ 1991 0034 9C000000 		.4byte	.LFE36-.LFB36
+ 1992 0038 00000000 		.4byte	.LFB37
+ 1993 003c 44000000 		.4byte	.LFE37-.LFB37
+ 1994 0040 00000000 		.4byte	.LFB38
+ 1995 0044 38000000 		.4byte	.LFE38-.LFB38
+ 1996 0048 00000000 		.4byte	.LFB39
+ 1997 004c 20000000 		.4byte	.LFE39-.LFB39
+ 1998 0050 00000000 		.4byte	0
+ 1999 0054 00000000 		.4byte	0
+ 2000              		.section	.debug_ranges,"",%progbits
+ 2001              	.Ldebug_ranges0:
+ 2002 0000 00000000 		.4byte	.LFB32
+ 2003 0004 46000000 		.4byte	.LFE32
+ 2004 0008 00000000 		.4byte	.LFB33
+ 2005 000c A4000000 		.4byte	.LFE33
+ 2006 0010 00000000 		.4byte	.LFB34
+ 2007 0014 16000000 		.4byte	.LFE34
+ 2008 0018 00000000 		.4byte	.LFB35
+ 2009 001c 4C000000 		.4byte	.LFE35
+ 2010 0020 00000000 		.4byte	.LFB36
+ 2011 0024 9C000000 		.4byte	.LFE36
+ 2012 0028 00000000 		.4byte	.LFB37
+ 2013 002c 44000000 		.4byte	.LFE37
+ 2014 0030 00000000 		.4byte	.LFB38
+ 2015 0034 38000000 		.4byte	.LFE38
+ 2016 0038 00000000 		.4byte	.LFB39
+ 2017 003c 20000000 		.4byte	.LFE39
+ 2018 0040 00000000 		.4byte	0
+ 2019 0044 00000000 		.4byte	0
+ 2020              		.section	.debug_line,"",%progbits
+ 2021              	.Ldebug_line0:
+ 2022 0000 CC010000 		.section	.debug_str,"MS",%progbits,1
+ 2022      0200AD00 
+ 2022      00000201 
+ 2022      FB0E0D00 
+ 2022      01010101 
+ 2023              	.LASF44:
+ 2024 0000 55415254 		.ascii	"UART_1_Start\000"
+ 2024      5F315F53 
+ 2024      74617274 
+ 2024      00
+ 2025              	.LASF46:
+ 2026 000d 54696D65 		.ascii	"Timer_1_Start\000"
+ 2026      725F315F 
+ 2026      53746172 
+ 2026      7400
+ 2027              	.LASF43:
+ 2028 001b 55415254 		.ascii	"UART_1_UartGetChar\000"
+ 2028      5F315F55 
+ 2028      61727447 
+ 2028      65744368 
+ 2028      617200
+ 2029              	.LASF26:
+ 2030 002e 54696D65 		.ascii	"TimeSlotInterrupt\000"
+ 2030      536C6F74 
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 42
+
+
+ 2030      496E7465 
+ 2030      72727570 
+ 2030      7400
+ 2031              	.LASF25:
+ 2032 0040 4368616E 		.ascii	"ChannelController\000"
+ 2032      6E656C43 
+ 2032      6F6E7472 
+ 2032      6F6C6C65 
+ 2032      7200
+ 2033              	.LASF23:
+ 2034 0052 4368616E 		.ascii	"ChannelDescriptorType\000"
+ 2034      6E656C44 
+ 2034      65736372 
+ 2034      6970746F 
+ 2034      72547970 
+ 2035              	.LASF30:
+ 2036 0068 43757272 		.ascii	"CurrentChannelNumber\000"
+ 2036      656E7443 
+ 2036      68616E6E 
+ 2036      656C4E75 
+ 2036      6D626572 
+ 2037              	.LASF31:
+ 2038 007d 4368616E 		.ascii	"ChannelIdx\000"
+ 2038      6E656C49 
+ 2038      647800
+ 2039              	.LASF22:
+ 2040 0088 50696E43 		.ascii	"PinControlFunction\000"
+ 2040      6F6E7472 
+ 2040      6F6C4675 
+ 2040      6E637469 
+ 2040      6F6E00
+ 2041              	.LASF18:
+ 2042 009b 43757272 		.ascii	"Current_L\000"
+ 2042      656E745F 
+ 2042      4C00
+ 2043              	.LASF49:
+ 2044 00a5 47726565 		.ascii	"Green_Output_Write\000"
+ 2044      6E5F4F75 
+ 2044      74707574 
+ 2044      5F577269 
+ 2044      746500
+ 2045              	.LASF11:
+ 2046 00b8 666C6F61 		.ascii	"float\000"
+ 2046      7400
+ 2047              	.LASF0:
+ 2048 00be 7369676E 		.ascii	"signed char\000"
+ 2048      65642063 
+ 2048      68617200 
+ 2049              	.LASF33:
+ 2050 00ca 56616C75 		.ascii	"ValueD\000"
+ 2050      654400
+ 2051              	.LASF1:
+ 2052 00d1 756E7369 		.ascii	"unsigned char\000"
+ 2052      676E6564 
+ 2052      20636861 
+ 2052      7200
+ 2053              	.LASF34:
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 43
+
+
+ 2054 00df 56616C75 		.ascii	"ValueH\000"
+ 2054      654800
+ 2055              	.LASF29:
+ 2056 00e6 4368616E 		.ascii	"ChannelNumber\000"
+ 2056      6E656C4E 
+ 2056      756D6265 
+ 2056      7200
+ 2057              	.LASF5:
+ 2058 00f4 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2058      20756E73 
+ 2058      69676E65 
+ 2058      6420696E 
+ 2058      7400
+ 2059              	.LASF35:
+ 2060 0106 56616C75 		.ascii	"ValueL\000"
+ 2060      654C00
+ 2061              	.LASF3:
+ 2062 010d 73686F72 		.ascii	"short unsigned int\000"
+ 2062      7420756E 
+ 2062      7369676E 
+ 2062      65642069 
+ 2062      6E7400
+ 2063              	.LASF38:
+ 2064 0120 496E6974 		.ascii	"Init\000"
+ 2064      00
+ 2065              	.LASF48:
+ 2066 0125 426C7565 		.ascii	"Blue_Output_Write\000"
+ 2066      5F4F7574 
+ 2066      7075745F 
+ 2066      57726974 
+ 2066      6500
+ 2067              	.LASF37:
+ 2068 0137 43757272 		.ascii	"CurrentCharacter\000"
+ 2068      656E7443 
+ 2068      68617261 
+ 2068      63746572 
+ 2068      00
+ 2069              	.LASF24:
+ 2070 0148 4572726F 		.ascii	"Error_Return\000"
+ 2070      725F5265 
+ 2070      7475726E 
+ 2070      00
+ 2071              	.LASF12:
+ 2072 0155 646F7562 		.ascii	"double\000"
+ 2072      6C6500
+ 2073              	.LASF2:
+ 2074 015c 73686F72 		.ascii	"short int\000"
+ 2074      7420696E 
+ 2074      7400
+ 2075              	.LASF42:
+ 2076 0166 55415254 		.ascii	"UART_1_SpiUartWriteTxData\000"
+ 2076      5F315F53 
+ 2076      70695561 
+ 2076      72745772 
+ 2076      69746554 
+ 2077              	.LASF19:
+ 2078 0180 4D61785F 		.ascii	"Max_D\000"
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 44
+
+
+ 2078      4400
+ 2079              	.LASF10:
+ 2080 0186 75696E74 		.ascii	"uint32\000"
+ 2080      333200
+ 2081              	.LASF53:
+ 2082 018d 6D61696E 		.ascii	"main\000"
+ 2082      00
+ 2083              	.LASF8:
+ 2084 0192 756E7369 		.ascii	"unsigned int\000"
+ 2084      676E6564 
+ 2084      20696E74 
+ 2084      00
+ 2085              	.LASF21:
+ 2086 019f 4D61785F 		.ascii	"Max_L\000"
+ 2086      4C00
+ 2087              	.LASF7:
+ 2088 01a5 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2088      206C6F6E 
+ 2088      6720756E 
+ 2088      7369676E 
+ 2088      65642069 
+ 2089              	.LASF27:
+ 2090 01bc 55706461 		.ascii	"UpdateChannelDescriptor\000"
+ 2090      74654368 
+ 2090      616E6E65 
+ 2090      6C446573 
+ 2090      63726970 
+ 2091              	.LASF40:
+ 2092 01d4 55617274 		.ascii	"UartBuffer\000"
+ 2092      42756666 
+ 2092      657200
+ 2093              	.LASF16:
+ 2094 01df 43757272 		.ascii	"Current_D\000"
+ 2094      656E745F 
+ 2094      4400
+ 2095              	.LASF17:
+ 2096 01e9 43757272 		.ascii	"Current_H\000"
+ 2096      656E745F 
+ 2096      4800
+ 2097              	.LASF52:
+ 2098 01f3 433A5C55 		.ascii	"C:\\Users\\ribot\\Documents\\PSoC Creator\\Kursovi\\"
+ 2098      73657273 
+ 2098      5C726962 
+ 2098      6F745C44 
+ 2098      6F63756D 
+ 2099 0221 4B757273 		.ascii	"Kursova_18_Varik.cydsn\000"
+ 2099      6F76615F 
+ 2099      31385F56 
+ 2099      6172696B 
+ 2099      2E637964 
+ 2100              	.LASF36:
+ 2101 0238 55617274 		.ascii	"UartDataReader\000"
+ 2101      44617461 
+ 2101      52656164 
+ 2101      657200
+ 2102              	.LASF15:
+ 2103 0247 73697A65 		.ascii	"sizetype\000"
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 45
+
+
+ 2103      74797065 
+ 2103      00
+ 2104              	.LASF6:
+ 2105 0250 6C6F6E67 		.ascii	"long long int\000"
+ 2105      206C6F6E 
+ 2105      6720696E 
+ 2105      7400
+ 2106              	.LASF51:
+ 2107 025e 6D61696E 		.ascii	"main.c\000"
+ 2107      2E6300
+ 2108              	.LASF13:
+ 2109 0265 63686172 		.ascii	"char\000"
+ 2109      00
+ 2110              	.LASF28:
+ 2111 026a 4368616E 		.ascii	"Channel_Number\000"
+ 2111      6E656C5F 
+ 2111      4E756D62 
+ 2111      657200
+ 2112              	.LASF20:
+ 2113 0279 4D61785F 		.ascii	"Max_H\000"
+ 2113      4800
+ 2114              	.LASF9:
+ 2115 027f 75696E74 		.ascii	"uint8\000"
+ 2115      3800
+ 2116              	.LASF50:
+ 2117 0285 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2117      43313120 
+ 2117      352E342E 
+ 2117      31203230 
+ 2117      31363036 
+ 2118 02b8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 2118      20726576 
+ 2118      6973696F 
+ 2118      6E203233 
+ 2118      37373135 
+ 2119 02eb 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2119      66756E63 
+ 2119      74696F6E 
+ 2119      2D736563 
+ 2119      74696F6E 
+ 2120              	.LASF4:
+ 2121 0313 6C6F6E67 		.ascii	"long int\000"
+ 2121      20696E74 
+ 2121      00
+ 2122              	.LASF41:
+ 2123 031c 55617274 		.ascii	"UartBufferIdx\000"
+ 2123      42756666 
+ 2123      65724964 
+ 2123      7800
+ 2124              	.LASF14:
+ 2125 032a 6C6F6E67 		.ascii	"long double\000"
+ 2125      20646F75 
+ 2125      626C6500 
+ 2126              	.LASF39:
+ 2127 0336 4368616E 		.ascii	"ChannelDescriptorsArray\000"
+ 2127      6E656C44 
+ 2127      65736372 
+ARM GAS  C:\Users\ribot\AppData\Local\Temp\cc5VQBEU.s 			page 46
+
+
+ 2127      6970746F 
+ 2127      72734172 
+ 2128              	.LASF32:
+ 2129 034e 55617274 		.ascii	"UartBufferParser\000"
+ 2129      42756666 
+ 2129      65725061 
+ 2129      72736572 
+ 2129      00
+ 2130              	.LASF45:
+ 2131 035f 6973725F 		.ascii	"isr_1_StartEx\000"
+ 2131      315F5374 
+ 2131      61727445 
+ 2131      7800
+ 2132              	.LASF47:
+ 2133 036d 5265645F 		.ascii	"Red_Output_Write\000"
+ 2133      4F757470 
+ 2133      75745F57 
+ 2133      72697465 
+ 2133      00
+ 2134              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,198 @@
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/BLUE.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE_aliases.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/BLUE_PM.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE_PM.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE_PM.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/Cm0Start.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Cm0Start.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h C:/PSoC/Kursova_6_Varik.cydsn/cyapicallbacks.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Cm0Start.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/cyapicallbacks.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/CyFlash.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyFlash.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyFlash.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyFlash.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyFlash.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/CyLFClk.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/CyLib.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyFlash.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/GREEN.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN_aliases.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/GREEN_PM.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN_PM.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN_PM.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/RED.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED_aliases.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/RED_PM.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED_PM.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED_PM.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/Timer_1.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Timer_1.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Timer_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Timer_1.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Timer_1.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/Timer_1_PM.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Timer_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Timer_1_PM.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Timer_1_PM.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_PVT.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_BOOT.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_BOOT.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_BOOT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_BOOT.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_BOOT.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_PM.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PM.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PM.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_SCBCLK.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_SPI_UART.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_SPI_UART_INT.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_INT.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h C:/PSoC/Kursova_6_Varik.cydsn/cyapicallbacks.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_INT.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_UART.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_UART.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h C:/PSoC/Kursova_6_Varik.cydsn/cyapicallbacks.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_UART.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_UART_BOOT.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_BOOT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_UART_BOOT.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_UART_BOOT.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_rx.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_rx_PM.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_PM.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_PM.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_tx.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/UART_1_tx_PM.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_PM.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_PM.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/cyPm.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyFlash.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyPm.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyPm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyPm.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyPm.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/cy_em_eeprom.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyFlash.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cy_em_eeprom.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cy_em_eeprom.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cy_em_eeprom.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cy_em_eeprom.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/cyfitter_cfg.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter_cfg.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h C:/PSoC/Kursova_6_Varik.cydsn/cyapicallbacks.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter_cfg.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/cymetadata.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cymetadata.c 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cymetadata.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/cyutils.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyutils.c 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyutils.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/isr_1.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/isr_1.c C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/isr_1.h C:/PSoC/Kursova_6_Varik.cydsn/cyapicallbacks.h 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/isr_1.c : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/isr_1.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/CortexM0/ARM_GCC_541/Debug/main.o : C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cmsis_armcc.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cmsis_compiler.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cmsis_gcc.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/core_cm0.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydisabledsheets.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/project.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/BLUE_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyFlash.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/GREEN_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/RED_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/Timer_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_BOOT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PINS.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SCBCLK.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_SPI_UART_PVT.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_rx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/UART_1_tx_aliases.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyPm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cy_em_eeprom.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cytypes.h C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/isr_1.h C:/PSoC/Kursova_6_Varik.cydsn/main.c 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cmsis_armcc.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cmsis_compiler.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cmsis_gcc.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/core_cm0.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/cydisabledsheets.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/Generated_Source/PSoC4/project.h : 
+
+C:/PSoC/Kursova_6_Varik.cydsn/main.c : 
+

@@ -1,0 +1,9 @@
+﻿Name,Quantity,Component
+"U1",1," Arduino Uno R3"
+"U2",1," LCD 16 x 2"
+"KEYPAD1",1," Keypad 4x4"
+"R1",1,"1 kΩ Resistor"
+"D1",1,"Red LED"
+"D2",1,"Green LED"
+"R2, R3",2,"160 Ω Resistor"
+"SERVO2",1,"Positional Micro Servo"

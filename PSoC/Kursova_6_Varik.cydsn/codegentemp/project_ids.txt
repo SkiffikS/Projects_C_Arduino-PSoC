@@ -1,0 +1,6 @@
+C:\PSoC\Kursova_6_Varik.cydsn\Kursova_6_Varik.cyprj|1c0a02c0-2ada-46f4-a5f3-ea735526c19c
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|5137b8a2-64f9-4ad7-b762-1fc379a20415
+C:\Users\ykuch\OneDrive\Документи\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|ed0477fe-c8dc-4de6-b86b-aefa33d5d2a2
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|040f1271-e282-4304-8eb4-a857d8322e86
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|d6bd5be7-b71d-42e6-ae7b-fd587ecea42f
+C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|be326444-dd2e-4ff3-b075-8a12e419276d

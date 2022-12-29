@@ -1,0 +1,2596 @@
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Error_Return,"ax",%progbits
+  20              		.align	2
+  21              		.global	Error_Return
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	Error_Return, %function
+  25              	Error_Return:
+  26              	.LFB32:
+  27              		.file 1 "main.c"
+   1:main.c        **** #include "project.h"
+   2:main.c        **** /* Number of channnels */
+   3:main.c        **** #define NUMBER_OF_CHANNELS (2)
+   4:main.c        **** /* The argument of the Pin_Write API to turn on the LED */
+   5:main.c        **** #define LED_ON_VALUE (0)
+   6:main.c        **** /* The argument of the Pin_Write API to turn off the LED */
+   7:main.c        **** #define LED_OFF_VALUE (1)
+   8:main.c        **** /* Size of UART buffer */
+   9:main.c        **** #define UART_BUFFER_SIZE (7)
+  10:main.c        **** /* UART buffer indeces */
+  11:main.c        **** #define UART_BUFFER_A_IDX (0)
+  12:main.c        **** #define UART_BUFFER_T_IDX (1)
+  13:main.c        **** #define UART_BUFFER_EQUALS_IDX (2) // EQUALS - Symbol "="
+  14:main.c        **** #define UART_BUFFER_CHANNEL_IDX (3)
+  15:main.c        **** #define UART_BUFFER_PLUS_IDX (4) // PLUS - Symbol "+"
+  16:main.c        **** #define UART_BUFFER_D_VALUE_IDX (5)
+  17:main.c        **** #define UART_BUFFER_H_VALUE_IDX (6)
+  18:main.c        **** #define UART_BUFFER_L_VALUE_IDX (7)
+  19:main.c        **** /* ASCII offset for digits. ASCII code of 0 in ASCII table. */
+  20:main.c        **** #define ASCII_OFFSET_FOR_DIGITS (48)
+  21:main.c        **** /* Channel Descriptor Type */
+  22:main.c        **** typedef struct
+  23:main.c        **** {
+  24:main.c        ****  uint8 Current_D; /* Counter of state D duration */
+  25:main.c        ****  uint8 Current_H; /* Counter of state H duration */
+  26:main.c        ****  uint8 Current_L; /* Counter of state L duration */
+  27:main.c        ****  uint8 Max_D; /* Maximum state D duration */
+  28:main.c        ****  uint8 Max_H; /* Maximum state H duration */
+  29:main.c        ****  uint8 Max_L; /* Maximum state L duration */
+  30:main.c        ****  void (*PinControlFunction)(uint8); /* Pointer to pin control function */
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 2
+
+
+  31:main.c        **** } ChannelDescriptorType;
+  32:main.c        **** 
+  33:main.c        **** /* Channels descriptors array with size of channels number */
+  34:main.c        **** ChannelDescriptorType ChannelDescriptorsArray[NUMBER_OF_CHANNELS];
+  35:main.c        **** /* Buffer to store data from UART */
+  36:main.c        **** char UartBuffer[UART_BUFFER_SIZE];
+  37:main.c        **** /* Index to the current UART buffer element */
+  38:main.c        **** uint8 UartBufferIdx;
+  39:main.c        **** 
+  40:main.c        **** /* This function notifies the user that an incorrect AT-command has been entered */
+  41:main.c        **** void Error_Return(void)
+  42:main.c        **** {
+  28              		.loc 1 42 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  43:main.c        ****     UART_1_UartPutChar('\n');
+  36              		.loc 1 43 0
+  37 0002 0A20     		movs	r0, #10
+  38 0004 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  39              	.LVL0:
+  44:main.c        ****     UART_1_UartPutChar('\r');
+  40              		.loc 1 44 0
+  41 0008 0D20     		movs	r0, #13
+  42 000a FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  43              	.LVL1:
+  45:main.c        ****     UART_1_UartPutChar(' ');
+  44              		.loc 1 45 0
+  45 000e 2020     		movs	r0, #32
+  46 0010 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  47              	.LVL2:
+  46:main.c        ****     UART_1_UartPutChar('E');
+  48              		.loc 1 46 0
+  49 0014 4520     		movs	r0, #69
+  50 0016 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  51              	.LVL3:
+  47:main.c        ****     UART_1_UartPutChar('r');
+  52              		.loc 1 47 0
+  53 001a 7220     		movs	r0, #114
+  54 001c FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  55              	.LVL4:
+  48:main.c        ****     UART_1_UartPutChar('r');
+  56              		.loc 1 48 0
+  57 0020 7220     		movs	r0, #114
+  58 0022 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  59              	.LVL5:
+  49:main.c        ****     UART_1_UartPutChar('o');
+  60              		.loc 1 49 0
+  61 0026 6F20     		movs	r0, #111
+  62 0028 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  63              	.LVL6:
+  50:main.c        ****     UART_1_UartPutChar('r');
+  64              		.loc 1 50 0
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 3
+
+
+  65 002c 7220     		movs	r0, #114
+  66 002e FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  67              	.LVL7:
+  51:main.c        ****     UART_1_UartPutChar(' ');
+  68              		.loc 1 51 0
+  69 0032 2020     		movs	r0, #32
+  70 0034 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  71              	.LVL8:
+  52:main.c        ****     UART_1_UartPutChar('\n');
+  72              		.loc 1 52 0
+  73 0038 0A20     		movs	r0, #10
+  74 003a FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  75              	.LVL9:
+  53:main.c        ****     UART_1_UartPutChar('\r');
+  76              		.loc 1 53 0
+  77 003e 0D20     		movs	r0, #13
+  78 0040 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+  79              	.LVL10:
+  54:main.c        **** }
+  80              		.loc 1 54 0
+  81              		@ sp needed
+  82 0044 10BD     		pop	{r4, pc}
+  83              		.cfi_endproc
+  84              	.LFE32:
+  85              		.size	Error_Return, .-Error_Return
+  86 0046 C046     		.section	.text.ChannelController,"ax",%progbits
+  87              		.align	2
+  88              		.global	ChannelController
+  89              		.code	16
+  90              		.thumb_func
+  91              		.type	ChannelController, %function
+  92              	ChannelController:
+  93              	.LFB33:
+  55:main.c        **** 
+  56:main.c        **** /**************************************************************************
+  57:main.c        ****  This function perfoms channel control.
+  58:main.c        ****  It decrements counters D, H or L and toggles pin state when required.
+  59:main.c        **** **************************************************************************/
+  60:main.c        **** void ChannelController(uint8 Channel_Number)
+  61:main.c        **** {
+  94              		.loc 1 61 0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98              	.LVL11:
+  99 0000 70B5     		push	{r4, r5, r6, lr}
+ 100              		.cfi_def_cfa_offset 16
+ 101              		.cfi_offset 4, -16
+ 102              		.cfi_offset 5, -12
+ 103              		.cfi_offset 6, -8
+ 104              		.cfi_offset 14, -4
+  62:main.c        ****     if(ChannelDescriptorsArray[Channel_Number].Current_D > 0)
+ 105              		.loc 1 62 0
+ 106 0002 4300     		lsls	r3, r0, #1
+ 107 0004 1B18     		adds	r3, r3, r0
+ 108 0006 9A00     		lsls	r2, r3, #2
+ 109 0008 254B     		ldr	r3, .L7
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 4
+
+
+ 110 000a D15C     		ldrb	r1, [r2, r3]
+ 111 000c 0029     		cmp	r1, #0
+ 112 000e 0AD0     		beq	.L3
+  63:main.c        ****     {
+  64:main.c        ****         ChannelDescriptorsArray[Channel_Number].Current_D--;
+ 113              		.loc 1 64 0
+ 114 0010 1A00     		movs	r2, r3
+ 115 0012 4300     		lsls	r3, r0, #1
+ 116 0014 1D18     		adds	r5, r3, r0
+ 117 0016 AC00     		lsls	r4, r5, #2
+ 118 0018 0139     		subs	r1, r1, #1
+ 119 001a A154     		strb	r1, [r4, r2]
+  65:main.c        ****         ChannelDescriptorsArray[Channel_Number].PinControlFunction(LED_OFF_VALUE);
+ 120              		.loc 1 65 0
+ 121 001c 1319     		adds	r3, r2, r4
+ 122 001e 9B68     		ldr	r3, [r3, #8]
+ 123 0020 0120     		movs	r0, #1
+ 124              	.LVL12:
+ 125 0022 9847     		blx	r3
+ 126              	.LVL13:
+  66:main.c        ****         return;
+ 127              		.loc 1 66 0
+ 128 0024 3AE0     		b	.L2
+ 129              	.LVL14:
+ 130              	.L3:
+  67:main.c        ****     }
+  68:main.c        ****     if(ChannelDescriptorsArray[Channel_Number].Current_H > 0)
+ 131              		.loc 1 68 0
+ 132 0026 4200     		lsls	r2, r0, #1
+ 133 0028 1218     		adds	r2, r2, r0
+ 134 002a 9300     		lsls	r3, r2, #2
+ 135 002c 1C4A     		ldr	r2, .L7
+ 136 002e D318     		adds	r3, r2, r3
+ 137 0030 5C78     		ldrb	r4, [r3, #1]
+ 138 0032 002C     		cmp	r4, #0
+ 139 0034 0AD0     		beq	.L5
+  69:main.c        ****     {
+  70:main.c        ****         ChannelDescriptorsArray[Channel_Number].Current_H--;
+ 140              		.loc 1 70 0
+ 141 0036 1100     		movs	r1, r2
+ 142 0038 4300     		lsls	r3, r0, #1
+ 143 003a 1D18     		adds	r5, r3, r0
+ 144 003c AA00     		lsls	r2, r5, #2
+ 145 003e 8A18     		adds	r2, r1, r2
+ 146 0040 013C     		subs	r4, r4, #1
+ 147 0042 5470     		strb	r4, [r2, #1]
+  71:main.c        ****         ChannelDescriptorsArray[Channel_Number].PinControlFunction(LED_ON_VALUE);
+ 148              		.loc 1 71 0
+ 149 0044 9368     		ldr	r3, [r2, #8]
+ 150 0046 0020     		movs	r0, #0
+ 151              	.LVL15:
+ 152 0048 9847     		blx	r3
+ 153              	.LVL16:
+  72:main.c        ****         return;
+ 154              		.loc 1 72 0
+ 155 004a 27E0     		b	.L2
+ 156              	.LVL17:
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 5
+
+
+ 157              	.L5:
+  73:main.c        ****     }
+  74:main.c        ****     if(ChannelDescriptorsArray[Channel_Number].Current_L > 0)
+ 158              		.loc 1 74 0
+ 159 004c 4200     		lsls	r2, r0, #1
+ 160 004e 1218     		adds	r2, r2, r0
+ 161 0050 9300     		lsls	r3, r2, #2
+ 162 0052 134A     		ldr	r2, .L7
+ 163 0054 D318     		adds	r3, r2, r3
+ 164 0056 9B78     		ldrb	r3, [r3, #2]
+ 165 0058 002B     		cmp	r3, #0
+ 166 005a 0AD0     		beq	.L6
+  75:main.c        ****     {
+  76:main.c        ****         ChannelDescriptorsArray[Channel_Number].Current_L--;
+ 167              		.loc 1 76 0
+ 168 005c 1400     		movs	r4, r2
+ 169 005e 4200     		lsls	r2, r0, #1
+ 170 0060 1518     		adds	r5, r2, r0
+ 171 0062 A900     		lsls	r1, r5, #2
+ 172 0064 6118     		adds	r1, r4, r1
+ 173 0066 013B     		subs	r3, r3, #1
+ 174 0068 8B70     		strb	r3, [r1, #2]
+  77:main.c        ****         ChannelDescriptorsArray[Channel_Number].PinControlFunction(LED_OFF_VALUE);
+ 175              		.loc 1 77 0
+ 176 006a 8B68     		ldr	r3, [r1, #8]
+ 177 006c 0120     		movs	r0, #1
+ 178              	.LVL18:
+ 179 006e 9847     		blx	r3
+ 180              	.LVL19:
+  78:main.c        ****         return;
+ 181              		.loc 1 78 0
+ 182 0070 14E0     		b	.L2
+ 183              	.LVL20:
+ 184              	.L6:
+  79:main.c        ****     }
+  80:main.c        ****     
+  81:main.c        ****     if (     ChannelDescriptorsArray[Channel_Number].Current_D == 0 && 
+ 185              		.loc 1 81 0
+ 186 0072 0029     		cmp	r1, #0
+ 187 0074 12D1     		bne	.L2
+ 188              		.loc 1 81 0 is_stmt 0 discriminator 1
+ 189 0076 002C     		cmp	r4, #0
+ 190 0078 10D1     		bne	.L2
+  82:main.c        ****              ChannelDescriptorsArray[Channel_Number].Current_H == 0 && 
+ 191              		.loc 1 82 0 is_stmt 1
+ 192 007a 002B     		cmp	r3, #0
+ 193 007c 0ED1     		bne	.L2
+  83:main.c        ****              ChannelDescriptorsArray[Channel_Number].Current_L == 0)
+  84:main.c        ****     {
+  85:main.c        ****     ChannelDescriptorsArray[Channel_Number].Current_D = 
+  86:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_D;
+ 194              		.loc 1 86 0
+ 195 007e 084A     		ldr	r2, .L7
+ 196 0080 4100     		lsls	r1, r0, #1
+ 197 0082 0C18     		adds	r4, r1, r0
+ 198 0084 A300     		lsls	r3, r4, #2
+ 199 0086 D318     		adds	r3, r2, r3
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 6
+
+
+ 200 0088 DE78     		ldrb	r6, [r3, #3]
+  85:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_D;
+ 201              		.loc 1 85 0
+ 202 008a 2500     		movs	r5, r4
+ 203 008c A400     		lsls	r4, r4, #2
+ 204 008e A654     		strb	r6, [r4, r2]
+  87:main.c        ****     
+  88:main.c        ****     ChannelDescriptorsArray[Channel_Number].Current_H = 
+  89:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_H;
+ 205              		.loc 1 89 0
+ 206 0090 1C79     		ldrb	r4, [r3, #4]
+  88:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_H;
+ 207              		.loc 1 88 0
+ 208 0092 5C70     		strb	r4, [r3, #1]
+  90:main.c        ****     
+  91:main.c        ****     ChannelDescriptorsArray[Channel_Number].Current_L = 
+  92:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_L;
+ 209              		.loc 1 92 0
+ 210 0094 5C79     		ldrb	r4, [r3, #5]
+  91:main.c        ****     ChannelDescriptorsArray[Channel_Number].Max_L;
+ 211              		.loc 1 91 0
+ 212 0096 AB00     		lsls	r3, r5, #2
+ 213 0098 D318     		adds	r3, r2, r3
+ 214 009a 9C70     		strb	r4, [r3, #2]
+ 215              	.LVL21:
+ 216              	.L2:
+  93:main.c        **** 
+  94:main.c        ****     return;
+  95:main.c        ****     }
+  96:main.c        **** }
+ 217              		.loc 1 96 0
+ 218              		@ sp needed
+ 219 009c 70BD     		pop	{r4, r5, r6, pc}
+ 220              	.L8:
+ 221 009e C046     		.align	2
+ 222              	.L7:
+ 223 00a0 00000000 		.word	ChannelDescriptorsArray
+ 224              		.cfi_endproc
+ 225              	.LFE33:
+ 226              		.size	ChannelController, .-ChannelController
+ 227              		.section	.text.TimeSlotInterrupt,"ax",%progbits
+ 228              		.align	2
+ 229              		.global	TimeSlotInterrupt
+ 230              		.code	16
+ 231              		.thumb_func
+ 232              		.type	TimeSlotInterrupt, %function
+ 233              	TimeSlotInterrupt:
+ 234              	.LFB34:
+  97:main.c        **** /**************************************************************************
+  98:main.c        ****  Interrupt Handler called every 500ms
+  99:main.c        **** **************************************************************************/
+ 100:main.c        **** CY_ISR(TimeSlotInterrupt)
+ 101:main.c        **** {
+ 235              		.loc 1 101 0
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 7
+
+
+ 239 0000 10B5     		push	{r4, lr}
+ 240              		.cfi_def_cfa_offset 8
+ 241              		.cfi_offset 4, -8
+ 242              		.cfi_offset 14, -4
+ 243              	.LVL22:
+ 102:main.c        ****  uint8 CurrentChannelNumber;
+ 103:main.c        ****  /* Call Channel controller function for each of channel */
+ 104:main.c        ****  for (CurrentChannelNumber = 0;
+ 244              		.loc 1 104 0
+ 245 0002 0024     		movs	r4, #0
+ 246 0004 04E0     		b	.L10
+ 247              	.LVL23:
+ 248              	.L11:
+ 105:main.c        ****  CurrentChannelNumber < NUMBER_OF_CHANNELS;
+ 106:main.c        ****  CurrentChannelNumber++)
+ 107:main.c        ****  {
+ 108:main.c        ****     ChannelController(CurrentChannelNumber);
+ 249              		.loc 1 108 0
+ 250 0006 2000     		movs	r0, r4
+ 251 0008 FFF7FEFF 		bl	ChannelController
+ 252              	.LVL24:
+ 106:main.c        ****  {
+ 253              		.loc 1 106 0
+ 254 000c 0134     		adds	r4, r4, #1
+ 255              	.LVL25:
+ 256 000e E4B2     		uxtb	r4, r4
+ 257              	.LVL26:
+ 258              	.L10:
+ 104:main.c        ****  CurrentChannelNumber < NUMBER_OF_CHANNELS;
+ 259              		.loc 1 104 0 discriminator 1
+ 260 0010 012C     		cmp	r4, #1
+ 261 0012 F8D9     		bls	.L11
+ 109:main.c        ****  }
+ 110:main.c        **** }
+ 262              		.loc 1 110 0
+ 263              		@ sp needed
+ 264              	.LVL27:
+ 265 0014 10BD     		pop	{r4, pc}
+ 266              		.cfi_endproc
+ 267              	.LFE34:
+ 268              		.size	TimeSlotInterrupt, .-TimeSlotInterrupt
+ 269 0016 C046     		.section	.text.UpdateChannelDescriptor,"ax",%progbits
+ 270              		.align	2
+ 271              		.global	UpdateChannelDescriptor
+ 272              		.code	16
+ 273              		.thumb_func
+ 274              		.type	UpdateChannelDescriptor, %function
+ 275              	UpdateChannelDescriptor:
+ 276              	.LFB35:
+ 111:main.c        **** /**************************************************************************
+ 112:main.c        ****  This function to update channel descriptors and pin state.
+ 113:main.c        ****  Counters D, H and L of all other channels are reset to the initial state
+ 114:main.c        ****  to start all channels synchronously.
+ 115:main.c        ****  Parameters:
+ 116:main.c        ****  ChannelNumber - channel to be updated;
+ 117:main.c        ****  D - new value of delay D;
+ 118:main.c        ****  H - new value of pulse duration H;
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 8
+
+
+ 119:main.c        ****  L - new value of pause duration L;
+ 120:main.c        **** **************************************************************************/
+ 121:main.c        **** void UpdateChannelDescriptor(uint8 ChannelNumber, uint8 D, uint8 H, uint8 L)
+ 122:main.c        **** {
+ 277              		.loc 1 122 0
+ 278              		.cfi_startproc
+ 279              		@ args = 0, pretend = 0, frame = 0
+ 280              		@ frame_needed = 0, uses_anonymous_args = 0
+ 281              	.LVL28:
+ 282 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 283              		.cfi_def_cfa_offset 24
+ 284              		.cfi_offset 3, -24
+ 285              		.cfi_offset 4, -20
+ 286              		.cfi_offset 5, -16
+ 287              		.cfi_offset 6, -12
+ 288              		.cfi_offset 7, -8
+ 289              		.cfi_offset 14, -4
+ 123:main.c        ****  uint8 ChannelIdx;
+ 124:main.c        ****  
+ 125:main.c        ****  /* Enter critical section to avoid interrupts during channel descriptors update */
+ 126:main.c        ****  CyGlobalIntDisable; /* Disable global interrupts. */
+ 290              		.loc 1 126 0
+ 291              		.syntax divided
+ 292              	@ 126 "main.c" 1
+ 293 0002 72B6     		CPSID   i
+ 294              	@ 0 "" 2
+ 127:main.c        ****  /* Update channel descriptor values from the data received from UART */
+ 128:main.c        ****  ChannelDescriptorsArray[ChannelNumber].Max_D = D;
+ 295              		.loc 1 128 0
+ 296              		.thumb
+ 297              		.syntax unified
+ 298 0004 104D     		ldr	r5, .L15
+ 299 0006 4600     		lsls	r6, r0, #1
+ 300 0008 3718     		adds	r7, r6, r0
+ 301 000a BC00     		lsls	r4, r7, #2
+ 302 000c 2C19     		adds	r4, r5, r4
+ 303 000e E170     		strb	r1, [r4, #3]
+ 129:main.c        ****  ChannelDescriptorsArray[ChannelNumber].Max_H = H; 
+ 304              		.loc 1 129 0
+ 305 0010 2271     		strb	r2, [r4, #4]
+ 130:main.c        ****  ChannelDescriptorsArray[ChannelNumber].Max_L = L; 
+ 306              		.loc 1 130 0
+ 307 0012 6371     		strb	r3, [r4, #5]
+ 308              	.LVL29:
+ 131:main.c        ****  
+ 132:main.c        ****  /* Reload counters in all channels to synchronize all channels. */
+ 133:main.c        ****  for (ChannelIdx = 0; ChannelIdx < NUMBER_OF_CHANNELS; ChannelIdx++)
+ 309              		.loc 1 133 0
+ 310 0014 0024     		movs	r4, #0
+ 311 0016 13E0     		b	.L13
+ 312              	.LVL30:
+ 313              	.L14:
+ 134:main.c        ****  {
+ 135:main.c        ****  ChannelDescriptorsArray[ChannelIdx].Current_D = ChannelDescriptorsArray[ChannelIdx].Max_D;
+ 314              		.loc 1 135 0 discriminator 3
+ 315 0018 0B49     		ldr	r1, .L15
+ 316 001a 6200     		lsls	r2, r4, #1
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 9
+
+
+ 317 001c 1019     		adds	r0, r2, r4
+ 318 001e 8300     		lsls	r3, r0, #2
+ 319 0020 CB18     		adds	r3, r1, r3
+ 320 0022 DE78     		ldrb	r6, [r3, #3]
+ 321 0024 0500     		movs	r5, r0
+ 322 0026 8000     		lsls	r0, r0, #2
+ 323 0028 4654     		strb	r6, [r0, r1]
+ 136:main.c        ****  ChannelDescriptorsArray[ChannelIdx].Current_H = ChannelDescriptorsArray[ChannelIdx].Max_H;
+ 324              		.loc 1 136 0 discriminator 3
+ 325 002a 1879     		ldrb	r0, [r3, #4]
+ 326 002c 5870     		strb	r0, [r3, #1]
+ 137:main.c        ****  ChannelDescriptorsArray[ChannelIdx].Current_L = ChannelDescriptorsArray[ChannelIdx].Max_L;
+ 327              		.loc 1 137 0 discriminator 3
+ 328 002e 5879     		ldrb	r0, [r3, #5]
+ 329 0030 9870     		strb	r0, [r3, #2]
+ 138:main.c        ****  /* Reset output pin corresponding to this channel */
+ 139:main.c        ****  ChannelDescriptorsArray[ChannelIdx].PinControlFunction(LED_OFF_VALUE);
+ 330              		.loc 1 139 0 discriminator 3
+ 331 0032 AB00     		lsls	r3, r5, #2
+ 332 0034 CB18     		adds	r3, r1, r3
+ 333 0036 9B68     		ldr	r3, [r3, #8]
+ 334 0038 0120     		movs	r0, #1
+ 335 003a 9847     		blx	r3
+ 336              	.LVL31:
+ 133:main.c        ****  {
+ 337              		.loc 1 133 0 discriminator 3
+ 338 003c 0134     		adds	r4, r4, #1
+ 339              	.LVL32:
+ 340 003e E4B2     		uxtb	r4, r4
+ 341              	.LVL33:
+ 342              	.L13:
+ 133:main.c        ****  {
+ 343              		.loc 1 133 0 is_stmt 0 discriminator 1
+ 344 0040 012C     		cmp	r4, #1
+ 345 0042 E9D9     		bls	.L14
+ 140:main.c        ****  }
+ 141:main.c        ****  /* Exit critical section */
+ 142:main.c        ****  CyGlobalIntEnable; /* Enable global interrupts. */
+ 346              		.loc 1 142 0 is_stmt 1
+ 347              		.syntax divided
+ 348              	@ 142 "main.c" 1
+ 349 0044 62B6     		CPSIE   i
+ 350              	@ 0 "" 2
+ 143:main.c        **** }
+ 351              		.loc 1 143 0
+ 352              		.thumb
+ 353              		.syntax unified
+ 354              		@ sp needed
+ 355              	.LVL34:
+ 356 0046 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 357              	.L16:
+ 358              		.align	2
+ 359              	.L15:
+ 360 0048 00000000 		.word	ChannelDescriptorsArray
+ 361              		.cfi_endproc
+ 362              	.LFE35:
+ 363              		.size	UpdateChannelDescriptor, .-UpdateChannelDescriptor
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 10
+
+
+ 364              		.section	.text.UartBufferParser,"ax",%progbits
+ 365              		.align	2
+ 366              		.global	UartBufferParser
+ 367              		.code	16
+ 368              		.thumb_func
+ 369              		.type	UartBufferParser, %function
+ 370              	UartBufferParser:
+ 371              	.LFB36:
+ 144:main.c        **** /**************************************************************************
+ 145:main.c        ****  This function parses the UART buffer and update counters D, H and L
+ 146:main.c        **** **************************************************************************/
+ 147:main.c        **** void UartBufferParser(void)
+ 148:main.c        **** {
+ 372              		.loc 1 148 0
+ 373              		.cfi_startproc
+ 374              		@ args = 0, pretend = 0, frame = 0
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376 0000 10B5     		push	{r4, lr}
+ 377              		.cfi_def_cfa_offset 8
+ 378              		.cfi_offset 4, -8
+ 379              		.cfi_offset 14, -4
+ 149:main.c        ****  uint8 ChannelNumber;
+ 150:main.c        ****  uint8 ValueD, ValueH, ValueL;
+ 151:main.c        ****  
+ 152:main.c        ****  ValueD = UartBuffer[UART_BUFFER_D_VALUE_IDX] - ASCII_OFFSET_FOR_DIGITS;
+ 380              		.loc 1 152 0
+ 381 0002 1B4C     		ldr	r4, .L24
+ 382 0004 6179     		ldrb	r1, [r4, #5]
+ 383 0006 3039     		subs	r1, r1, #48
+ 384 0008 C9B2     		uxtb	r1, r1
+ 385              	.LVL35:
+ 153:main.c        ****  ValueH = UartBuffer[UART_BUFFER_H_VALUE_IDX] - ASCII_OFFSET_FOR_DIGITS;
+ 386              		.loc 1 153 0
+ 387 000a A279     		ldrb	r2, [r4, #6]
+ 388 000c 303A     		subs	r2, r2, #48
+ 389 000e D2B2     		uxtb	r2, r2
+ 390              	.LVL36:
+ 154:main.c        ****  ValueL = UartBuffer[UART_BUFFER_L_VALUE_IDX] - ASCII_OFFSET_FOR_DIGITS;   
+ 391              		.loc 1 154 0
+ 392 0010 E379     		ldrb	r3, [r4, #7]
+ 393 0012 303B     		subs	r3, r3, #48
+ 394 0014 DBB2     		uxtb	r3, r3
+ 395              	.LVL37:
+ 155:main.c        ****  ChannelNumber = UartBuffer[UART_BUFFER_CHANNEL_IDX] - ASCII_OFFSET_FOR_DIGITS;
+ 396              		.loc 1 155 0
+ 397 0016 E078     		ldrb	r0, [r4, #3]
+ 398 0018 3038     		subs	r0, r0, #48
+ 399 001a C0B2     		uxtb	r0, r0
+ 400              	.LVL38:
+ 156:main.c        **** 
+ 157:main.c        ****  if ('A' != UartBuffer[UART_BUFFER_A_IDX])
+ 401              		.loc 1 157 0
+ 402 001c 2478     		ldrb	r4, [r4]
+ 403 001e 412C     		cmp	r4, #65
+ 404 0020 02D0     		beq	.L18
+ 158:main.c        ****     {
+ 159:main.c        ****         /* UART buffer content does not match to the expected value "A". Return. */
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 11
+
+
+ 160:main.c        ****         Error_Return();
+ 405              		.loc 1 160 0
+ 406 0022 FFF7FEFF 		bl	Error_Return
+ 407              	.LVL39:
+ 161:main.c        ****         return;
+ 408              		.loc 1 161 0
+ 409 0026 21E0     		b	.L17
+ 410              	.LVL40:
+ 411              	.L18:
+ 162:main.c        ****     }
+ 163:main.c        ****  if ('T' != UartBuffer[UART_BUFFER_T_IDX])
+ 412              		.loc 1 163 0
+ 413 0028 114C     		ldr	r4, .L24
+ 414 002a 6478     		ldrb	r4, [r4, #1]
+ 415 002c 542C     		cmp	r4, #84
+ 416 002e 02D0     		beq	.L20
+ 164:main.c        ****     {
+ 165:main.c        ****         Error_Return();
+ 417              		.loc 1 165 0
+ 418 0030 FFF7FEFF 		bl	Error_Return
+ 419              	.LVL41:
+ 166:main.c        ****         return;
+ 420              		.loc 1 166 0
+ 421 0034 1AE0     		b	.L17
+ 422              	.LVL42:
+ 423              	.L20:
+ 167:main.c        ****     }
+ 168:main.c        ****  if ('=' != UartBuffer[UART_BUFFER_EQUALS_IDX])
+ 424              		.loc 1 168 0
+ 425 0036 0E4C     		ldr	r4, .L24
+ 426 0038 A478     		ldrb	r4, [r4, #2]
+ 427 003a 3D2C     		cmp	r4, #61
+ 428 003c 02D0     		beq	.L21
+ 169:main.c        ****     {
+ 170:main.c        ****         Error_Return();
+ 429              		.loc 1 170 0
+ 430 003e FFF7FEFF 		bl	Error_Return
+ 431              	.LVL43:
+ 171:main.c        ****         return;
+ 432              		.loc 1 171 0
+ 433 0042 13E0     		b	.L17
+ 434              	.LVL44:
+ 435              	.L21:
+ 172:main.c        ****     }
+ 173:main.c        ****     
+ 174:main.c        ****  if ('+' != UartBuffer[UART_BUFFER_PLUS_IDX])
+ 436              		.loc 1 174 0
+ 437 0044 0A4C     		ldr	r4, .L24
+ 438 0046 2479     		ldrb	r4, [r4, #4]
+ 439 0048 2B2C     		cmp	r4, #43
+ 440 004a 02D0     		beq	.L22
+ 175:main.c        ****     {
+ 176:main.c        ****         Error_Return();
+ 441              		.loc 1 176 0
+ 442 004c FFF7FEFF 		bl	Error_Return
+ 443              	.LVL45:
+ 177:main.c        ****         return;
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 12
+
+
+ 444              		.loc 1 177 0
+ 445 0050 0CE0     		b	.L17
+ 446              	.LVL46:
+ 447              	.L22:
+ 178:main.c        ****     }
+ 179:main.c        ****     
+ 180:main.c        ****  if (ValueD >= 0 && ValueD <= 9 &&
+ 448              		.loc 1 180 0
+ 449 0052 0929     		cmp	r1, #9
+ 450 0054 08D8     		bhi	.L23
+ 181:main.c        ****      ValueH >= 0 && ValueH <= 9 &&
+ 451              		.loc 1 181 0
+ 452 0056 092A     		cmp	r2, #9
+ 453 0058 06D8     		bhi	.L23
+ 182:main.c        ****      ValueL >= 0 && ValueL <= 9 &&
+ 454              		.loc 1 182 0
+ 455 005a 092B     		cmp	r3, #9
+ 456 005c 04D8     		bhi	.L23
+ 183:main.c        ****      ChannelNumber >= 0 && ChannelNumber < NUMBER_OF_CHANNELS)
+ 457              		.loc 1 183 0
+ 458 005e 0128     		cmp	r0, #1
+ 459 0060 02D8     		bhi	.L23
+ 184:main.c        ****     {
+ 185:main.c        ****         /* Update channel descriptor with received values D, H and L */
+ 186:main.c        ****         UpdateChannelDescriptor(ChannelNumber, ValueD, ValueH, ValueL);
+ 460              		.loc 1 186 0
+ 461 0062 FFF7FEFF 		bl	UpdateChannelDescriptor
+ 462              	.LVL47:
+ 463 0066 01E0     		b	.L17
+ 464              	.LVL48:
+ 465              	.L23:
+ 187:main.c        ****     }
+ 188:main.c        ****  else
+ 189:main.c        ****     {
+ 190:main.c        ****         Error_Return();
+ 466              		.loc 1 190 0
+ 467 0068 FFF7FEFF 		bl	Error_Return
+ 468              	.LVL49:
+ 469              	.L17:
+ 191:main.c        ****     }
+ 192:main.c        **** }
+ 470              		.loc 1 192 0
+ 471              		@ sp needed
+ 472 006c 10BD     		pop	{r4, pc}
+ 473              	.L25:
+ 474 006e C046     		.align	2
+ 475              	.L24:
+ 476 0070 00000000 		.word	UartBuffer
+ 477              		.cfi_endproc
+ 478              	.LFE36:
+ 479              		.size	UartBufferParser, .-UartBufferParser
+ 480              		.section	.text.UartDataReader,"ax",%progbits
+ 481              		.align	2
+ 482              		.global	UartDataReader
+ 483              		.code	16
+ 484              		.thumb_func
+ 485              		.type	UartDataReader, %function
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 13
+
+
+ 486              	UartDataReader:
+ 487              	.LFB37:
+ 193:main.c        **** /**************************************************************************
+ 194:main.c        ****  This function to read bytes (characters) from UART, collect data to the
+ 195:main.c        ****  buffer and parse the buffer.
+ 196:main.c        **** **************************************************************************/
+ 197:main.c        **** void UartDataReader(void)
+ 198:main.c        **** {
+ 488              		.loc 1 198 0
+ 489              		.cfi_startproc
+ 490              		@ args = 0, pretend = 0, frame = 0
+ 491              		@ frame_needed = 0, uses_anonymous_args = 0
+ 492 0000 10B5     		push	{r4, lr}
+ 493              		.cfi_def_cfa_offset 8
+ 494              		.cfi_offset 4, -8
+ 495              		.cfi_offset 14, -4
+ 496              	.LVL50:
+ 199:main.c        ****  char CurrentCharacter = 0;
+ 200:main.c        ****  CurrentCharacter = UART_1_UartGetChar();
+ 497              		.loc 1 200 0
+ 498 0002 FFF7FEFF 		bl	UART_1_UartGetChar
+ 499              	.LVL51:
+ 500 0006 C4B2     		uxtb	r4, r0
+ 501              	.LVL52:
+ 201:main.c        ****  if (0 == CurrentCharacter)
+ 502              		.loc 1 201 0
+ 503 0008 002C     		cmp	r4, #0
+ 504 000a 16D0     		beq	.L26
+ 202:main.c        ****  {
+ 203:main.c        ****  /* If current character equal to zero it means that no data received
+ 204:main.c        **** from UART.
+ 205:main.c        ****  Retrun from the function. */
+ 206:main.c        ****  return;
+ 207:main.c        ****  }
+ 208:main.c        ****  
+ 209:main.c        ****  /* Send back received character to see it in the terminal */
+ 210:main.c        ****  UART_1_UartPutChar(CurrentCharacter);
+ 505              		.loc 1 210 0
+ 506 000c FF23     		movs	r3, #255
+ 507 000e 1840     		ands	r0, r3
+ 508 0010 FFF7FEFF 		bl	UART_1_SpiUartWriteTxData
+ 509              	.LVL53:
+ 211:main.c        ****  
+ 212:main.c        ****  /* Check if received character is "A" (== indicator of packet begin) */
+ 213:main.c        ****  if ('A' == CurrentCharacter)
+ 510              		.loc 1 213 0
+ 511 0014 412C     		cmp	r4, #65
+ 512 0016 02D1     		bne	.L28
+ 214:main.c        ****  {
+ 215:main.c        ****  /* UART received character "A". Reset index to begin of the UART buffer */
+ 216:main.c        ****  UartBufferIdx = 0;
+ 513              		.loc 1 216 0
+ 514 0018 0022     		movs	r2, #0
+ 515 001a 084B     		ldr	r3, .L29
+ 516 001c 1A70     		strb	r2, [r3]
+ 517              	.L28:
+ 217:main.c        ****  }
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 14
+
+
+ 218:main.c        ****  /* Put received character to UART buffer and increment index. */
+ 219:main.c        ****  UartBuffer[UartBufferIdx] = CurrentCharacter;
+ 518              		.loc 1 219 0
+ 519 001e 074A     		ldr	r2, .L29
+ 520 0020 1378     		ldrb	r3, [r2]
+ 521 0022 0749     		ldr	r1, .L29+4
+ 522 0024 CC54     		strb	r4, [r1, r3]
+ 220:main.c        ****  UartBufferIdx++;
+ 523              		.loc 1 220 0
+ 524 0026 0133     		adds	r3, r3, #1
+ 525 0028 DBB2     		uxtb	r3, r3
+ 526 002a 1370     		strb	r3, [r2]
+ 221:main.c        ****  
+ 222:main.c        ****  /* Check if UART buffer is filled */
+ 223:main.c        ****  if (UART_BUFFER_SIZE == UartBufferIdx)
+ 527              		.loc 1 223 0
+ 528 002c 072B     		cmp	r3, #7
+ 529 002e 04D1     		bne	.L26
+ 224:main.c        ****  {
+ 225:main.c        ****  /* UART buffer is full. Start parse this buffer. */
+ 226:main.c        ****  UartBufferParser();
+ 530              		.loc 1 226 0
+ 531 0030 FFF7FEFF 		bl	UartBufferParser
+ 532              	.LVL54:
+ 227:main.c        ****  /* Reset index to begin of the UART buffer */
+ 228:main.c        ****  UartBufferIdx = 0;
+ 533              		.loc 1 228 0
+ 534 0034 0022     		movs	r2, #0
+ 535 0036 014B     		ldr	r3, .L29
+ 536 0038 1A70     		strb	r2, [r3]
+ 537              	.L26:
+ 229:main.c        ****  }
+ 230:main.c        **** }
+ 538              		.loc 1 230 0
+ 539              		@ sp needed
+ 540              	.LVL55:
+ 541 003a 10BD     		pop	{r4, pc}
+ 542              	.L30:
+ 543              		.align	2
+ 544              	.L29:
+ 545 003c 00000000 		.word	UartBufferIdx
+ 546 0040 00000000 		.word	UartBuffer
+ 547              		.cfi_endproc
+ 548              	.LFE37:
+ 549              		.size	UartDataReader, .-UartDataReader
+ 550              		.section	.text.Init,"ax",%progbits
+ 551              		.align	2
+ 552              		.global	Init
+ 553              		.code	16
+ 554              		.thumb_func
+ 555              		.type	Init, %function
+ 556              	Init:
+ 557              	.LFB38:
+ 231:main.c        **** /**************************************************************************
+ 232:main.c        ****  This function performs generic initialization.
+ 233:main.c        **** **************************************************************************/
+ 234:main.c        **** void Init(void)
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 15
+
+
+ 235:main.c        **** {
+ 558              		.loc 1 235 0
+ 559              		.cfi_startproc
+ 560              		@ args = 0, pretend = 0, frame = 0
+ 561              		@ frame_needed = 0, uses_anonymous_args = 0
+ 562 0000 10B5     		push	{r4, lr}
+ 563              		.cfi_def_cfa_offset 8
+ 564              		.cfi_offset 4, -8
+ 565              		.cfi_offset 14, -4
+ 236:main.c        ****  /* Assign pin control functions to the channel descriptors. */
+ 237:main.c        ****  ChannelDescriptorsArray[0].PinControlFunction = Blue_Output_Write;
+ 566              		.loc 1 237 0
+ 567 0002 064B     		ldr	r3, .L32
+ 568 0004 064A     		ldr	r2, .L32+4
+ 569 0006 9A60     		str	r2, [r3, #8]
+ 238:main.c        ****  ChannelDescriptorsArray[1].PinControlFunction = Green_Output_Write;
+ 570              		.loc 1 238 0
+ 571 0008 064A     		ldr	r2, .L32+8
+ 572 000a 5A61     		str	r2, [r3, #20]
+ 239:main.c        ****  
+ 240:main.c        **** /* UART component start */
+ 241:main.c        ****  UART_1_Start();
+ 573              		.loc 1 241 0
+ 574 000c FFF7FEFF 		bl	UART_1_Start
+ 575              	.LVL56:
+ 242:main.c        **** 
+ 243:main.c        ****  /* Start Interrupt component */
+ 244:main.c        ****  isr_1_StartEx(TimeSlotInterrupt);
+ 576              		.loc 1 244 0
+ 577 0010 0548     		ldr	r0, .L32+12
+ 578 0012 FFF7FEFF 		bl	isr_1_StartEx
+ 579              	.LVL57:
+ 245:main.c        **** 
+ 246:main.c        ****  /* Start component Timer */
+ 247:main.c        ****  Timer_1_Start();
+ 580              		.loc 1 247 0
+ 581 0016 FFF7FEFF 		bl	Timer_1_Start
+ 582              	.LVL58:
+ 248:main.c        **** }
+ 583              		.loc 1 248 0
+ 584              		@ sp needed
+ 585 001a 10BD     		pop	{r4, pc}
+ 586              	.L33:
+ 587              		.align	2
+ 588              	.L32:
+ 589 001c 00000000 		.word	ChannelDescriptorsArray
+ 590 0020 00000000 		.word	Blue_Output_Write
+ 591 0024 00000000 		.word	Green_Output_Write
+ 592 0028 00000000 		.word	TimeSlotInterrupt
+ 593              		.cfi_endproc
+ 594              	.LFE38:
+ 595              		.size	Init, .-Init
+ 596              		.section	.text.main,"ax",%progbits
+ 597              		.align	2
+ 598              		.global	main
+ 599              		.code	16
+ 600              		.thumb_func
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 16
+
+
+ 601              		.type	main, %function
+ 602              	main:
+ 603              	.LFB39:
+ 249:main.c        **** /**************************************************************************
+ 250:main.c        ****  Main function
+ 251:main.c        **** **************************************************************************/
+ 252:main.c        **** int main(void)
+ 253:main.c        **** {
+ 604              		.loc 1 253 0
+ 605              		.cfi_startproc
+ 606              		@ Volatile: function does not return.
+ 607              		@ args = 0, pretend = 0, frame = 0
+ 608              		@ frame_needed = 0, uses_anonymous_args = 0
+ 609 0000 10B5     		push	{r4, lr}
+ 610              		.cfi_def_cfa_offset 8
+ 611              		.cfi_offset 4, -8
+ 612              		.cfi_offset 14, -4
+ 254:main.c        ****  CyGlobalIntEnable; /* Enable global interrupts. */
+ 613              		.loc 1 254 0
+ 614              		.syntax divided
+ 615              	@ 254 "main.c" 1
+ 616 0002 62B6     		CPSIE   i
+ 617              	@ 0 "" 2
+ 255:main.c        ****  Red_Output_Write(1);
+ 618              		.loc 1 255 0
+ 619              		.thumb
+ 620              		.syntax unified
+ 621 0004 0120     		movs	r0, #1
+ 622 0006 FFF7FEFF 		bl	Red_Output_Write
+ 623              	.LVL59:
+ 256:main.c        ****  Blue_Output_Write(1);
+ 624              		.loc 1 256 0
+ 625 000a 0120     		movs	r0, #1
+ 626 000c FFF7FEFF 		bl	Blue_Output_Write
+ 627              	.LVL60:
+ 257:main.c        ****  Green_Output_Write(1);
+ 628              		.loc 1 257 0
+ 629 0010 0120     		movs	r0, #1
+ 630 0012 FFF7FEFF 		bl	Green_Output_Write
+ 631              	.LVL61:
+ 258:main.c        ****  /* Perform generic initialization */
+ 259:main.c        ****  Init(); 
+ 632              		.loc 1 259 0
+ 633 0016 FFF7FEFF 		bl	Init
+ 634              	.LVL62:
+ 635              	.L35:
+ 260:main.c        ****  /* Infinite loop */
+ 261:main.c        ****  for(;;)
+ 262:main.c        ****  {
+ 263:main.c        ****     UartDataReader();
+ 636              		.loc 1 263 0 discriminator 1
+ 637 001a FFF7FEFF 		bl	UartDataReader
+ 638              	.LVL63:
+ 639 001e FCE7     		b	.L35
+ 640              		.cfi_endproc
+ 641              	.LFE39:
+ 642              		.size	main, .-main
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 17
+
+
+ 643              		.comm	UartBufferIdx,1,1
+ 644              		.comm	UartBuffer,7,4
+ 645              		.comm	ChannelDescriptorsArray,24,4
+ 646              		.text
+ 647              	.Letext0:
+ 648              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 649              		.file 3 "Generated_Source\\PSoC4/UART_1_SPI_UART.h"
+ 650              		.file 4 "Generated_Source\\PSoC4/UART_1.h"
+ 651              		.file 5 "Generated_Source\\PSoC4/isr_1.h"
+ 652              		.file 6 "Generated_Source\\PSoC4/Timer_1.h"
+ 653              		.file 7 "Generated_Source\\PSoC4/Red_Output.h"
+ 654              		.file 8 "Generated_Source\\PSoC4/Blue_Output.h"
+ 655              		.file 9 "Generated_Source\\PSoC4/Green_Output.h"
+ 656              		.section	.debug_info,"",%progbits
+ 657              	.Ldebug_info0:
+ 658 0000 08050000 		.4byte	0x508
+ 659 0004 0400     		.2byte	0x4
+ 660 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 661 000a 04       		.byte	0x4
+ 662 000b 01       		.uleb128 0x1
+ 663 000c 47020000 		.4byte	.LASF50
+ 664 0010 0C       		.byte	0xc
+ 665 0011 FB020000 		.4byte	.LASF51
+ 666 0015 8D010000 		.4byte	.LASF52
+ 667 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 668 001d 00000000 		.4byte	0
+ 669 0021 00000000 		.4byte	.Ldebug_line0
+ 670 0025 02       		.uleb128 0x2
+ 671 0026 01       		.byte	0x1
+ 672 0027 06       		.byte	0x6
+ 673 0028 BE000000 		.4byte	.LASF0
+ 674 002c 02       		.uleb128 0x2
+ 675 002d 01       		.byte	0x1
+ 676 002e 08       		.byte	0x8
+ 677 002f D1000000 		.4byte	.LASF1
+ 678 0033 02       		.uleb128 0x2
+ 679 0034 02       		.byte	0x2
+ 680 0035 05       		.byte	0x5
+ 681 0036 5C010000 		.4byte	.LASF2
+ 682 003a 02       		.uleb128 0x2
+ 683 003b 02       		.byte	0x2
+ 684 003c 07       		.byte	0x7
+ 685 003d 0D010000 		.4byte	.LASF3
+ 686 0041 02       		.uleb128 0x2
+ 687 0042 04       		.byte	0x4
+ 688 0043 05       		.byte	0x5
+ 689 0044 22030000 		.4byte	.LASF4
+ 690 0048 02       		.uleb128 0x2
+ 691 0049 04       		.byte	0x4
+ 692 004a 07       		.byte	0x7
+ 693 004b F4000000 		.4byte	.LASF5
+ 694 004f 02       		.uleb128 0x2
+ 695 0050 08       		.byte	0x8
+ 696 0051 05       		.byte	0x5
+ 697 0052 ED020000 		.4byte	.LASF6
+ 698 0056 02       		.uleb128 0x2
+ 699 0057 08       		.byte	0x8
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 18
+
+
+ 700 0058 07       		.byte	0x7
+ 701 0059 F4010000 		.4byte	.LASF7
+ 702 005d 03       		.uleb128 0x3
+ 703 005e 04       		.byte	0x4
+ 704 005f 05       		.byte	0x5
+ 705 0060 696E7400 		.ascii	"int\000"
+ 706 0064 02       		.uleb128 0x2
+ 707 0065 04       		.byte	0x4
+ 708 0066 07       		.byte	0x7
+ 709 0067 E1010000 		.4byte	.LASF8
+ 710 006b 04       		.uleb128 0x4
+ 711 006c 1C030000 		.4byte	.LASF9
+ 712 0070 02       		.byte	0x2
+ 713 0071 FC01     		.2byte	0x1fc
+ 714 0073 2C000000 		.4byte	0x2c
+ 715 0077 04       		.uleb128 0x4
+ 716 0078 86010000 		.4byte	.LASF10
+ 717 007c 02       		.byte	0x2
+ 718 007d FE01     		.2byte	0x1fe
+ 719 007f 48000000 		.4byte	0x48
+ 720 0083 02       		.uleb128 0x2
+ 721 0084 04       		.byte	0x4
+ 722 0085 04       		.byte	0x4
+ 723 0086 B8000000 		.4byte	.LASF11
+ 724 008a 02       		.uleb128 0x2
+ 725 008b 08       		.byte	0x8
+ 726 008c 04       		.byte	0x4
+ 727 008d 55010000 		.4byte	.LASF12
+ 728 0091 02       		.uleb128 0x2
+ 729 0092 01       		.byte	0x1
+ 730 0093 08       		.byte	0x8
+ 731 0094 02030000 		.4byte	.LASF13
+ 732 0098 02       		.uleb128 0x2
+ 733 0099 08       		.byte	0x8
+ 734 009a 04       		.byte	0x4
+ 735 009b 39030000 		.4byte	.LASF14
+ 736 009f 02       		.uleb128 0x2
+ 737 00a0 04       		.byte	0x4
+ 738 00a1 07       		.byte	0x7
+ 739 00a2 E4020000 		.4byte	.LASF15
+ 740 00a6 05       		.uleb128 0x5
+ 741 00a7 0C       		.byte	0xc
+ 742 00a8 01       		.byte	0x1
+ 743 00a9 16       		.byte	0x16
+ 744 00aa 03010000 		.4byte	0x103
+ 745 00ae 06       		.uleb128 0x6
+ 746 00af 2E020000 		.4byte	.LASF16
+ 747 00b3 01       		.byte	0x1
+ 748 00b4 18       		.byte	0x18
+ 749 00b5 6B000000 		.4byte	0x6b
+ 750 00b9 00       		.byte	0
+ 751 00ba 06       		.uleb128 0x6
+ 752 00bb 3D020000 		.4byte	.LASF17
+ 753 00bf 01       		.byte	0x1
+ 754 00c0 19       		.byte	0x19
+ 755 00c1 6B000000 		.4byte	0x6b
+ 756 00c5 01       		.byte	0x1
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 19
+
+
+ 757 00c6 06       		.uleb128 0x6
+ 758 00c7 9B000000 		.4byte	.LASF18
+ 759 00cb 01       		.byte	0x1
+ 760 00cc 1A       		.byte	0x1a
+ 761 00cd 6B000000 		.4byte	0x6b
+ 762 00d1 02       		.byte	0x2
+ 763 00d2 06       		.uleb128 0x6
+ 764 00d3 80010000 		.4byte	.LASF19
+ 765 00d7 01       		.byte	0x1
+ 766 00d8 1B       		.byte	0x1b
+ 767 00d9 6B000000 		.4byte	0x6b
+ 768 00dd 03       		.byte	0x3
+ 769 00de 06       		.uleb128 0x6
+ 770 00df 16030000 		.4byte	.LASF20
+ 771 00e3 01       		.byte	0x1
+ 772 00e4 1C       		.byte	0x1c
+ 773 00e5 6B000000 		.4byte	0x6b
+ 774 00e9 04       		.byte	0x4
+ 775 00ea 06       		.uleb128 0x6
+ 776 00eb EE010000 		.4byte	.LASF21
+ 777 00ef 01       		.byte	0x1
+ 778 00f0 1D       		.byte	0x1d
+ 779 00f1 6B000000 		.4byte	0x6b
+ 780 00f5 05       		.byte	0x5
+ 781 00f6 06       		.uleb128 0x6
+ 782 00f7 88000000 		.4byte	.LASF22
+ 783 00fb 01       		.byte	0x1
+ 784 00fc 1E       		.byte	0x1e
+ 785 00fd 0E010000 		.4byte	0x10e
+ 786 0101 08       		.byte	0x8
+ 787 0102 00       		.byte	0
+ 788 0103 07       		.uleb128 0x7
+ 789 0104 0E010000 		.4byte	0x10e
+ 790 0108 08       		.uleb128 0x8
+ 791 0109 6B000000 		.4byte	0x6b
+ 792 010d 00       		.byte	0
+ 793 010e 09       		.uleb128 0x9
+ 794 010f 04       		.byte	0x4
+ 795 0110 03010000 		.4byte	0x103
+ 796 0114 0A       		.uleb128 0xa
+ 797 0115 52000000 		.4byte	.LASF23
+ 798 0119 01       		.byte	0x1
+ 799 011a 1F       		.byte	0x1f
+ 800 011b A6000000 		.4byte	0xa6
+ 801 011f 0B       		.uleb128 0xb
+ 802 0120 48010000 		.4byte	.LASF24
+ 803 0124 01       		.byte	0x1
+ 804 0125 29       		.byte	0x29
+ 805 0126 00000000 		.4byte	.LFB32
+ 806 012a 46000000 		.4byte	.LFE32-.LFB32
+ 807 012e 01       		.uleb128 0x1
+ 808 012f 9C       		.byte	0x9c
+ 809 0130 09020000 		.4byte	0x209
+ 810 0134 0C       		.uleb128 0xc
+ 811 0135 08000000 		.4byte	.LVL0
+ 812 0139 B1040000 		.4byte	0x4b1
+ 813 013d 47010000 		.4byte	0x147
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 20
+
+
+ 814 0141 0D       		.uleb128 0xd
+ 815 0142 01       		.uleb128 0x1
+ 816 0143 50       		.byte	0x50
+ 817 0144 01       		.uleb128 0x1
+ 818 0145 3A       		.byte	0x3a
+ 819 0146 00       		.byte	0
+ 820 0147 0C       		.uleb128 0xc
+ 821 0148 0E000000 		.4byte	.LVL1
+ 822 014c B1040000 		.4byte	0x4b1
+ 823 0150 5A010000 		.4byte	0x15a
+ 824 0154 0D       		.uleb128 0xd
+ 825 0155 01       		.uleb128 0x1
+ 826 0156 50       		.byte	0x50
+ 827 0157 01       		.uleb128 0x1
+ 828 0158 3D       		.byte	0x3d
+ 829 0159 00       		.byte	0
+ 830 015a 0C       		.uleb128 0xc
+ 831 015b 14000000 		.4byte	.LVL2
+ 832 015f B1040000 		.4byte	0x4b1
+ 833 0163 6E010000 		.4byte	0x16e
+ 834 0167 0D       		.uleb128 0xd
+ 835 0168 01       		.uleb128 0x1
+ 836 0169 50       		.byte	0x50
+ 837 016a 02       		.uleb128 0x2
+ 838 016b 08       		.byte	0x8
+ 839 016c 20       		.byte	0x20
+ 840 016d 00       		.byte	0
+ 841 016e 0C       		.uleb128 0xc
+ 842 016f 1A000000 		.4byte	.LVL3
+ 843 0173 B1040000 		.4byte	0x4b1
+ 844 0177 82010000 		.4byte	0x182
+ 845 017b 0D       		.uleb128 0xd
+ 846 017c 01       		.uleb128 0x1
+ 847 017d 50       		.byte	0x50
+ 848 017e 02       		.uleb128 0x2
+ 849 017f 08       		.byte	0x8
+ 850 0180 45       		.byte	0x45
+ 851 0181 00       		.byte	0
+ 852 0182 0C       		.uleb128 0xc
+ 853 0183 20000000 		.4byte	.LVL4
+ 854 0187 B1040000 		.4byte	0x4b1
+ 855 018b 96010000 		.4byte	0x196
+ 856 018f 0D       		.uleb128 0xd
+ 857 0190 01       		.uleb128 0x1
+ 858 0191 50       		.byte	0x50
+ 859 0192 02       		.uleb128 0x2
+ 860 0193 08       		.byte	0x8
+ 861 0194 72       		.byte	0x72
+ 862 0195 00       		.byte	0
+ 863 0196 0C       		.uleb128 0xc
+ 864 0197 26000000 		.4byte	.LVL5
+ 865 019b B1040000 		.4byte	0x4b1
+ 866 019f AA010000 		.4byte	0x1aa
+ 867 01a3 0D       		.uleb128 0xd
+ 868 01a4 01       		.uleb128 0x1
+ 869 01a5 50       		.byte	0x50
+ 870 01a6 02       		.uleb128 0x2
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 21
+
+
+ 871 01a7 08       		.byte	0x8
+ 872 01a8 72       		.byte	0x72
+ 873 01a9 00       		.byte	0
+ 874 01aa 0C       		.uleb128 0xc
+ 875 01ab 2C000000 		.4byte	.LVL6
+ 876 01af B1040000 		.4byte	0x4b1
+ 877 01b3 BE010000 		.4byte	0x1be
+ 878 01b7 0D       		.uleb128 0xd
+ 879 01b8 01       		.uleb128 0x1
+ 880 01b9 50       		.byte	0x50
+ 881 01ba 02       		.uleb128 0x2
+ 882 01bb 08       		.byte	0x8
+ 883 01bc 6F       		.byte	0x6f
+ 884 01bd 00       		.byte	0
+ 885 01be 0C       		.uleb128 0xc
+ 886 01bf 32000000 		.4byte	.LVL7
+ 887 01c3 B1040000 		.4byte	0x4b1
+ 888 01c7 D2010000 		.4byte	0x1d2
+ 889 01cb 0D       		.uleb128 0xd
+ 890 01cc 01       		.uleb128 0x1
+ 891 01cd 50       		.byte	0x50
+ 892 01ce 02       		.uleb128 0x2
+ 893 01cf 08       		.byte	0x8
+ 894 01d0 72       		.byte	0x72
+ 895 01d1 00       		.byte	0
+ 896 01d2 0C       		.uleb128 0xc
+ 897 01d3 38000000 		.4byte	.LVL8
+ 898 01d7 B1040000 		.4byte	0x4b1
+ 899 01db E6010000 		.4byte	0x1e6
+ 900 01df 0D       		.uleb128 0xd
+ 901 01e0 01       		.uleb128 0x1
+ 902 01e1 50       		.byte	0x50
+ 903 01e2 02       		.uleb128 0x2
+ 904 01e3 08       		.byte	0x8
+ 905 01e4 20       		.byte	0x20
+ 906 01e5 00       		.byte	0
+ 907 01e6 0C       		.uleb128 0xc
+ 908 01e7 3E000000 		.4byte	.LVL9
+ 909 01eb B1040000 		.4byte	0x4b1
+ 910 01ef F9010000 		.4byte	0x1f9
+ 911 01f3 0D       		.uleb128 0xd
+ 912 01f4 01       		.uleb128 0x1
+ 913 01f5 50       		.byte	0x50
+ 914 01f6 01       		.uleb128 0x1
+ 915 01f7 3A       		.byte	0x3a
+ 916 01f8 00       		.byte	0
+ 917 01f9 0E       		.uleb128 0xe
+ 918 01fa 44000000 		.4byte	.LVL10
+ 919 01fe B1040000 		.4byte	0x4b1
+ 920 0202 0D       		.uleb128 0xd
+ 921 0203 01       		.uleb128 0x1
+ 922 0204 50       		.byte	0x50
+ 923 0205 01       		.uleb128 0x1
+ 924 0206 3D       		.byte	0x3d
+ 925 0207 00       		.byte	0
+ 926 0208 00       		.byte	0
+ 927 0209 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 22
+
+
+ 928 020a 40000000 		.4byte	.LASF25
+ 929 020e 01       		.byte	0x1
+ 930 020f 3C       		.byte	0x3c
+ 931 0210 00000000 		.4byte	.LFB33
+ 932 0214 A4000000 		.4byte	.LFE33-.LFB33
+ 933 0218 01       		.uleb128 0x1
+ 934 0219 9C       		.byte	0x9c
+ 935 021a 57020000 		.4byte	0x257
+ 936 021e 0F       		.uleb128 0xf
+ 937 021f 07030000 		.4byte	.LASF28
+ 938 0223 01       		.byte	0x1
+ 939 0224 3C       		.byte	0x3c
+ 940 0225 6B000000 		.4byte	0x6b
+ 941 0229 00000000 		.4byte	.LLST0
+ 942 022d 10       		.uleb128 0x10
+ 943 022e 24000000 		.4byte	.LVL13
+ 944 0232 3C020000 		.4byte	0x23c
+ 945 0236 0D       		.uleb128 0xd
+ 946 0237 01       		.uleb128 0x1
+ 947 0238 50       		.byte	0x50
+ 948 0239 01       		.uleb128 0x1
+ 949 023a 31       		.byte	0x31
+ 950 023b 00       		.byte	0
+ 951 023c 10       		.uleb128 0x10
+ 952 023d 4A000000 		.4byte	.LVL16
+ 953 0241 4B020000 		.4byte	0x24b
+ 954 0245 0D       		.uleb128 0xd
+ 955 0246 01       		.uleb128 0x1
+ 956 0247 50       		.byte	0x50
+ 957 0248 01       		.uleb128 0x1
+ 958 0249 30       		.byte	0x30
+ 959 024a 00       		.byte	0
+ 960 024b 11       		.uleb128 0x11
+ 961 024c 70000000 		.4byte	.LVL19
+ 962 0250 0D       		.uleb128 0xd
+ 963 0251 01       		.uleb128 0x1
+ 964 0252 50       		.byte	0x50
+ 965 0253 01       		.uleb128 0x1
+ 966 0254 31       		.byte	0x31
+ 967 0255 00       		.byte	0
+ 968 0256 00       		.byte	0
+ 969 0257 0B       		.uleb128 0xb
+ 970 0258 2E000000 		.4byte	.LASF26
+ 971 025c 01       		.byte	0x1
+ 972 025d 64       		.byte	0x64
+ 973 025e 00000000 		.4byte	.LFB34
+ 974 0262 16000000 		.4byte	.LFE34-.LFB34
+ 975 0266 01       		.uleb128 0x1
+ 976 0267 9C       		.byte	0x9c
+ 977 0268 8C020000 		.4byte	0x28c
+ 978 026c 12       		.uleb128 0x12
+ 979 026d 68000000 		.4byte	.LASF30
+ 980 0271 01       		.byte	0x1
+ 981 0272 66       		.byte	0x66
+ 982 0273 6B000000 		.4byte	0x6b
+ 983 0277 6C000000 		.4byte	.LLST1
+ 984 027b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 23
+
+
+ 985 027c 0C000000 		.4byte	.LVL24
+ 986 0280 09020000 		.4byte	0x209
+ 987 0284 0D       		.uleb128 0xd
+ 988 0285 01       		.uleb128 0x1
+ 989 0286 50       		.byte	0x50
+ 990 0287 02       		.uleb128 0x2
+ 991 0288 74       		.byte	0x74
+ 992 0289 00       		.sleb128 0
+ 993 028a 00       		.byte	0
+ 994 028b 00       		.byte	0
+ 995 028c 0B       		.uleb128 0xb
+ 996 028d 0B020000 		.4byte	.LASF27
+ 997 0291 01       		.byte	0x1
+ 998 0292 79       		.byte	0x79
+ 999 0293 00000000 		.4byte	.LFB35
+ 1000 0297 4C000000 		.4byte	.LFE35-.LFB35
+ 1001 029b 01       		.uleb128 0x1
+ 1002 029c 9C       		.byte	0x9c
+ 1003 029d F2020000 		.4byte	0x2f2
+ 1004 02a1 0F       		.uleb128 0xf
+ 1005 02a2 E6000000 		.4byte	.LASF29
+ 1006 02a6 01       		.byte	0x1
+ 1007 02a7 79       		.byte	0x79
+ 1008 02a8 6B000000 		.4byte	0x6b
+ 1009 02ac 96000000 		.4byte	.LLST2
+ 1010 02b0 13       		.uleb128 0x13
+ 1011 02b1 4400     		.ascii	"D\000"
+ 1012 02b3 01       		.byte	0x1
+ 1013 02b4 79       		.byte	0x79
+ 1014 02b5 6B000000 		.4byte	0x6b
+ 1015 02b9 B7000000 		.4byte	.LLST3
+ 1016 02bd 13       		.uleb128 0x13
+ 1017 02be 4800     		.ascii	"H\000"
+ 1018 02c0 01       		.byte	0x1
+ 1019 02c1 79       		.byte	0x79
+ 1020 02c2 6B000000 		.4byte	0x6b
+ 1021 02c6 D8000000 		.4byte	.LLST4
+ 1022 02ca 13       		.uleb128 0x13
+ 1023 02cb 4C00     		.ascii	"L\000"
+ 1024 02cd 01       		.byte	0x1
+ 1025 02ce 79       		.byte	0x79
+ 1026 02cf 6B000000 		.4byte	0x6b
+ 1027 02d3 F9000000 		.4byte	.LLST5
+ 1028 02d7 12       		.uleb128 0x12
+ 1029 02d8 7D000000 		.4byte	.LASF31
+ 1030 02dc 01       		.byte	0x1
+ 1031 02dd 7B       		.byte	0x7b
+ 1032 02de 6B000000 		.4byte	0x6b
+ 1033 02e2 1A010000 		.4byte	.LLST6
+ 1034 02e6 11       		.uleb128 0x11
+ 1035 02e7 3C000000 		.4byte	.LVL31
+ 1036 02eb 0D       		.uleb128 0xd
+ 1037 02ec 01       		.uleb128 0x1
+ 1038 02ed 50       		.byte	0x50
+ 1039 02ee 01       		.uleb128 0x1
+ 1040 02ef 31       		.byte	0x31
+ 1041 02f0 00       		.byte	0
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 24
+
+
+ 1042 02f1 00       		.byte	0
+ 1043 02f2 0B       		.uleb128 0xb
+ 1044 02f3 5D030000 		.4byte	.LASF32
+ 1045 02f7 01       		.byte	0x1
+ 1046 02f8 93       		.byte	0x93
+ 1047 02f9 00000000 		.4byte	.LFB36
+ 1048 02fd 74000000 		.4byte	.LFE36-.LFB36
+ 1049 0301 01       		.uleb128 0x1
+ 1050 0302 9C       		.byte	0x9c
+ 1051 0303 7A030000 		.4byte	0x37a
+ 1052 0307 12       		.uleb128 0x12
+ 1053 0308 E6000000 		.4byte	.LASF29
+ 1054 030c 01       		.byte	0x1
+ 1055 030d 95       		.byte	0x95
+ 1056 030e 6B000000 		.4byte	0x6b
+ 1057 0312 44010000 		.4byte	.LLST7
+ 1058 0316 12       		.uleb128 0x12
+ 1059 0317 CA000000 		.4byte	.LASF33
+ 1060 031b 01       		.byte	0x1
+ 1061 031c 96       		.byte	0x96
+ 1062 031d 6B000000 		.4byte	0x6b
+ 1063 0321 8E010000 		.4byte	.LLST8
+ 1064 0325 12       		.uleb128 0x12
+ 1065 0326 DF000000 		.4byte	.LASF34
+ 1066 032a 01       		.byte	0x1
+ 1067 032b 96       		.byte	0x96
+ 1068 032c 6B000000 		.4byte	0x6b
+ 1069 0330 D8010000 		.4byte	.LLST9
+ 1070 0334 12       		.uleb128 0x12
+ 1071 0335 06010000 		.4byte	.LASF35
+ 1072 0339 01       		.byte	0x1
+ 1073 033a 96       		.byte	0x96
+ 1074 033b 6B000000 		.4byte	0x6b
+ 1075 033f 22020000 		.4byte	.LLST10
+ 1076 0343 14       		.uleb128 0x14
+ 1077 0344 26000000 		.4byte	.LVL39
+ 1078 0348 1F010000 		.4byte	0x11f
+ 1079 034c 14       		.uleb128 0x14
+ 1080 034d 34000000 		.4byte	.LVL41
+ 1081 0351 1F010000 		.4byte	0x11f
+ 1082 0355 14       		.uleb128 0x14
+ 1083 0356 42000000 		.4byte	.LVL43
+ 1084 035a 1F010000 		.4byte	0x11f
+ 1085 035e 14       		.uleb128 0x14
+ 1086 035f 50000000 		.4byte	.LVL45
+ 1087 0363 1F010000 		.4byte	0x11f
+ 1088 0367 14       		.uleb128 0x14
+ 1089 0368 66000000 		.4byte	.LVL47
+ 1090 036c 8C020000 		.4byte	0x28c
+ 1091 0370 14       		.uleb128 0x14
+ 1092 0371 6C000000 		.4byte	.LVL49
+ 1093 0375 1F010000 		.4byte	0x11f
+ 1094 0379 00       		.byte	0
+ 1095 037a 0B       		.uleb128 0xb
+ 1096 037b D5020000 		.4byte	.LASF36
+ 1097 037f 01       		.byte	0x1
+ 1098 0380 C5       		.byte	0xc5
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 25
+
+
+ 1099 0381 00000000 		.4byte	.LFB37
+ 1100 0385 44000000 		.4byte	.LFE37-.LFB37
+ 1101 0389 01       		.uleb128 0x1
+ 1102 038a 9C       		.byte	0x9c
+ 1103 038b BA030000 		.4byte	0x3ba
+ 1104 038f 12       		.uleb128 0x12
+ 1105 0390 37010000 		.4byte	.LASF37
+ 1106 0394 01       		.byte	0x1
+ 1107 0395 C7       		.byte	0xc7
+ 1108 0396 91000000 		.4byte	0x91
+ 1109 039a 6C020000 		.4byte	.LLST11
+ 1110 039e 14       		.uleb128 0x14
+ 1111 039f 06000000 		.4byte	.LVL51
+ 1112 03a3 BD040000 		.4byte	0x4bd
+ 1113 03a7 14       		.uleb128 0x14
+ 1114 03a8 14000000 		.4byte	.LVL53
+ 1115 03ac B1040000 		.4byte	0x4b1
+ 1116 03b0 14       		.uleb128 0x14
+ 1117 03b1 34000000 		.4byte	.LVL54
+ 1118 03b5 F2020000 		.4byte	0x2f2
+ 1119 03b9 00       		.byte	0
+ 1120 03ba 0B       		.uleb128 0xb
+ 1121 03bb 20010000 		.4byte	.LASF38
+ 1122 03bf 01       		.byte	0x1
+ 1123 03c0 EA       		.byte	0xea
+ 1124 03c1 00000000 		.4byte	.LFB38
+ 1125 03c5 2C000000 		.4byte	.LFE38-.LFB38
+ 1126 03c9 01       		.uleb128 0x1
+ 1127 03ca 9C       		.byte	0x9c
+ 1128 03cb F9030000 		.4byte	0x3f9
+ 1129 03cf 14       		.uleb128 0x14
+ 1130 03d0 10000000 		.4byte	.LVL56
+ 1131 03d4 C9040000 		.4byte	0x4c9
+ 1132 03d8 0C       		.uleb128 0xc
+ 1133 03d9 16000000 		.4byte	.LVL57
+ 1134 03dd D4040000 		.4byte	0x4d4
+ 1135 03e1 EF030000 		.4byte	0x3ef
+ 1136 03e5 0D       		.uleb128 0xd
+ 1137 03e6 01       		.uleb128 0x1
+ 1138 03e7 50       		.byte	0x50
+ 1139 03e8 05       		.uleb128 0x5
+ 1140 03e9 03       		.byte	0x3
+ 1141 03ea 00000000 		.4byte	TimeSlotInterrupt
+ 1142 03ee 00       		.byte	0
+ 1143 03ef 14       		.uleb128 0x14
+ 1144 03f0 1A000000 		.4byte	.LVL58
+ 1145 03f4 DF040000 		.4byte	0x4df
+ 1146 03f8 00       		.byte	0
+ 1147 03f9 15       		.uleb128 0x15
+ 1148 03fa 38020000 		.4byte	.LASF53
+ 1149 03fe 01       		.byte	0x1
+ 1150 03ff FC       		.byte	0xfc
+ 1151 0400 5D000000 		.4byte	0x5d
+ 1152 0404 00000000 		.4byte	.LFB39
+ 1153 0408 20000000 		.4byte	.LFE39-.LFB39
+ 1154 040c 01       		.uleb128 0x1
+ 1155 040d 9C       		.byte	0x9c
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 26
+
+
+ 1156 040e 5E040000 		.4byte	0x45e
+ 1157 0412 0C       		.uleb128 0xc
+ 1158 0413 0A000000 		.4byte	.LVL59
+ 1159 0417 EA040000 		.4byte	0x4ea
+ 1160 041b 25040000 		.4byte	0x425
+ 1161 041f 0D       		.uleb128 0xd
+ 1162 0420 01       		.uleb128 0x1
+ 1163 0421 50       		.byte	0x50
+ 1164 0422 01       		.uleb128 0x1
+ 1165 0423 31       		.byte	0x31
+ 1166 0424 00       		.byte	0
+ 1167 0425 0C       		.uleb128 0xc
+ 1168 0426 10000000 		.4byte	.LVL60
+ 1169 042a F5040000 		.4byte	0x4f5
+ 1170 042e 38040000 		.4byte	0x438
+ 1171 0432 0D       		.uleb128 0xd
+ 1172 0433 01       		.uleb128 0x1
+ 1173 0434 50       		.byte	0x50
+ 1174 0435 01       		.uleb128 0x1
+ 1175 0436 31       		.byte	0x31
+ 1176 0437 00       		.byte	0
+ 1177 0438 0C       		.uleb128 0xc
+ 1178 0439 16000000 		.4byte	.LVL61
+ 1179 043d 00050000 		.4byte	0x500
+ 1180 0441 4B040000 		.4byte	0x44b
+ 1181 0445 0D       		.uleb128 0xd
+ 1182 0446 01       		.uleb128 0x1
+ 1183 0447 50       		.byte	0x50
+ 1184 0448 01       		.uleb128 0x1
+ 1185 0449 31       		.byte	0x31
+ 1186 044a 00       		.byte	0
+ 1187 044b 14       		.uleb128 0x14
+ 1188 044c 1A000000 		.4byte	.LVL62
+ 1189 0450 BA030000 		.4byte	0x3ba
+ 1190 0454 14       		.uleb128 0x14
+ 1191 0455 1E000000 		.4byte	.LVL63
+ 1192 0459 7A030000 		.4byte	0x37a
+ 1193 045d 00       		.byte	0
+ 1194 045e 16       		.uleb128 0x16
+ 1195 045f 14010000 		.4byte	0x114
+ 1196 0463 6E040000 		.4byte	0x46e
+ 1197 0467 17       		.uleb128 0x17
+ 1198 0468 9F000000 		.4byte	0x9f
+ 1199 046c 01       		.byte	0x1
+ 1200 046d 00       		.byte	0
+ 1201 046e 18       		.uleb128 0x18
+ 1202 046f 45030000 		.4byte	.LASF39
+ 1203 0473 01       		.byte	0x1
+ 1204 0474 22       		.byte	0x22
+ 1205 0475 5E040000 		.4byte	0x45e
+ 1206 0479 05       		.uleb128 0x5
+ 1207 047a 03       		.byte	0x3
+ 1208 047b 00000000 		.4byte	ChannelDescriptorsArray
+ 1209 047f 16       		.uleb128 0x16
+ 1210 0480 91000000 		.4byte	0x91
+ 1211 0484 8F040000 		.4byte	0x48f
+ 1212 0488 17       		.uleb128 0x17
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 27
+
+
+ 1213 0489 9F000000 		.4byte	0x9f
+ 1214 048d 06       		.byte	0x6
+ 1215 048e 00       		.byte	0
+ 1216 048f 18       		.uleb128 0x18
+ 1217 0490 23020000 		.4byte	.LASF40
+ 1218 0494 01       		.byte	0x1
+ 1219 0495 24       		.byte	0x24
+ 1220 0496 7F040000 		.4byte	0x47f
+ 1221 049a 05       		.uleb128 0x5
+ 1222 049b 03       		.byte	0x3
+ 1223 049c 00000000 		.4byte	UartBuffer
+ 1224 04a0 18       		.uleb128 0x18
+ 1225 04a1 2B030000 		.4byte	.LASF41
+ 1226 04a5 01       		.byte	0x1
+ 1227 04a6 26       		.byte	0x26
+ 1228 04a7 6B000000 		.4byte	0x6b
+ 1229 04ab 05       		.uleb128 0x5
+ 1230 04ac 03       		.byte	0x3
+ 1231 04ad 00000000 		.4byte	UartBufferIdx
+ 1232 04b1 19       		.uleb128 0x19
+ 1233 04b2 66010000 		.4byte	.LASF42
+ 1234 04b6 66010000 		.4byte	.LASF42
+ 1235 04ba 03       		.byte	0x3
+ 1236 04bb 4403     		.2byte	0x344
+ 1237 04bd 19       		.uleb128 0x19
+ 1238 04be 1B000000 		.4byte	.LASF43
+ 1239 04c2 1B000000 		.4byte	.LASF43
+ 1240 04c6 03       		.byte	0x3
+ 1241 04c7 0F03     		.2byte	0x30f
+ 1242 04c9 1A       		.uleb128 0x1a
+ 1243 04ca 00000000 		.4byte	.LASF44
+ 1244 04ce 00000000 		.4byte	.LASF44
+ 1245 04d2 04       		.byte	0x4
+ 1246 04d3 72       		.byte	0x72
+ 1247 04d4 1A       		.uleb128 0x1a
+ 1248 04d5 6E030000 		.4byte	.LASF45
+ 1249 04d9 6E030000 		.4byte	.LASF45
+ 1250 04dd 05       		.byte	0x5
+ 1251 04de 18       		.byte	0x18
+ 1252 04df 1A       		.uleb128 0x1a
+ 1253 04e0 0D000000 		.4byte	.LASF46
+ 1254 04e4 0D000000 		.4byte	.LASF46
+ 1255 04e8 06       		.byte	0x6
+ 1256 04e9 5A       		.byte	0x5a
+ 1257 04ea 1A       		.uleb128 0x1a
+ 1258 04eb 7C030000 		.4byte	.LASF47
+ 1259 04ef 7C030000 		.4byte	.LASF47
+ 1260 04f3 07       		.byte	0x7
+ 1261 04f4 33       		.byte	0x33
+ 1262 04f5 1A       		.uleb128 0x1a
+ 1263 04f6 25010000 		.4byte	.LASF48
+ 1264 04fa 25010000 		.4byte	.LASF48
+ 1265 04fe 08       		.byte	0x8
+ 1266 04ff 33       		.byte	0x33
+ 1267 0500 1A       		.uleb128 0x1a
+ 1268 0501 A5000000 		.4byte	.LASF49
+ 1269 0505 A5000000 		.4byte	.LASF49
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 28
+
+
+ 1270 0509 09       		.byte	0x9
+ 1271 050a 33       		.byte	0x33
+ 1272 050b 00       		.byte	0
+ 1273              		.section	.debug_abbrev,"",%progbits
+ 1274              	.Ldebug_abbrev0:
+ 1275 0000 01       		.uleb128 0x1
+ 1276 0001 11       		.uleb128 0x11
+ 1277 0002 01       		.byte	0x1
+ 1278 0003 25       		.uleb128 0x25
+ 1279 0004 0E       		.uleb128 0xe
+ 1280 0005 13       		.uleb128 0x13
+ 1281 0006 0B       		.uleb128 0xb
+ 1282 0007 03       		.uleb128 0x3
+ 1283 0008 0E       		.uleb128 0xe
+ 1284 0009 1B       		.uleb128 0x1b
+ 1285 000a 0E       		.uleb128 0xe
+ 1286 000b 55       		.uleb128 0x55
+ 1287 000c 17       		.uleb128 0x17
+ 1288 000d 11       		.uleb128 0x11
+ 1289 000e 01       		.uleb128 0x1
+ 1290 000f 10       		.uleb128 0x10
+ 1291 0010 17       		.uleb128 0x17
+ 1292 0011 00       		.byte	0
+ 1293 0012 00       		.byte	0
+ 1294 0013 02       		.uleb128 0x2
+ 1295 0014 24       		.uleb128 0x24
+ 1296 0015 00       		.byte	0
+ 1297 0016 0B       		.uleb128 0xb
+ 1298 0017 0B       		.uleb128 0xb
+ 1299 0018 3E       		.uleb128 0x3e
+ 1300 0019 0B       		.uleb128 0xb
+ 1301 001a 03       		.uleb128 0x3
+ 1302 001b 0E       		.uleb128 0xe
+ 1303 001c 00       		.byte	0
+ 1304 001d 00       		.byte	0
+ 1305 001e 03       		.uleb128 0x3
+ 1306 001f 24       		.uleb128 0x24
+ 1307 0020 00       		.byte	0
+ 1308 0021 0B       		.uleb128 0xb
+ 1309 0022 0B       		.uleb128 0xb
+ 1310 0023 3E       		.uleb128 0x3e
+ 1311 0024 0B       		.uleb128 0xb
+ 1312 0025 03       		.uleb128 0x3
+ 1313 0026 08       		.uleb128 0x8
+ 1314 0027 00       		.byte	0
+ 1315 0028 00       		.byte	0
+ 1316 0029 04       		.uleb128 0x4
+ 1317 002a 16       		.uleb128 0x16
+ 1318 002b 00       		.byte	0
+ 1319 002c 03       		.uleb128 0x3
+ 1320 002d 0E       		.uleb128 0xe
+ 1321 002e 3A       		.uleb128 0x3a
+ 1322 002f 0B       		.uleb128 0xb
+ 1323 0030 3B       		.uleb128 0x3b
+ 1324 0031 05       		.uleb128 0x5
+ 1325 0032 49       		.uleb128 0x49
+ 1326 0033 13       		.uleb128 0x13
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 29
+
+
+ 1327 0034 00       		.byte	0
+ 1328 0035 00       		.byte	0
+ 1329 0036 05       		.uleb128 0x5
+ 1330 0037 13       		.uleb128 0x13
+ 1331 0038 01       		.byte	0x1
+ 1332 0039 0B       		.uleb128 0xb
+ 1333 003a 0B       		.uleb128 0xb
+ 1334 003b 3A       		.uleb128 0x3a
+ 1335 003c 0B       		.uleb128 0xb
+ 1336 003d 3B       		.uleb128 0x3b
+ 1337 003e 0B       		.uleb128 0xb
+ 1338 003f 01       		.uleb128 0x1
+ 1339 0040 13       		.uleb128 0x13
+ 1340 0041 00       		.byte	0
+ 1341 0042 00       		.byte	0
+ 1342 0043 06       		.uleb128 0x6
+ 1343 0044 0D       		.uleb128 0xd
+ 1344 0045 00       		.byte	0
+ 1345 0046 03       		.uleb128 0x3
+ 1346 0047 0E       		.uleb128 0xe
+ 1347 0048 3A       		.uleb128 0x3a
+ 1348 0049 0B       		.uleb128 0xb
+ 1349 004a 3B       		.uleb128 0x3b
+ 1350 004b 0B       		.uleb128 0xb
+ 1351 004c 49       		.uleb128 0x49
+ 1352 004d 13       		.uleb128 0x13
+ 1353 004e 38       		.uleb128 0x38
+ 1354 004f 0B       		.uleb128 0xb
+ 1355 0050 00       		.byte	0
+ 1356 0051 00       		.byte	0
+ 1357 0052 07       		.uleb128 0x7
+ 1358 0053 15       		.uleb128 0x15
+ 1359 0054 01       		.byte	0x1
+ 1360 0055 27       		.uleb128 0x27
+ 1361 0056 19       		.uleb128 0x19
+ 1362 0057 01       		.uleb128 0x1
+ 1363 0058 13       		.uleb128 0x13
+ 1364 0059 00       		.byte	0
+ 1365 005a 00       		.byte	0
+ 1366 005b 08       		.uleb128 0x8
+ 1367 005c 05       		.uleb128 0x5
+ 1368 005d 00       		.byte	0
+ 1369 005e 49       		.uleb128 0x49
+ 1370 005f 13       		.uleb128 0x13
+ 1371 0060 00       		.byte	0
+ 1372 0061 00       		.byte	0
+ 1373 0062 09       		.uleb128 0x9
+ 1374 0063 0F       		.uleb128 0xf
+ 1375 0064 00       		.byte	0
+ 1376 0065 0B       		.uleb128 0xb
+ 1377 0066 0B       		.uleb128 0xb
+ 1378 0067 49       		.uleb128 0x49
+ 1379 0068 13       		.uleb128 0x13
+ 1380 0069 00       		.byte	0
+ 1381 006a 00       		.byte	0
+ 1382 006b 0A       		.uleb128 0xa
+ 1383 006c 16       		.uleb128 0x16
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 30
+
+
+ 1384 006d 00       		.byte	0
+ 1385 006e 03       		.uleb128 0x3
+ 1386 006f 0E       		.uleb128 0xe
+ 1387 0070 3A       		.uleb128 0x3a
+ 1388 0071 0B       		.uleb128 0xb
+ 1389 0072 3B       		.uleb128 0x3b
+ 1390 0073 0B       		.uleb128 0xb
+ 1391 0074 49       		.uleb128 0x49
+ 1392 0075 13       		.uleb128 0x13
+ 1393 0076 00       		.byte	0
+ 1394 0077 00       		.byte	0
+ 1395 0078 0B       		.uleb128 0xb
+ 1396 0079 2E       		.uleb128 0x2e
+ 1397 007a 01       		.byte	0x1
+ 1398 007b 3F       		.uleb128 0x3f
+ 1399 007c 19       		.uleb128 0x19
+ 1400 007d 03       		.uleb128 0x3
+ 1401 007e 0E       		.uleb128 0xe
+ 1402 007f 3A       		.uleb128 0x3a
+ 1403 0080 0B       		.uleb128 0xb
+ 1404 0081 3B       		.uleb128 0x3b
+ 1405 0082 0B       		.uleb128 0xb
+ 1406 0083 27       		.uleb128 0x27
+ 1407 0084 19       		.uleb128 0x19
+ 1408 0085 11       		.uleb128 0x11
+ 1409 0086 01       		.uleb128 0x1
+ 1410 0087 12       		.uleb128 0x12
+ 1411 0088 06       		.uleb128 0x6
+ 1412 0089 40       		.uleb128 0x40
+ 1413 008a 18       		.uleb128 0x18
+ 1414 008b 9742     		.uleb128 0x2117
+ 1415 008d 19       		.uleb128 0x19
+ 1416 008e 01       		.uleb128 0x1
+ 1417 008f 13       		.uleb128 0x13
+ 1418 0090 00       		.byte	0
+ 1419 0091 00       		.byte	0
+ 1420 0092 0C       		.uleb128 0xc
+ 1421 0093 898201   		.uleb128 0x4109
+ 1422 0096 01       		.byte	0x1
+ 1423 0097 11       		.uleb128 0x11
+ 1424 0098 01       		.uleb128 0x1
+ 1425 0099 31       		.uleb128 0x31
+ 1426 009a 13       		.uleb128 0x13
+ 1427 009b 01       		.uleb128 0x1
+ 1428 009c 13       		.uleb128 0x13
+ 1429 009d 00       		.byte	0
+ 1430 009e 00       		.byte	0
+ 1431 009f 0D       		.uleb128 0xd
+ 1432 00a0 8A8201   		.uleb128 0x410a
+ 1433 00a3 00       		.byte	0
+ 1434 00a4 02       		.uleb128 0x2
+ 1435 00a5 18       		.uleb128 0x18
+ 1436 00a6 9142     		.uleb128 0x2111
+ 1437 00a8 18       		.uleb128 0x18
+ 1438 00a9 00       		.byte	0
+ 1439 00aa 00       		.byte	0
+ 1440 00ab 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 31
+
+
+ 1441 00ac 898201   		.uleb128 0x4109
+ 1442 00af 01       		.byte	0x1
+ 1443 00b0 11       		.uleb128 0x11
+ 1444 00b1 01       		.uleb128 0x1
+ 1445 00b2 31       		.uleb128 0x31
+ 1446 00b3 13       		.uleb128 0x13
+ 1447 00b4 00       		.byte	0
+ 1448 00b5 00       		.byte	0
+ 1449 00b6 0F       		.uleb128 0xf
+ 1450 00b7 05       		.uleb128 0x5
+ 1451 00b8 00       		.byte	0
+ 1452 00b9 03       		.uleb128 0x3
+ 1453 00ba 0E       		.uleb128 0xe
+ 1454 00bb 3A       		.uleb128 0x3a
+ 1455 00bc 0B       		.uleb128 0xb
+ 1456 00bd 3B       		.uleb128 0x3b
+ 1457 00be 0B       		.uleb128 0xb
+ 1458 00bf 49       		.uleb128 0x49
+ 1459 00c0 13       		.uleb128 0x13
+ 1460 00c1 02       		.uleb128 0x2
+ 1461 00c2 17       		.uleb128 0x17
+ 1462 00c3 00       		.byte	0
+ 1463 00c4 00       		.byte	0
+ 1464 00c5 10       		.uleb128 0x10
+ 1465 00c6 898201   		.uleb128 0x4109
+ 1466 00c9 01       		.byte	0x1
+ 1467 00ca 11       		.uleb128 0x11
+ 1468 00cb 01       		.uleb128 0x1
+ 1469 00cc 01       		.uleb128 0x1
+ 1470 00cd 13       		.uleb128 0x13
+ 1471 00ce 00       		.byte	0
+ 1472 00cf 00       		.byte	0
+ 1473 00d0 11       		.uleb128 0x11
+ 1474 00d1 898201   		.uleb128 0x4109
+ 1475 00d4 01       		.byte	0x1
+ 1476 00d5 11       		.uleb128 0x11
+ 1477 00d6 01       		.uleb128 0x1
+ 1478 00d7 00       		.byte	0
+ 1479 00d8 00       		.byte	0
+ 1480 00d9 12       		.uleb128 0x12
+ 1481 00da 34       		.uleb128 0x34
+ 1482 00db 00       		.byte	0
+ 1483 00dc 03       		.uleb128 0x3
+ 1484 00dd 0E       		.uleb128 0xe
+ 1485 00de 3A       		.uleb128 0x3a
+ 1486 00df 0B       		.uleb128 0xb
+ 1487 00e0 3B       		.uleb128 0x3b
+ 1488 00e1 0B       		.uleb128 0xb
+ 1489 00e2 49       		.uleb128 0x49
+ 1490 00e3 13       		.uleb128 0x13
+ 1491 00e4 02       		.uleb128 0x2
+ 1492 00e5 17       		.uleb128 0x17
+ 1493 00e6 00       		.byte	0
+ 1494 00e7 00       		.byte	0
+ 1495 00e8 13       		.uleb128 0x13
+ 1496 00e9 05       		.uleb128 0x5
+ 1497 00ea 00       		.byte	0
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 32
+
+
+ 1498 00eb 03       		.uleb128 0x3
+ 1499 00ec 08       		.uleb128 0x8
+ 1500 00ed 3A       		.uleb128 0x3a
+ 1501 00ee 0B       		.uleb128 0xb
+ 1502 00ef 3B       		.uleb128 0x3b
+ 1503 00f0 0B       		.uleb128 0xb
+ 1504 00f1 49       		.uleb128 0x49
+ 1505 00f2 13       		.uleb128 0x13
+ 1506 00f3 02       		.uleb128 0x2
+ 1507 00f4 17       		.uleb128 0x17
+ 1508 00f5 00       		.byte	0
+ 1509 00f6 00       		.byte	0
+ 1510 00f7 14       		.uleb128 0x14
+ 1511 00f8 898201   		.uleb128 0x4109
+ 1512 00fb 00       		.byte	0
+ 1513 00fc 11       		.uleb128 0x11
+ 1514 00fd 01       		.uleb128 0x1
+ 1515 00fe 31       		.uleb128 0x31
+ 1516 00ff 13       		.uleb128 0x13
+ 1517 0100 00       		.byte	0
+ 1518 0101 00       		.byte	0
+ 1519 0102 15       		.uleb128 0x15
+ 1520 0103 2E       		.uleb128 0x2e
+ 1521 0104 01       		.byte	0x1
+ 1522 0105 3F       		.uleb128 0x3f
+ 1523 0106 19       		.uleb128 0x19
+ 1524 0107 03       		.uleb128 0x3
+ 1525 0108 0E       		.uleb128 0xe
+ 1526 0109 3A       		.uleb128 0x3a
+ 1527 010a 0B       		.uleb128 0xb
+ 1528 010b 3B       		.uleb128 0x3b
+ 1529 010c 0B       		.uleb128 0xb
+ 1530 010d 27       		.uleb128 0x27
+ 1531 010e 19       		.uleb128 0x19
+ 1532 010f 49       		.uleb128 0x49
+ 1533 0110 13       		.uleb128 0x13
+ 1534 0111 8701     		.uleb128 0x87
+ 1535 0113 19       		.uleb128 0x19
+ 1536 0114 11       		.uleb128 0x11
+ 1537 0115 01       		.uleb128 0x1
+ 1538 0116 12       		.uleb128 0x12
+ 1539 0117 06       		.uleb128 0x6
+ 1540 0118 40       		.uleb128 0x40
+ 1541 0119 18       		.uleb128 0x18
+ 1542 011a 9742     		.uleb128 0x2117
+ 1543 011c 19       		.uleb128 0x19
+ 1544 011d 01       		.uleb128 0x1
+ 1545 011e 13       		.uleb128 0x13
+ 1546 011f 00       		.byte	0
+ 1547 0120 00       		.byte	0
+ 1548 0121 16       		.uleb128 0x16
+ 1549 0122 01       		.uleb128 0x1
+ 1550 0123 01       		.byte	0x1
+ 1551 0124 49       		.uleb128 0x49
+ 1552 0125 13       		.uleb128 0x13
+ 1553 0126 01       		.uleb128 0x1
+ 1554 0127 13       		.uleb128 0x13
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 33
+
+
+ 1555 0128 00       		.byte	0
+ 1556 0129 00       		.byte	0
+ 1557 012a 17       		.uleb128 0x17
+ 1558 012b 21       		.uleb128 0x21
+ 1559 012c 00       		.byte	0
+ 1560 012d 49       		.uleb128 0x49
+ 1561 012e 13       		.uleb128 0x13
+ 1562 012f 2F       		.uleb128 0x2f
+ 1563 0130 0B       		.uleb128 0xb
+ 1564 0131 00       		.byte	0
+ 1565 0132 00       		.byte	0
+ 1566 0133 18       		.uleb128 0x18
+ 1567 0134 34       		.uleb128 0x34
+ 1568 0135 00       		.byte	0
+ 1569 0136 03       		.uleb128 0x3
+ 1570 0137 0E       		.uleb128 0xe
+ 1571 0138 3A       		.uleb128 0x3a
+ 1572 0139 0B       		.uleb128 0xb
+ 1573 013a 3B       		.uleb128 0x3b
+ 1574 013b 0B       		.uleb128 0xb
+ 1575 013c 49       		.uleb128 0x49
+ 1576 013d 13       		.uleb128 0x13
+ 1577 013e 3F       		.uleb128 0x3f
+ 1578 013f 19       		.uleb128 0x19
+ 1579 0140 02       		.uleb128 0x2
+ 1580 0141 18       		.uleb128 0x18
+ 1581 0142 00       		.byte	0
+ 1582 0143 00       		.byte	0
+ 1583 0144 19       		.uleb128 0x19
+ 1584 0145 2E       		.uleb128 0x2e
+ 1585 0146 00       		.byte	0
+ 1586 0147 3F       		.uleb128 0x3f
+ 1587 0148 19       		.uleb128 0x19
+ 1588 0149 3C       		.uleb128 0x3c
+ 1589 014a 19       		.uleb128 0x19
+ 1590 014b 6E       		.uleb128 0x6e
+ 1591 014c 0E       		.uleb128 0xe
+ 1592 014d 03       		.uleb128 0x3
+ 1593 014e 0E       		.uleb128 0xe
+ 1594 014f 3A       		.uleb128 0x3a
+ 1595 0150 0B       		.uleb128 0xb
+ 1596 0151 3B       		.uleb128 0x3b
+ 1597 0152 05       		.uleb128 0x5
+ 1598 0153 00       		.byte	0
+ 1599 0154 00       		.byte	0
+ 1600 0155 1A       		.uleb128 0x1a
+ 1601 0156 2E       		.uleb128 0x2e
+ 1602 0157 00       		.byte	0
+ 1603 0158 3F       		.uleb128 0x3f
+ 1604 0159 19       		.uleb128 0x19
+ 1605 015a 3C       		.uleb128 0x3c
+ 1606 015b 19       		.uleb128 0x19
+ 1607 015c 6E       		.uleb128 0x6e
+ 1608 015d 0E       		.uleb128 0xe
+ 1609 015e 03       		.uleb128 0x3
+ 1610 015f 0E       		.uleb128 0xe
+ 1611 0160 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 34
+
+
+ 1612 0161 0B       		.uleb128 0xb
+ 1613 0162 3B       		.uleb128 0x3b
+ 1614 0163 0B       		.uleb128 0xb
+ 1615 0164 00       		.byte	0
+ 1616 0165 00       		.byte	0
+ 1617 0166 00       		.byte	0
+ 1618              		.section	.debug_loc,"",%progbits
+ 1619              	.Ldebug_loc0:
+ 1620              	.LLST0:
+ 1621 0000 00000000 		.4byte	.LVL11
+ 1622 0004 22000000 		.4byte	.LVL12
+ 1623 0008 0100     		.2byte	0x1
+ 1624 000a 50       		.byte	0x50
+ 1625 000b 22000000 		.4byte	.LVL12
+ 1626 000f 26000000 		.4byte	.LVL14
+ 1627 0013 0400     		.2byte	0x4
+ 1628 0015 F3       		.byte	0xf3
+ 1629 0016 01       		.uleb128 0x1
+ 1630 0017 50       		.byte	0x50
+ 1631 0018 9F       		.byte	0x9f
+ 1632 0019 26000000 		.4byte	.LVL14
+ 1633 001d 48000000 		.4byte	.LVL15
+ 1634 0021 0100     		.2byte	0x1
+ 1635 0023 50       		.byte	0x50
+ 1636 0024 48000000 		.4byte	.LVL15
+ 1637 0028 4C000000 		.4byte	.LVL17
+ 1638 002c 0400     		.2byte	0x4
+ 1639 002e F3       		.byte	0xf3
+ 1640 002f 01       		.uleb128 0x1
+ 1641 0030 50       		.byte	0x50
+ 1642 0031 9F       		.byte	0x9f
+ 1643 0032 4C000000 		.4byte	.LVL17
+ 1644 0036 6E000000 		.4byte	.LVL18
+ 1645 003a 0100     		.2byte	0x1
+ 1646 003c 50       		.byte	0x50
+ 1647 003d 6E000000 		.4byte	.LVL18
+ 1648 0041 72000000 		.4byte	.LVL20
+ 1649 0045 0400     		.2byte	0x4
+ 1650 0047 F3       		.byte	0xf3
+ 1651 0048 01       		.uleb128 0x1
+ 1652 0049 50       		.byte	0x50
+ 1653 004a 9F       		.byte	0x9f
+ 1654 004b 72000000 		.4byte	.LVL20
+ 1655 004f 9C000000 		.4byte	.LVL21
+ 1656 0053 0100     		.2byte	0x1
+ 1657 0055 50       		.byte	0x50
+ 1658 0056 9C000000 		.4byte	.LVL21
+ 1659 005a A4000000 		.4byte	.LFE33
+ 1660 005e 0400     		.2byte	0x4
+ 1661 0060 F3       		.byte	0xf3
+ 1662 0061 01       		.uleb128 0x1
+ 1663 0062 50       		.byte	0x50
+ 1664 0063 9F       		.byte	0x9f
+ 1665 0064 00000000 		.4byte	0
+ 1666 0068 00000000 		.4byte	0
+ 1667              	.LLST1:
+ 1668 006c 02000000 		.4byte	.LVL22
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 35
+
+
+ 1669 0070 06000000 		.4byte	.LVL23
+ 1670 0074 0200     		.2byte	0x2
+ 1671 0076 30       		.byte	0x30
+ 1672 0077 9F       		.byte	0x9f
+ 1673 0078 06000000 		.4byte	.LVL23
+ 1674 007c 0E000000 		.4byte	.LVL25
+ 1675 0080 0100     		.2byte	0x1
+ 1676 0082 54       		.byte	0x54
+ 1677 0083 10000000 		.4byte	.LVL26
+ 1678 0087 14000000 		.4byte	.LVL27
+ 1679 008b 0100     		.2byte	0x1
+ 1680 008d 54       		.byte	0x54
+ 1681 008e 00000000 		.4byte	0
+ 1682 0092 00000000 		.4byte	0
+ 1683              	.LLST2:
+ 1684 0096 00000000 		.4byte	.LVL28
+ 1685 009a 18000000 		.4byte	.LVL30
+ 1686 009e 0100     		.2byte	0x1
+ 1687 00a0 50       		.byte	0x50
+ 1688 00a1 18000000 		.4byte	.LVL30
+ 1689 00a5 4C000000 		.4byte	.LFE35
+ 1690 00a9 0400     		.2byte	0x4
+ 1691 00ab F3       		.byte	0xf3
+ 1692 00ac 01       		.uleb128 0x1
+ 1693 00ad 50       		.byte	0x50
+ 1694 00ae 9F       		.byte	0x9f
+ 1695 00af 00000000 		.4byte	0
+ 1696 00b3 00000000 		.4byte	0
+ 1697              	.LLST3:
+ 1698 00b7 00000000 		.4byte	.LVL28
+ 1699 00bb 18000000 		.4byte	.LVL30
+ 1700 00bf 0100     		.2byte	0x1
+ 1701 00c1 51       		.byte	0x51
+ 1702 00c2 18000000 		.4byte	.LVL30
+ 1703 00c6 4C000000 		.4byte	.LFE35
+ 1704 00ca 0400     		.2byte	0x4
+ 1705 00cc F3       		.byte	0xf3
+ 1706 00cd 01       		.uleb128 0x1
+ 1707 00ce 51       		.byte	0x51
+ 1708 00cf 9F       		.byte	0x9f
+ 1709 00d0 00000000 		.4byte	0
+ 1710 00d4 00000000 		.4byte	0
+ 1711              	.LLST4:
+ 1712 00d8 00000000 		.4byte	.LVL28
+ 1713 00dc 18000000 		.4byte	.LVL30
+ 1714 00e0 0100     		.2byte	0x1
+ 1715 00e2 52       		.byte	0x52
+ 1716 00e3 18000000 		.4byte	.LVL30
+ 1717 00e7 4C000000 		.4byte	.LFE35
+ 1718 00eb 0400     		.2byte	0x4
+ 1719 00ed F3       		.byte	0xf3
+ 1720 00ee 01       		.uleb128 0x1
+ 1721 00ef 52       		.byte	0x52
+ 1722 00f0 9F       		.byte	0x9f
+ 1723 00f1 00000000 		.4byte	0
+ 1724 00f5 00000000 		.4byte	0
+ 1725              	.LLST5:
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 36
+
+
+ 1726 00f9 00000000 		.4byte	.LVL28
+ 1727 00fd 18000000 		.4byte	.LVL30
+ 1728 0101 0100     		.2byte	0x1
+ 1729 0103 53       		.byte	0x53
+ 1730 0104 18000000 		.4byte	.LVL30
+ 1731 0108 4C000000 		.4byte	.LFE35
+ 1732 010c 0400     		.2byte	0x4
+ 1733 010e F3       		.byte	0xf3
+ 1734 010f 01       		.uleb128 0x1
+ 1735 0110 53       		.byte	0x53
+ 1736 0111 9F       		.byte	0x9f
+ 1737 0112 00000000 		.4byte	0
+ 1738 0116 00000000 		.4byte	0
+ 1739              	.LLST6:
+ 1740 011a 14000000 		.4byte	.LVL29
+ 1741 011e 18000000 		.4byte	.LVL30
+ 1742 0122 0200     		.2byte	0x2
+ 1743 0124 30       		.byte	0x30
+ 1744 0125 9F       		.byte	0x9f
+ 1745 0126 18000000 		.4byte	.LVL30
+ 1746 012a 3E000000 		.4byte	.LVL32
+ 1747 012e 0100     		.2byte	0x1
+ 1748 0130 54       		.byte	0x54
+ 1749 0131 40000000 		.4byte	.LVL33
+ 1750 0135 46000000 		.4byte	.LVL34
+ 1751 0139 0100     		.2byte	0x1
+ 1752 013b 54       		.byte	0x54
+ 1753 013c 00000000 		.4byte	0
+ 1754 0140 00000000 		.4byte	0
+ 1755              	.LLST7:
+ 1756 0144 1C000000 		.4byte	.LVL38
+ 1757 0148 25000000 		.4byte	.LVL39-1
+ 1758 014c 0100     		.2byte	0x1
+ 1759 014e 50       		.byte	0x50
+ 1760 014f 28000000 		.4byte	.LVL40
+ 1761 0153 33000000 		.4byte	.LVL41-1
+ 1762 0157 0100     		.2byte	0x1
+ 1763 0159 50       		.byte	0x50
+ 1764 015a 36000000 		.4byte	.LVL42
+ 1765 015e 41000000 		.4byte	.LVL43-1
+ 1766 0162 0100     		.2byte	0x1
+ 1767 0164 50       		.byte	0x50
+ 1768 0165 44000000 		.4byte	.LVL44
+ 1769 0169 4F000000 		.4byte	.LVL45-1
+ 1770 016d 0100     		.2byte	0x1
+ 1771 016f 50       		.byte	0x50
+ 1772 0170 52000000 		.4byte	.LVL46
+ 1773 0174 65000000 		.4byte	.LVL47-1
+ 1774 0178 0100     		.2byte	0x1
+ 1775 017a 50       		.byte	0x50
+ 1776 017b 68000000 		.4byte	.LVL48
+ 1777 017f 6B000000 		.4byte	.LVL49-1
+ 1778 0183 0100     		.2byte	0x1
+ 1779 0185 50       		.byte	0x50
+ 1780 0186 00000000 		.4byte	0
+ 1781 018a 00000000 		.4byte	0
+ 1782              	.LLST8:
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 37
+
+
+ 1783 018e 0A000000 		.4byte	.LVL35
+ 1784 0192 25000000 		.4byte	.LVL39-1
+ 1785 0196 0100     		.2byte	0x1
+ 1786 0198 51       		.byte	0x51
+ 1787 0199 28000000 		.4byte	.LVL40
+ 1788 019d 33000000 		.4byte	.LVL41-1
+ 1789 01a1 0100     		.2byte	0x1
+ 1790 01a3 51       		.byte	0x51
+ 1791 01a4 36000000 		.4byte	.LVL42
+ 1792 01a8 41000000 		.4byte	.LVL43-1
+ 1793 01ac 0100     		.2byte	0x1
+ 1794 01ae 51       		.byte	0x51
+ 1795 01af 44000000 		.4byte	.LVL44
+ 1796 01b3 4F000000 		.4byte	.LVL45-1
+ 1797 01b7 0100     		.2byte	0x1
+ 1798 01b9 51       		.byte	0x51
+ 1799 01ba 52000000 		.4byte	.LVL46
+ 1800 01be 65000000 		.4byte	.LVL47-1
+ 1801 01c2 0100     		.2byte	0x1
+ 1802 01c4 51       		.byte	0x51
+ 1803 01c5 68000000 		.4byte	.LVL48
+ 1804 01c9 6B000000 		.4byte	.LVL49-1
+ 1805 01cd 0100     		.2byte	0x1
+ 1806 01cf 51       		.byte	0x51
+ 1807 01d0 00000000 		.4byte	0
+ 1808 01d4 00000000 		.4byte	0
+ 1809              	.LLST9:
+ 1810 01d8 10000000 		.4byte	.LVL36
+ 1811 01dc 25000000 		.4byte	.LVL39-1
+ 1812 01e0 0100     		.2byte	0x1
+ 1813 01e2 52       		.byte	0x52
+ 1814 01e3 28000000 		.4byte	.LVL40
+ 1815 01e7 33000000 		.4byte	.LVL41-1
+ 1816 01eb 0100     		.2byte	0x1
+ 1817 01ed 52       		.byte	0x52
+ 1818 01ee 36000000 		.4byte	.LVL42
+ 1819 01f2 41000000 		.4byte	.LVL43-1
+ 1820 01f6 0100     		.2byte	0x1
+ 1821 01f8 52       		.byte	0x52
+ 1822 01f9 44000000 		.4byte	.LVL44
+ 1823 01fd 4F000000 		.4byte	.LVL45-1
+ 1824 0201 0100     		.2byte	0x1
+ 1825 0203 52       		.byte	0x52
+ 1826 0204 52000000 		.4byte	.LVL46
+ 1827 0208 65000000 		.4byte	.LVL47-1
+ 1828 020c 0100     		.2byte	0x1
+ 1829 020e 52       		.byte	0x52
+ 1830 020f 68000000 		.4byte	.LVL48
+ 1831 0213 6B000000 		.4byte	.LVL49-1
+ 1832 0217 0100     		.2byte	0x1
+ 1833 0219 52       		.byte	0x52
+ 1834 021a 00000000 		.4byte	0
+ 1835 021e 00000000 		.4byte	0
+ 1836              	.LLST10:
+ 1837 0222 16000000 		.4byte	.LVL37
+ 1838 0226 25000000 		.4byte	.LVL39-1
+ 1839 022a 0100     		.2byte	0x1
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 38
+
+
+ 1840 022c 53       		.byte	0x53
+ 1841 022d 28000000 		.4byte	.LVL40
+ 1842 0231 33000000 		.4byte	.LVL41-1
+ 1843 0235 0100     		.2byte	0x1
+ 1844 0237 53       		.byte	0x53
+ 1845 0238 36000000 		.4byte	.LVL42
+ 1846 023c 41000000 		.4byte	.LVL43-1
+ 1847 0240 0100     		.2byte	0x1
+ 1848 0242 53       		.byte	0x53
+ 1849 0243 44000000 		.4byte	.LVL44
+ 1850 0247 4F000000 		.4byte	.LVL45-1
+ 1851 024b 0100     		.2byte	0x1
+ 1852 024d 53       		.byte	0x53
+ 1853 024e 52000000 		.4byte	.LVL46
+ 1854 0252 65000000 		.4byte	.LVL47-1
+ 1855 0256 0100     		.2byte	0x1
+ 1856 0258 53       		.byte	0x53
+ 1857 0259 68000000 		.4byte	.LVL48
+ 1858 025d 6B000000 		.4byte	.LVL49-1
+ 1859 0261 0100     		.2byte	0x1
+ 1860 0263 53       		.byte	0x53
+ 1861 0264 00000000 		.4byte	0
+ 1862 0268 00000000 		.4byte	0
+ 1863              	.LLST11:
+ 1864 026c 02000000 		.4byte	.LVL50
+ 1865 0270 08000000 		.4byte	.LVL52
+ 1866 0274 0200     		.2byte	0x2
+ 1867 0276 30       		.byte	0x30
+ 1868 0277 9F       		.byte	0x9f
+ 1869 0278 08000000 		.4byte	.LVL52
+ 1870 027c 3A000000 		.4byte	.LVL55
+ 1871 0280 0100     		.2byte	0x1
+ 1872 0282 54       		.byte	0x54
+ 1873 0283 00000000 		.4byte	0
+ 1874 0287 00000000 		.4byte	0
+ 1875              		.section	.debug_aranges,"",%progbits
+ 1876 0000 54000000 		.4byte	0x54
+ 1877 0004 0200     		.2byte	0x2
+ 1878 0006 00000000 		.4byte	.Ldebug_info0
+ 1879 000a 04       		.byte	0x4
+ 1880 000b 00       		.byte	0
+ 1881 000c 0000     		.2byte	0
+ 1882 000e 0000     		.2byte	0
+ 1883 0010 00000000 		.4byte	.LFB32
+ 1884 0014 46000000 		.4byte	.LFE32-.LFB32
+ 1885 0018 00000000 		.4byte	.LFB33
+ 1886 001c A4000000 		.4byte	.LFE33-.LFB33
+ 1887 0020 00000000 		.4byte	.LFB34
+ 1888 0024 16000000 		.4byte	.LFE34-.LFB34
+ 1889 0028 00000000 		.4byte	.LFB35
+ 1890 002c 4C000000 		.4byte	.LFE35-.LFB35
+ 1891 0030 00000000 		.4byte	.LFB36
+ 1892 0034 74000000 		.4byte	.LFE36-.LFB36
+ 1893 0038 00000000 		.4byte	.LFB37
+ 1894 003c 44000000 		.4byte	.LFE37-.LFB37
+ 1895 0040 00000000 		.4byte	.LFB38
+ 1896 0044 2C000000 		.4byte	.LFE38-.LFB38
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 39
+
+
+ 1897 0048 00000000 		.4byte	.LFB39
+ 1898 004c 20000000 		.4byte	.LFE39-.LFB39
+ 1899 0050 00000000 		.4byte	0
+ 1900 0054 00000000 		.4byte	0
+ 1901              		.section	.debug_ranges,"",%progbits
+ 1902              	.Ldebug_ranges0:
+ 1903 0000 00000000 		.4byte	.LFB32
+ 1904 0004 46000000 		.4byte	.LFE32
+ 1905 0008 00000000 		.4byte	.LFB33
+ 1906 000c A4000000 		.4byte	.LFE33
+ 1907 0010 00000000 		.4byte	.LFB34
+ 1908 0014 16000000 		.4byte	.LFE34
+ 1909 0018 00000000 		.4byte	.LFB35
+ 1910 001c 4C000000 		.4byte	.LFE35
+ 1911 0020 00000000 		.4byte	.LFB36
+ 1912 0024 74000000 		.4byte	.LFE36
+ 1913 0028 00000000 		.4byte	.LFB37
+ 1914 002c 44000000 		.4byte	.LFE37
+ 1915 0030 00000000 		.4byte	.LFB38
+ 1916 0034 2C000000 		.4byte	.LFE38
+ 1917 0038 00000000 		.4byte	.LFB39
+ 1918 003c 20000000 		.4byte	.LFE39
+ 1919 0040 00000000 		.4byte	0
+ 1920 0044 00000000 		.4byte	0
+ 1921              		.section	.debug_line,"",%progbits
+ 1922              	.Ldebug_line0:
+ 1923 0000 C1010000 		.section	.debug_str,"MS",%progbits,1
+ 1923      0200AD00 
+ 1923      00000201 
+ 1923      FB0E0D00 
+ 1923      01010101 
+ 1924              	.LASF44:
+ 1925 0000 55415254 		.ascii	"UART_1_Start\000"
+ 1925      5F315F53 
+ 1925      74617274 
+ 1925      00
+ 1926              	.LASF46:
+ 1927 000d 54696D65 		.ascii	"Timer_1_Start\000"
+ 1927      725F315F 
+ 1927      53746172 
+ 1927      7400
+ 1928              	.LASF43:
+ 1929 001b 55415254 		.ascii	"UART_1_UartGetChar\000"
+ 1929      5F315F55 
+ 1929      61727447 
+ 1929      65744368 
+ 1929      617200
+ 1930              	.LASF26:
+ 1931 002e 54696D65 		.ascii	"TimeSlotInterrupt\000"
+ 1931      536C6F74 
+ 1931      496E7465 
+ 1931      72727570 
+ 1931      7400
+ 1932              	.LASF25:
+ 1933 0040 4368616E 		.ascii	"ChannelController\000"
+ 1933      6E656C43 
+ 1933      6F6E7472 
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 40
+
+
+ 1933      6F6C6C65 
+ 1933      7200
+ 1934              	.LASF23:
+ 1935 0052 4368616E 		.ascii	"ChannelDescriptorType\000"
+ 1935      6E656C44 
+ 1935      65736372 
+ 1935      6970746F 
+ 1935      72547970 
+ 1936              	.LASF30:
+ 1937 0068 43757272 		.ascii	"CurrentChannelNumber\000"
+ 1937      656E7443 
+ 1937      68616E6E 
+ 1937      656C4E75 
+ 1937      6D626572 
+ 1938              	.LASF31:
+ 1939 007d 4368616E 		.ascii	"ChannelIdx\000"
+ 1939      6E656C49 
+ 1939      647800
+ 1940              	.LASF22:
+ 1941 0088 50696E43 		.ascii	"PinControlFunction\000"
+ 1941      6F6E7472 
+ 1941      6F6C4675 
+ 1941      6E637469 
+ 1941      6F6E00
+ 1942              	.LASF18:
+ 1943 009b 43757272 		.ascii	"Current_L\000"
+ 1943      656E745F 
+ 1943      4C00
+ 1944              	.LASF49:
+ 1945 00a5 47726565 		.ascii	"Green_Output_Write\000"
+ 1945      6E5F4F75 
+ 1945      74707574 
+ 1945      5F577269 
+ 1945      746500
+ 1946              	.LASF11:
+ 1947 00b8 666C6F61 		.ascii	"float\000"
+ 1947      7400
+ 1948              	.LASF0:
+ 1949 00be 7369676E 		.ascii	"signed char\000"
+ 1949      65642063 
+ 1949      68617200 
+ 1950              	.LASF33:
+ 1951 00ca 56616C75 		.ascii	"ValueD\000"
+ 1951      654400
+ 1952              	.LASF1:
+ 1953 00d1 756E7369 		.ascii	"unsigned char\000"
+ 1953      676E6564 
+ 1953      20636861 
+ 1953      7200
+ 1954              	.LASF34:
+ 1955 00df 56616C75 		.ascii	"ValueH\000"
+ 1955      654800
+ 1956              	.LASF29:
+ 1957 00e6 4368616E 		.ascii	"ChannelNumber\000"
+ 1957      6E656C4E 
+ 1957      756D6265 
+ 1957      7200
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 41
+
+
+ 1958              	.LASF5:
+ 1959 00f4 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1959      20756E73 
+ 1959      69676E65 
+ 1959      6420696E 
+ 1959      7400
+ 1960              	.LASF35:
+ 1961 0106 56616C75 		.ascii	"ValueL\000"
+ 1961      654C00
+ 1962              	.LASF3:
+ 1963 010d 73686F72 		.ascii	"short unsigned int\000"
+ 1963      7420756E 
+ 1963      7369676E 
+ 1963      65642069 
+ 1963      6E7400
+ 1964              	.LASF38:
+ 1965 0120 496E6974 		.ascii	"Init\000"
+ 1965      00
+ 1966              	.LASF48:
+ 1967 0125 426C7565 		.ascii	"Blue_Output_Write\000"
+ 1967      5F4F7574 
+ 1967      7075745F 
+ 1967      57726974 
+ 1967      6500
+ 1968              	.LASF37:
+ 1969 0137 43757272 		.ascii	"CurrentCharacter\000"
+ 1969      656E7443 
+ 1969      68617261 
+ 1969      63746572 
+ 1969      00
+ 1970              	.LASF24:
+ 1971 0148 4572726F 		.ascii	"Error_Return\000"
+ 1971      725F5265 
+ 1971      7475726E 
+ 1971      00
+ 1972              	.LASF12:
+ 1973 0155 646F7562 		.ascii	"double\000"
+ 1973      6C6500
+ 1974              	.LASF2:
+ 1975 015c 73686F72 		.ascii	"short int\000"
+ 1975      7420696E 
+ 1975      7400
+ 1976              	.LASF42:
+ 1977 0166 55415254 		.ascii	"UART_1_SpiUartWriteTxData\000"
+ 1977      5F315F53 
+ 1977      70695561 
+ 1977      72745772 
+ 1977      69746554 
+ 1978              	.LASF19:
+ 1979 0180 4D61785F 		.ascii	"Max_D\000"
+ 1979      4400
+ 1980              	.LASF10:
+ 1981 0186 75696E74 		.ascii	"uint32\000"
+ 1981      333200
+ 1982              	.LASF52:
+ 1983 018d 433A5C55 		.ascii	"C:\\Users\\Acer\\Documents\\PSoC Creator\\Lab_Works"
+ 1983      73657273 
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 42
+
+
+ 1983      5C416365 
+ 1983      725C446F 
+ 1983      63756D65 
+ 1984 01bb 5F4D6963 		.ascii	"_Microprocesor\\Kursova_19_Varik.cydsn\000"
+ 1984      726F7072 
+ 1984      6F636573 
+ 1984      6F725C4B 
+ 1984      7572736F 
+ 1985              	.LASF8:
+ 1986 01e1 756E7369 		.ascii	"unsigned int\000"
+ 1986      676E6564 
+ 1986      20696E74 
+ 1986      00
+ 1987              	.LASF21:
+ 1988 01ee 4D61785F 		.ascii	"Max_L\000"
+ 1988      4C00
+ 1989              	.LASF7:
+ 1990 01f4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1990      206C6F6E 
+ 1990      6720756E 
+ 1990      7369676E 
+ 1990      65642069 
+ 1991              	.LASF27:
+ 1992 020b 55706461 		.ascii	"UpdateChannelDescriptor\000"
+ 1992      74654368 
+ 1992      616E6E65 
+ 1992      6C446573 
+ 1992      63726970 
+ 1993              	.LASF40:
+ 1994 0223 55617274 		.ascii	"UartBuffer\000"
+ 1994      42756666 
+ 1994      657200
+ 1995              	.LASF16:
+ 1996 022e 43757272 		.ascii	"Current_D\000"
+ 1996      656E745F 
+ 1996      4400
+ 1997              	.LASF53:
+ 1998 0238 6D61696E 		.ascii	"main\000"
+ 1998      00
+ 1999              	.LASF17:
+ 2000 023d 43757272 		.ascii	"Current_H\000"
+ 2000      656E745F 
+ 2000      4800
+ 2001              	.LASF50:
+ 2002 0247 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2002      43313120 
+ 2002      352E342E 
+ 2002      31203230 
+ 2002      31363036 
+ 2003 027a 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 2003      20726576 
+ 2003      6973696F 
+ 2003      6E203233 
+ 2003      37373135 
+ 2004 02ad 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2004      66756E63 
+ 2004      74696F6E 
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 43
+
+
+ 2004      2D736563 
+ 2004      74696F6E 
+ 2005              	.LASF36:
+ 2006 02d5 55617274 		.ascii	"UartDataReader\000"
+ 2006      44617461 
+ 2006      52656164 
+ 2006      657200
+ 2007              	.LASF15:
+ 2008 02e4 73697A65 		.ascii	"sizetype\000"
+ 2008      74797065 
+ 2008      00
+ 2009              	.LASF6:
+ 2010 02ed 6C6F6E67 		.ascii	"long long int\000"
+ 2010      206C6F6E 
+ 2010      6720696E 
+ 2010      7400
+ 2011              	.LASF51:
+ 2012 02fb 6D61696E 		.ascii	"main.c\000"
+ 2012      2E6300
+ 2013              	.LASF13:
+ 2014 0302 63686172 		.ascii	"char\000"
+ 2014      00
+ 2015              	.LASF28:
+ 2016 0307 4368616E 		.ascii	"Channel_Number\000"
+ 2016      6E656C5F 
+ 2016      4E756D62 
+ 2016      657200
+ 2017              	.LASF20:
+ 2018 0316 4D61785F 		.ascii	"Max_H\000"
+ 2018      4800
+ 2019              	.LASF9:
+ 2020 031c 75696E74 		.ascii	"uint8\000"
+ 2020      3800
+ 2021              	.LASF4:
+ 2022 0322 6C6F6E67 		.ascii	"long int\000"
+ 2022      20696E74 
+ 2022      00
+ 2023              	.LASF41:
+ 2024 032b 55617274 		.ascii	"UartBufferIdx\000"
+ 2024      42756666 
+ 2024      65724964 
+ 2024      7800
+ 2025              	.LASF14:
+ 2026 0339 6C6F6E67 		.ascii	"long double\000"
+ 2026      20646F75 
+ 2026      626C6500 
+ 2027              	.LASF39:
+ 2028 0345 4368616E 		.ascii	"ChannelDescriptorsArray\000"
+ 2028      6E656C44 
+ 2028      65736372 
+ 2028      6970746F 
+ 2028      72734172 
+ 2029              	.LASF32:
+ 2030 035d 55617274 		.ascii	"UartBufferParser\000"
+ 2030      42756666 
+ 2030      65725061 
+ 2030      72736572 
+ARM GAS  C:\Users\Acer\AppData\Local\Temp\ccnmFC2r.s 			page 44
+
+
+ 2030      00
+ 2031              	.LASF45:
+ 2032 036e 6973725F 		.ascii	"isr_1_StartEx\000"
+ 2032      315F5374 
+ 2032      61727445 
+ 2032      7800
+ 2033              	.LASF47:
+ 2034 037c 5265645F 		.ascii	"Red_Output_Write\000"
+ 2034      4F757470 
+ 2034      75745F57 
+ 2034      72697465 
+ 2034      00
+ 2035              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

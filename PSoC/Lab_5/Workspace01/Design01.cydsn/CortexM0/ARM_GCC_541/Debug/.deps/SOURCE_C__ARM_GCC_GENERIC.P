@@ -1,0 +1,54 @@
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/CortexM0/ARM_GCC_541/Debug/main.o : C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/CyFlash.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/CyLib.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_1_Green.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_1_Green_aliases.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_2_Red.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_2_Red_aliases.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_3_Blue.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_3_Blue_aliases.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/SWI.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/SWI_aliases.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cmsis_armcc.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cmsis_compiler.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cmsis_gcc.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/core_cm0.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cyPm.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cy_em_eeprom.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cydisabledsheets.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cyfitter.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cypins.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cytypes.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/project.h C:/PSoC/Lab_5/Workspace01/Design01.cydsn/main.c 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/CyFlash.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/CyLFClk.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/CyLib.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_1_Green.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_1_Green_aliases.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_2_Red.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_2_Red_aliases.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_3_Blue.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/Pin_3_Blue_aliases.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/SWI.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/SWI_aliases.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cmsis_armcc.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cmsis_compiler.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cmsis_gcc.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/core_cm0.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cyPm.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cy_em_eeprom.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cydevice_trm.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cydisabledsheets.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cyfitter.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cypins.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/cytypes.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/Generated_Source/PSoC4/project.h : 
+
+C:/PSoC/Lab_5/Workspace01/Design01.cydsn/main.c : 
+

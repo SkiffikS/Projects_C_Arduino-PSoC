@@ -1,0 +1,13 @@
+# Kursova_10_Varik
+# 2022-11-10 19:44:37Z
+
+# IO_2@[IOP=(3)][IoId=(2)] is reserved: SWDDebugEnabled
+dont_use_io iocell 3 2
+# IO_3@[IOP=(3)][IoId=(3)] is reserved: SWDDebugEnabled
+dont_use_io iocell 3 3
+set_location "ClockGenBlock" m0s8clockgenblockcell -1 -1 0
+set_io "\UART_1:tx(0)\" iocell 0 5
+set_io "\UART_1:rx(0)\" iocell 0 4
+set_io "Red_Output(0)" iocell 1 6
+set_io "Green_Output(0)" iocell 0 2
+set_io "Blue_Output(0)" iocell 0 3
